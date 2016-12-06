@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.user.UserDAO">
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.user.UserDTO">
+		SELECT * FROM BLOG_USER
+	</select>
+	
+	<select id="selectUser" resultType="com.leelab.blogproject.user.UserDTO">
+		SELECT * FROM BLOG_USER WHERE ID = #{id}
+	</select>
+	
+	<insert id="add" parameterType="com.leelab.blogproject.user.UserDTO">
+		INSERT INTO BLOG_USER(ID,
+							  PASSWORD,
+							  PHONE,
+							  EMAIL,
+							  AUTH_KEY,
+							  NICKNAME,
+							  PROFILE_URL) 
+					  VALUES(#{id},
+					         #{password},
+					         #{phone},
+					         #{email},
+					         #{auth_key},
+					         #{nickname},
+					         #{profile_url})
+	</insert>
+	
+	<update id="updateUser" parameterType="com.leelab.blogproject.user.UserDTO">
+		UPDATE BLOG_USER SET PASSWORD = #{password},
+							 PHONE = #{phone},
+							 EMAIL = #{email},
+							 AUTH = #{auth},
+							 AUTH_KEY = #{auth_key},
+							 NICKNAME = #{nickname},
+							 PROFILE_URL = #{profile_url} 
+						  WHERE
+						  	 ID = #{id}
+	</update>
+	
+</mapper>

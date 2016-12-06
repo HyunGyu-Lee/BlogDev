@@ -1,0 +1,18 @@
+@CHARSET "EUC-KR";
+.profile_view_twice {
+	width: 128px;
+	height: 128px;
+}
+
+.profile_view_normal {
+	width: 256px;
+	height: 256px;
+}
+
+.password_view {
+	cursor: pointer;
+}
+
+.auth_view {
+	display: none;
+}

@@ -1,0 +1,28 @@
+@CHARSET "EUC-KR";
+.profile-box {
+	background-color: rgb(239, 240, 242);
+	padding: 7px;
+}
+
+.userInfo {
+	
+}
+
+.username {
+	cursor : pointer;
+	margin-left: 10px;
+	margin-right : 2px;
+	font-weight: bold;
+}
+
+.logoutBtn {
+	margin-left: 5px;
+}
+
+.control {
+	margin-top: 7px;
+}
+
+.openBlogBtn {
+	font-size: 11px;
+}

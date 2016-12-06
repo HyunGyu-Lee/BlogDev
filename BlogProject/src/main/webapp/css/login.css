@@ -1,0 +1,19 @@
+@CHARSET "EUC-KR";
+
+.table.login {
+	width: 33%;
+}
+
+.login-button {
+	height: 80px !important;
+	border-radius: 5px;
+}
+
+.table-borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+    border: none;
+}

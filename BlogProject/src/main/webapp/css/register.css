@@ -1,0 +1,38 @@
+@CHARSET "EUC-KR";
+
+.confirm-no {
+	color: red;
+	font-weight: bolder;
+	font-size: 12px;
+}
+
+.confirm {
+	color: green;
+	font-weight: bolder;
+	font-size: 12px;
+}
+
+.profile_view {
+	width: 64px;
+	height: 64px;
+}
+
+.profile_view_help {
+	color: #555555;
+	font-size: 7px;
+}
+
+.register_form_control {
+	width: 100%;
+	border-radius: 5px;	
+}
+
+.register_form_label {
+	font-weight: bold;	
+}
+
+.email-warn {
+	color : red;
+	font-size: 12px;
+	font-weight: bold;
+}
