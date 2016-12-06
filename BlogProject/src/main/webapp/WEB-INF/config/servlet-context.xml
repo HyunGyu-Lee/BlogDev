@@ -15,6 +15,7 @@
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/home"/>
 			<exclude-mapping path="/openLogin"/>
+			<exclude-mapping path="/openRegister"/>
 			<exclude-mapping path="/ajax/**"/>
 			<exclude-mapping path="/**/*.css"/>
 			<exclude-mapping path="/**/*.js"/>

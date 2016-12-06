@@ -1,6 +1,7 @@
 package com.leelab.blogproject.user;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.mail.MessagingException;
 
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.leelab.blogproject.mail.HTMLGenerator;
 import com.leelab.blogproject.mail.MailTemplate;
+import com.leelab.blogproject.utils.CollectionUtils;
 import com.leelab.blogproject.utils.FileUtils;
 import com.leelab.blogproject.utils.StringUtils;
 
@@ -127,5 +129,18 @@ public class UserService {
 	public byte[] getProfileImage(String id) throws IOException {
 		UserDTO user = getUser(id);
 		return FileUtils.read(FileUtils.PROFILE+user.getProfile_url());
+	}
+	
+	public HashMap<String, Object> getUserInfo(String id) {
+		UserDTO dto = getUser(id);
+		return CollectionUtils.generateBeanAsHashMap(dto);
+	}
+
+	public boolean passwordAuth(String id, String password) {
+		UserDTO user = getUser(id);
+		
+		if(user.getPassword().equals(password))return true;
+		
+		return false;
 	}
 }

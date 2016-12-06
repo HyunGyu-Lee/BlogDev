@@ -16,3 +16,9 @@
 .auth_view {
 	display: none;
 }
+
+.notValidPassword {
+	color: red;
+	font-weight: bold;
+	display: none;
+}

@@ -18,7 +18,7 @@ import com.leelab.blogproject.user.UserService;
 public class HomeController {
 	
 	@Autowired
-	private UserService userSerivce;
+	private UserService userService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
@@ -47,7 +47,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/userInfo")
-	public String userInfo() {
+	public String userInfo(@SessionAttribute UserDTO user, Model model) {
+		model.addAttribute("user", userService.getUserInfo(user.getId()));
 		return "home/userInfo";
 	}
 }

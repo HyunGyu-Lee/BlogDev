@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.leelab.blogproject.mail.MailTemplate;
 import com.leelab.blogproject.user.UserDAO;
+import com.leelab.blogproject.user.UserDTO;
+import com.leelab.blogproject.utils.CollectionUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -37,7 +39,12 @@ public class TestApplication {
 	
 	@Test
 	public void test() throws MessagingException {
-		mail.send("gusrb0808@naver.com", "Blog 회원가입 인증 메일입니다.", "<h1>Blog에서 보내드립니다.</h1>인증코드는 이현규짱 입니다.");
+		//mail.send("gusrb0808@naver.com", "Blog 회원가입 인증 메일입니다.", "<h1>Blog에서 보내드립니다.</h1>인증코드는 이현규짱 입니다.");
+		
+		UserDTO user = userDao.selectUser("admin");
+		
+		System.out.println(CollectionUtils.generateBeanAsHashMap(user));
+		
 	}
 	
 	

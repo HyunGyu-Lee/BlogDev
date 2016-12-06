@@ -1,4 +1,4 @@
-package com.leelab.blogproject.controller;
+ package com.leelab.blogproject.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -95,6 +95,14 @@ public class AjaxCallController {
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(userService.getProfileImage(id), header, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="passwordAuth", method=RequestMethod.POST)
+	public HashMap<String, Object> passwordAuth(@RequestParam String password, @SessionAttribute UserDTO user) {
+		boolean result = userService.passwordAuth(user.getId(), password);
+
+		return CollectionUtils.generateHashMap(CollectionUtils.array("result","password"),
+											   CollectionUtils.objectArray(result,password));
 	}
 	
 }

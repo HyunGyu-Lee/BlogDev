@@ -18,8 +18,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {		
 		HttpSession session = request.getSession(false);
-		
-		if(session==null)
+
+		if(session==null||session.getAttribute("user")==null)
 		{
 			logger.info("Login require.");
 			response.sendRedirect("openLogin");

@@ -17,37 +17,39 @@
 				    	<table class="table">
 				    		<tr>
 				    			<td rowspan="6" align="center">
-				    				<img src="ajax/profileImage/${sessionScope.user.id}" class="profile_view_normal"><br/><br/><br/>
+				    				<img src="ajax/profileImage/${user.id}" class="profile_view_normal"><br/><br/><br/>
 				    				<input type="file" name="profile_url_normal" value="변경"/>
 				    			</td>
 				    			<td>ID</td>
-				    			<td>${sessionScope.user.id}</td>
+				    			<td>${user.id}</td>
 				    		</tr>
 				    		<tr>
 				    			<td>닉네임</td>
-				    			<td>${sessionScope.user.nickname}</td>
+				    			<td>${user.nickname}</td>
 				    		</tr>
 				    		<tr>
 				    			<td>비밀번호</td>
 				    			<td style="padding-top: 15px;">
-				    				<span class="password_view label label-danger">비밀번호 확인을 위해 한번더 인증</span>
-				    				<div class="auth_view">
+				    				<span class="password_view label label-danger">비밀번호 확인을 위해서는 비밀번호를 한번 더 입력해주세요</span>
+				    				<div class="auth_view form-inline">
 				    					<br/>
-				    					<input type="text" name="password"/><input type="button" value="인증"/>
-				    				</div>				    				
+				    					<input type="password" class="form-control" name="password"/>
+				    					<input type="button" class="btn password-auth-btn" value="인증"/>
+				    					<span class="notValidPassword">비밀번호가 일치하지 않습니다!</span>
+				    				</div>
 				    			</td>
 				    		</tr>
 				    		<tr>
 				    			<td>이메일</td>
-				    			<td><span>${sessionScope.user.email}</span></td>
+				    			<td><span>${user.email}</span></td>
 				    		</tr>
 				    		<tr>
 				    			<td>전화번호</td>
-				    			<td><span>${sessionScope.user.phone}</span></td>
+				    			<td><span>${user.phone}</span></td>
 				    		</tr>
 				    		<tr>
 				    			<td>가입일</td>
-				    			<td><span><fmt:formatDate value="${sessionScope.user.create_at}" pattern="yyyy년 MM월 dd일 HH시mm분ss초"/></span></td>
+				    			<td><span><fmt:formatDate value="${user.create_at}" pattern="yyyy년 MM월 dd일 HH시mm분ss초"/></span></td>
 				    		</tr>
 				    	</table>
 				  	</div>

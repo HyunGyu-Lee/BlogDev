@@ -15,7 +15,7 @@
 		
 		<div align="center">
 			<form id="login">
-				<table class="table login table-borderless">
+				<table class="table logintab table-borderless">
 					<tr>
 						<td><label for="id">아이디</label></td>
 						<td><input type="text" id="id" name="id" class="form-control"/></td>

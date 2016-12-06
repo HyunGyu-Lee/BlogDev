@@ -12,4 +12,24 @@ $(function(){
 		}
 	});
 	
+	$('.password-auth-btn').click(function(){
+		$.ajax({
+			url : 'ajax/passwordAuth',
+			type : 'post',
+			data : {password : $('input[name*="password"]').val()},
+			dataType : 'json',
+			success : function(response) {
+				if(response.result == true)
+				{
+					$('.password_view').html(response.password);
+					$('.auth_view').hide();
+				}
+				else
+				{
+					$('.notValidPassword').show();
+				}
+			}
+		})
+	})
+	
 });
