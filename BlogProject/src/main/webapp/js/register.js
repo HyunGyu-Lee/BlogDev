@@ -13,89 +13,90 @@ $(function(){
 	/* 가입하기 버튼 클릭시 */
 	$('.btn.regist').click(function(){
 		if(isEmpty('id')) {
-			alert('아이디를 확인하세요');
+			swal('','아이디를 확인하세요','error');
 			return;
 		}
 		if(isEmpty('password')) {
-			alert('비밀번호를 확인하세요');
+			swal('','비밀번호를 확인하세요','error');
 			return;
 		}
 		if(isEmpty('nickname')) {
-			alert('닉네임을 확인하세요');
+			swal('','닉네임을 확인하세요','error');
 			return;
 		}
 		if(isEmpty('email')) {
-			alert('이메일을 확인하세요');
+			swal('','이메일을 확인하세요','error');
 			return;
 		}
 		if(isEmpty('phone')) {
-			alert('전화번호를 확인하세요');
+			swal('','전화번호를 확인하세요','error');
 			return;
 		}
 		if(isEmpty('profile_url'))
 		{
-			alert('이미지 파일을 꼭 지정해주세요.');
+			swal('','이미지 파일을 꼭 지정해주세요.','error');
 			return;
 		}
 		
 		if(!duplicate_check) {
-			alert('아이디 중복확인을 해주세요');
+			swal('','아이디 중복확인을 해주세요','error');
 			return;
 		}
 		if(!password_confirm_check) {
-			alert('비밀번호 확인을 완료해주세요!');
+			swal('','비밀번호 확인을 완료해주세요!','error');
 			return;
 		}
 		
 		var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 		if(!regExp.test($('input[name*="email"]').val()))
 		{
-			alert('올바른 이메일형식이 아닙니다.');
+			swal('','올바른 이메일형식이 아닙니다.','error');
 			return;
 		}
 		
-		$('#register').ajaxSubmit({
-			url : 'ajax/register',
-			type : 'post',
-			enctype : 'multipart/form-data',
-			success : function(response) {
-				alert('회원가입이 완료됐습니다. 이메일 인증을 완료하시면 로그인 할 수 있습니다.');
+		swal({
+			title: '회원가입',
+			text: "입력하신 정보로 회원 가입하시겠습니까?",
+			type: 'question',
+			showLoaderOnConfirm:true,
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '가입',
+			preConfirm:function(){
+				return new Promise(function(resolve, reject){
+					console.log('통신시작');
+					$('#register').ajaxSubmit({
+						url : 'ajax/register',
+						type : 'post',
+						enctype : 'multipart/form-data',
+						success : function(response) {
+							console.log('통신성공');
+							resolve();
+						},
+						error : function(error) {
+							swal('','서버와 통신이 원할하지 않습니다.','error');
+						}
+					});
+				})
+			}
+		}).then(function () {
+			console.log('성공적');
+			swal('회원가입 완료','회원가입이 완료됐습니다. 이메일 인증을 완료하시면 로그인 할 수 있습니다.','success').then(function(){
 				location.href = '/blog/';
-			},
-			error : function(error) {
-				alert('서버와 통신이 원할하지 않습니다.');
-			}			
-		});
-		
-//		var form_data = new FormData($("#register")[0]);
-//		
-//		form_data.append("profile_url", $('input[name*="profile_url"]')[0].files[0]);
-//		
-//		$.ajax({
-//			url : 'ajax/register',
-//			type : 'post',
-//			enctype : 'multipart/form-data',
-//			data : form_data,
-//			processData: false,
-//            contentType: false,
-//			success : function(response) {
-//				console.log(response);
-//			},
-//			error : function(error) {
-//				console.log(error);
-//			}			
-//		});
+			})
+		})
+
 	});
 	
 	/* 아이디 중복체크 클릭시 */
-	$('.duplicate-check').click(function(){
-		
+	$('.duplicate-check').click(function() {
 		var id = $('input[name*="id"').val();
 		id = id.trim();
 		
 		if(id.length==0)
 		{
-			alert('공백 제외 한 글자 이상 입력하세요.');
+			swal('','공백 제외 한 글자 이상 입력하세요.','warning');
 			return;
 		}
 		
@@ -107,12 +108,13 @@ $(function(){
 			success : function(response) {
 				if(response.result == true)
 				{
-					alert('사용할 수 있는 아이디입니다.');
+					console.log('중복체크버튼클릭');
+					swal('','사용할 수 있는 아이디입니다.','success');
 					duplicate_check = true;
 				}
 				else
 				{
-					alert('이미 사용중인 아이디입니다.');
+					swal('','이미 사용중인 아이디입니다.','error');
 				}
 			}			
 		})

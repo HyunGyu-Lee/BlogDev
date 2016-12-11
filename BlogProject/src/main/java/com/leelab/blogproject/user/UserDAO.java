@@ -23,5 +23,5 @@ public interface UserDAO {
 	public void deleteAll();
 
 	/* 사용자 정보 수정 */
-	public void updateUser(UserDTO user);
+	public void update(UserDTO user);
 }

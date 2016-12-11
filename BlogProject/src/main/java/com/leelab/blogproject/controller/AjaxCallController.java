@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.leelab.blogproject.annotation.LoginRequired;
 import com.leelab.blogproject.resolver.MultipartRequest;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
 import com.leelab.blogproject.utils.CollectionUtils;
+import com.leelab.blogproject.utils.json.SimpleHashMap;
 
 @RestController
 @RequestMapping("/ajax")
@@ -58,12 +61,13 @@ public class AjaxCallController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public HashMap<String, Object> login(@RequestParam String id, @RequestParam String password, HttpSession session) {
+	public HashMap<String, Object> login(@RequestParam String id,
+										 @RequestParam String password,
+										 HttpServletRequest request,HttpServletResponse response) {
 		boolean result = userService.login(id, password);
-
 		if(result)
 		{
-			session.setAttribute("user", userService.getUser(id));
+			request.getSession().setAttribute("user", userService.getUser(id));
 		}
 		
 		logger.info("Login check {} - {} => {}", id, password, result);
@@ -103,6 +107,13 @@ public class AjaxCallController {
 
 		return CollectionUtils.generateHashMap(CollectionUtils.array("result","password"),
 											   CollectionUtils.objectArray(result,password));
+	}
+	
+	//@LoginRequired
+	@RequestMapping(value="modifyField", method=RequestMethod.POST)
+	public void modifyField(UserDTO user, @SessionAttribute("user") UserDTO sessionUser) {
+		user.setId(sessionUser.getId());
+		userService.updateUser(user);
 	}
 	
 }

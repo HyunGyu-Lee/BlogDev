@@ -30,16 +30,19 @@
 					         #{profile_url})
 	</insert>
 	
-	<update id="updateUser" parameterType="com.leelab.blogproject.user.UserDTO">
-		UPDATE BLOG_USER SET PASSWORD = #{password},
-							 PHONE = #{phone},
-							 EMAIL = #{email},
-							 AUTH = #{auth},
-							 AUTH_KEY = #{auth_key},
-							 NICKNAME = #{nickname},
-							 PROFILE_URL = #{profile_url} 
-						  WHERE
-						  	 ID = #{id}
+	<update id="update" parameterType="com.leelab.blogproject.user.UserDTO">
+		UPDATE BLOG_USER
+			<set>
+				<if test="password!=null">PASSWORD = #{password},</if>
+				<if test="phone!=null">   PHONE = #{phone},</if>
+				<if test="email!=null">   EMAIL = #{email},</if>
+				<if test="auth!=null">    AUTH = #{auth},</if>
+				<if test="auth_key!=null">AUTH_KEY = #{auth_key},</if>
+				<if test="nickname!=null">NICKNAME = #{nickname},</if>
+				<if test="profile_url!=null">PROFILE_URL = #{profile_url}</if>
+			</set>
+			WHERE
+				ID = #{id}
 	</update>
 	
 </mapper>

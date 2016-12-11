@@ -21,11 +21,9 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
 		if(session==null||session.getAttribute("user")==null)
 		{
-			logger.info("Login require.");
 			response.sendRedirect("openLogin");
 			return false;
 		}
-		
 		return true;
 	}
 	

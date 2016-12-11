@@ -51,4 +51,5 @@ public class HomeController {
 		model.addAttribute("user", userService.getUserInfo(user.getId()));
 		return "home/userInfo";
 	}
+
 }

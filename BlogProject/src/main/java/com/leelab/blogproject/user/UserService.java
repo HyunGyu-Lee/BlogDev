@@ -102,7 +102,7 @@ public class UserService {
 		if(user.getAuth_key().equals(auth_key)) 
 		{
 			user.setAuth("true");
-			userDao.updateUser(user);
+			userDao.update(user);
 			return true;
 		}
 		
@@ -123,7 +123,7 @@ public class UserService {
 		
 		mail.send(user.getEmail(), "Blog 이메일 인증 인증코드입니다.", html.generateHTML());
 		
-		userDao.updateUser(user);
+		userDao.update(user);
 	}
 	
 	public byte[] getProfileImage(String id) throws IOException {
@@ -142,5 +142,9 @@ public class UserService {
 		if(user.getPassword().equals(password))return true;
 		
 		return false;
+	}
+
+	public void updateUser(UserDTO user) {
+		userDao.update(user);
 	}
 }

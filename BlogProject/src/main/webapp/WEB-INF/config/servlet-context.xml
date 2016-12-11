@@ -16,6 +16,7 @@
 			<exclude-mapping path="/home"/>
 			<exclude-mapping path="/openLogin"/>
 			<exclude-mapping path="/openRegister"/>
+			<exclude-mapping path="/util/**"/>
 			<exclude-mapping path="/ajax/**"/>
 			<exclude-mapping path="/**/*.css"/>
 			<exclude-mapping path="/**/*.js"/>
@@ -45,7 +46,7 @@
 	</annotation-driven>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="1000000"/>
+		<beans:property name="maxUploadSize" value="10000000"/>
 	</beans:bean>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

@@ -22,3 +22,13 @@
 	font-weight: bold;
 	display: none;
 }
+
+.edit {
+	margin-left : 10px;
+	cursor: pointer;
+	font-size: 15px;
+}
+
+table td {
+	vertical-align: middle !important;	
+}

@@ -47,8 +47,9 @@
 				success : function(response) {
 					if(response.result==true)
 					{
-						alert('이메일 인증에 성공하셨습니다.');
-						location.href = "/blog/";
+						swal('','이메일 인증에 성공하셨습니다.','success').then(function(){
+							location.href = "/blog/";							
+						});
 					}
 					else
 					{
@@ -59,13 +60,25 @@
 		});
 		
 		$('#re-auth').click(function(){
-			$.ajax({
-				url : 'ajax/reAuth',
-				type : 'post',
-				success : function() {
-					alert('새 인증코드가 발송됐습니다.');
+			swal({
+				confirmButtonText : '요청',
+				html:'아래 메일로 인증번호가 발송됍니다.<br/>${sessionScope.user.email}',
+				type:'info',
+				showLoaderOnConfirm:true,
+				preConfirm : function(){
+					return new Promise(function(resolve, reject){
+						$.ajax({
+							url : 'ajax/reAuth',
+							type : 'post',
+							success : function() {
+								swal('','새 인증코드가 발송됐습니다.','success').then(function(){
+									resolve();
+								});
+							}
+						})
+					});
 				}
-			})
+			});
 		});
 	});
 	</script>	

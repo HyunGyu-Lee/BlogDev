@@ -3,7 +3,7 @@
 
 <div class="page-header">
 	<h1>
-		<span class="home">블로그, Blog</span>
+		<span class="home label label-primary">Public Blog</span>
 		<span class="pull-right">
 			메뉴가 들어갈 곳입니당
 			<!--  <span class="label label-default login">로그인</span> 
@@ -12,6 +12,4 @@
 		</span>
 	</h1>
 		
-
-
 </div>

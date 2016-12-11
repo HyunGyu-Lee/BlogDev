@@ -26,3 +26,9 @@
 .openBlogBtn {
 	font-size: 11px;
 }
+
+.home {
+	cursor: pointer;
+	font-size: 35px;
+	font-style: italic;
+}
