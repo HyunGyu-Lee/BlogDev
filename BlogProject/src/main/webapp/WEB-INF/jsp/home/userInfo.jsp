@@ -18,7 +18,9 @@
 				    		<tr>
 				    			<td rowspan="6" align="center">
 				    				<img src="ajax/profileImage/${user.id}" class="profile_view_normal"><br/><br/><br/>
-				    				<input type="file" name="profile_url_normal" value="변경"/>
+				    				<form id="edit_profile" enctype="multipart/form-data">
+				    					<input type="file" id="profile_url_normal" name="profile" value="변경"/>
+				    				</form>
 				    			</td>
 				    			<td>ID</td>
 				    			<td>${user.id}</td>

@@ -18,6 +18,7 @@ public class SimpleHashMap extends HashMap<String, Object> {
 		return new SimpleHashMap();
 	}
 	
+	@Deprecated
 	public String toJsonString() {
 		Set<String> set = this.keySet();
 		

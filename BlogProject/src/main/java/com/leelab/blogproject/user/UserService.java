@@ -147,4 +147,16 @@ public class UserService {
 	public void updateUser(UserDTO user) {
 		userDao.update(user);
 	}
+
+	public void editProfilePhoto(String id, MultipartFile file) throws IllegalStateException, IOException {
+		String extension = FileUtils.getFileExtension(file.getOriginalFilename());
+		String saveFileName = StringUtils.getRandomString()+extension;
+
+		UserDTO user = getUser(id);
+		user.setProfile_url(saveFileName);
+		
+		userDao.update(user);
+		
+		FileUtils.save(file, FileUtils.PROFILE+saveFileName);		
+	}
 }

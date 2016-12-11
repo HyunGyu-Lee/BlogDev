@@ -47,8 +47,7 @@ $(function(){
 			return;
 		}
 		
-		var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
-		if(!regExp.test($('input[name*="email"]').val()))
+		if(!emailValidate($('input[name*="email"]').val()))
 		{
 			swal('','올바른 이메일형식이 아닙니다.','error');
 			return;

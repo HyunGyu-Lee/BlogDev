@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.leelab.blogproject.annotation.LoginRequired;
 import com.leelab.blogproject.resolver.MultipartRequest;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
@@ -45,7 +43,7 @@ public class AjaxCallController {
 
 		logger.info("Duplicate check : {} -> {}", id, result);
 		
-		return CollectionUtils.generateHashMap(new String[]{"result"}, new Object[]{result});
+		return SimpleHashMap.newInstance().put("result", result);
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
@@ -57,7 +55,7 @@ public class AjaxCallController {
 							   request.get("phone"),
 							   request.getFile(0));
 		
-		return CollectionUtils.generateHashMap(new String[]{"result"}, new Object[]{true});
+		return SimpleHashMap.newInstance().put("result", true);
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -71,7 +69,8 @@ public class AjaxCallController {
 		}
 		
 		logger.info("Login check {} - {} => {}", id, password, result);
-		return CollectionUtils.generateHashMap(new String[]{"result"}, new Object[]{result});
+
+		return SimpleHashMap.newInstance().put("result", result);
 	}
 	
 	@RequestMapping("/auth")
@@ -83,7 +82,7 @@ public class AjaxCallController {
 			session.setAttribute("user", userService.getUser(id));
 		}
 		logger.info("Auth check {} - {}", auth_key, result);
-		return CollectionUtils.generateHashMap(new String[]{"result"}, new Object[]{result});
+		return SimpleHashMap.newInstance().put("result", result);
 	}
 	
 	@RequestMapping("/reAuth")
@@ -103,17 +102,18 @@ public class AjaxCallController {
 	
 	@RequestMapping(value="passwordAuth", method=RequestMethod.POST)
 	public HashMap<String, Object> passwordAuth(@RequestParam String password, @SessionAttribute UserDTO user) {
-		boolean result = userService.passwordAuth(user.getId(), password);
-
-		return CollectionUtils.generateHashMap(CollectionUtils.array("result","password"),
-											   CollectionUtils.objectArray(result,password));
+		boolean result = userService.passwordAuth(user.getId(), password);		
+		return SimpleHashMap.newInstance().put("result", result).put("password", password);
 	}
 	
-	//@LoginRequired
 	@RequestMapping(value="modifyField", method=RequestMethod.POST)
 	public void modifyField(UserDTO user, @SessionAttribute("user") UserDTO sessionUser) {
 		user.setId(sessionUser.getId());
 		userService.updateUser(user);
 	}
 	
+	@RequestMapping(value="editProfilePhoto", method=RequestMethod.POST)
+	public void editProfilePhoto(MultipartRequest multi,@SessionAttribute("user") UserDTO user) throws IllegalStateException, IOException {
+		userService.editProfilePhoto(user.getId(), multi.getFile(0));
+	}
 }

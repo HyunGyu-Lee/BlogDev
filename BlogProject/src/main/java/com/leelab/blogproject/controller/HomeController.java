@@ -21,13 +21,18 @@ public class HomeController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(HttpServletRequest request) {
+	public String home(HttpSession session) {
+		if(session.getAttribute("user")!=null)
+		{
+			String id = ((UserDTO)session.getAttribute("user")).getId();
+			session.setAttribute("user", userService.getUser(id));
+		}
 		return "home/home";
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeView(HttpServletRequest request) {
-		return "home/home";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/openRegister")

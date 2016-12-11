@@ -1,13 +1,30 @@
 function modifyAjax(obj) {
 	var name = obj;
 	var value = $('.'+obj).children('input:eq(0)').val()
-
+	
+	if(isEmptyString(value))
+	{
+		swal('','변경할 값을 입력하세요','error');
+		return;
+	}
+	
+	if(name=='email')
+	{
+		if(!emailValidate(value))
+		{
+			swal('','올바른 이메일 형식이 아닙니다.','error');
+			return;
+		}		
+	}
+	
 	$.ajax({
 		url : 'ajax/modifyField',
 		type : 'post',
 		data : name +'='+ value,
 		success : function(response) {
-			/* 성공시 성공 내용반영 */
+			swal('','변경 되었습니다.','success').then(function(){
+				location.href = 'userInfo';
+			});
 		}
 	});
 }
@@ -64,4 +81,16 @@ $(function(){
 			$(this).html('수정');
 		}		
 	})
+	
+	$(document).on('change', '#profile_url_normal', function(){
+		setImageFromFile(this,'.profile_view_normal');
+		
+		$('#edit_profile').ajaxSubmit({
+			url : 'ajax/editProfilePhoto',
+			type : 'post',
+			success : function(){
+				swal('','프로필 이미지가 변경되었습니다.','success');
+			}
+		});
+	});
 });

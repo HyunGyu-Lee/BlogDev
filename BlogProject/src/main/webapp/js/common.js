@@ -16,3 +16,12 @@ function isEmptyString(str) {
 	if(t.length==0)return true;
 	return false;
 }
+
+function emailValidate(email) {
+	var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+	if(!regExp.test(email))
+	{
+		return false;
+	}
+	return true;
+}
