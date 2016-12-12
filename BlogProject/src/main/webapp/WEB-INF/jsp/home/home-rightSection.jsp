@@ -26,7 +26,8 @@
 			<span class="logoutBtn"><a href="logout" class="label label-danger">로그아웃</a></span>
 		</div>
 		<div class="control">
-			<input type="button" class="btn btn-success openBlogBtn" value="정보수정"/>
+			<input type="hidden" id="idRef" value="${sessionScope.user.id}"/>
+			<a href="#" class="label label-success openMyBlog">내 블로그</a>
 		</div>
 	</div>
 </c:if>

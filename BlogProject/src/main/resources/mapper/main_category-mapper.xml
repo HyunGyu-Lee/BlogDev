@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.category.main.MainCategoryDAO">
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+		SELECT * FROM MAIN_CATEGORY
+	</select>
+	
+	<select id="selectByUserId" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+		SELECT * FROM MAIN_CATEGORY WHERE USER_ID = #{param1}
+	</select>
+	
+	<select id="selectById">
+		SELECT * FROM MAIN_CATEGORY WHERE ID = #{param1}
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.category.main.MainCategoryDTO" useGeneratedKeys="true">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			SELECT MAIN_CATEGORY_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MAIN_CATEGORY(ID, USER_ID, NAME)
+					VALUES(#{id}, #{user_id}, #{name})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM MAIN_CATEGORY WHERE ID = #{param1}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM MAIN_CATEGORY
+	</delete>
+	
+	<update id="update" parameterType="com.leelab.blogproject.category.main.MainCategoryDTO">
+		UPDATE MAIN_CATEGORY 
+			<set>
+				NAME = #{name}
+			</set>
+			WHERE
+				ID = #{id}
+	</update>
+	
+</mapper>

@@ -14,7 +14,14 @@ $(function(){
 				success : function(response) {
 					if(response.result==true)
 					{
-						location.href = '/blog/';
+						if(response.redirectUri==null)
+						{
+							location.href = '/blog/';
+						}
+						else
+						{
+							location.href = response.redirectUri;
+						}
 					}
 					else
 					{

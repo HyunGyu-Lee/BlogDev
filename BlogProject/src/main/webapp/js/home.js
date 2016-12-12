@@ -14,4 +14,9 @@ $(function(){
 	$('.username').click(function(){
 		location.href = 'userInfo';
 	});
+	
+	$(document).on('click', '.openMyBlog', function(){
+		var id = $('#idRef').val();
+		location. href = '/blog/'+id;
+	})
 })

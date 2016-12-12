@@ -2,10 +2,9 @@
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.leelab.blogproject.resolver.MultipartRequest;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
-import com.leelab.blogproject.utils.CollectionUtils;
 import com.leelab.blogproject.utils.json.SimpleHashMap;
 
 @RestController
@@ -59,18 +57,20 @@ public class AjaxCallController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public HashMap<String, Object> login(@RequestParam String id,
-										 @RequestParam String password,
-										 HttpServletRequest request,HttpServletResponse response) {
+	public HashMap<String, Object> login(@RequestParam Map<String, String> requestScope, HttpSession session) {
+		String id = requestScope.get("id");
+		String password = requestScope.get("password");
+		String redirectUri = requestScope.get("redirectUri");
+		logger.info(redirectUri);
 		boolean result = userService.login(id, password);
 		if(result)
 		{
-			request.getSession().setAttribute("user", userService.getUser(id));
+			session.setAttribute("user", userService.getUser(id));
 		}
 		
 		logger.info("Login check {} - {} => {}", id, password, result);
 
-		return SimpleHashMap.newInstance().put("result", result);
+		return SimpleHashMap.newInstance().put("result", result).put("redirectUri", redirectUri);
 	}
 	
 	@RequestMapping("/auth")

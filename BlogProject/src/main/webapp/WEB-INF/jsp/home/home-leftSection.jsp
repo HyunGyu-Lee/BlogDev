@@ -7,5 +7,6 @@
 </div>
 </c:if>
 
-<h1>새로운 블로그</h1>
-<div class="userInfoView"></div>
+<div>
+	메인 영역
+</div>

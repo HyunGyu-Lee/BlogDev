@@ -15,6 +15,14 @@
 		
 		<div align="center">
 			<form id="login">
+				<c:choose>
+					<c:when test="${not empty redirectUri}">
+						<input type="hidden" name="redirectUri" value="${redirectUri}"/>					
+					</c:when>
+					<c:otherwise>
+						<input type="hidden" name="redirectUri" value="/"/>				
+					</c:otherwise>
+				</c:choose>
 				<table class="table logintab table-borderless">
 					<tr>
 						<td><label for="id">아이디</label></td>

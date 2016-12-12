@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.category.sub.SubCategoryDAO">
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+		SELECT * FROM SUB_CATEGORY
+	</select>
+	
+	<select id="selectByUserId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+		SELECT * FROM SUB_CATEGORY WHERE USER_ID = #{param1}
+	</select>
+	
+	<select id="selectByMainCategoryId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+		SELECT * FROM SUB_CATEGORY WHERE MAIN_CATEGORY_ID = #{param1}
+	</select>
+	
+	<select id="selectById">
+		SELECT * FROM SUB_CATEGORY WHERE ID = #{param1}
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.category.sub.SubCategoryDTO" useGeneratedKeys="true">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			SELECT SUB_CATEGORY_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO SUB_CATEGORY(ID, USER_ID, NAME, MAIN_CATEGORY_ID)
+					VALUES(#{id}, #{user_id}, #{name}, #{main_category_id})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM SUB_CATEGORY WHERE ID = #{param1}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM SUB_CATEGORY
+	</delete>
+	
+	<update id="update" parameterType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+		UPDATE SUB_CATEGORY 
+			<set>
+				NAME = #{name}
+			</set>
+			WHERE
+				ID = #{id}
+	</update>
+	
+</mapper>

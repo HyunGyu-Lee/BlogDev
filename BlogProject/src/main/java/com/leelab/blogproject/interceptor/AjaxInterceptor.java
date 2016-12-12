@@ -8,9 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.leelab.blogproject.annotation.LoginRequired;
-import com.leelab.blogproject.utils.ReflectionUtils;
-
 public class AjaxInterceptor extends HandlerInterceptorAdapter {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AjaxInterceptor.class);

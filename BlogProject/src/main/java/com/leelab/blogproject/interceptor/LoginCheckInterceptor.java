@@ -21,7 +21,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
 		if(session==null||session.getAttribute("user")==null)
 		{
-			response.sendRedirect("openLogin");
+			response.sendRedirect("openLogin?requestUri="+request.getRequestURI());
 			return false;
 		}
 		return true;

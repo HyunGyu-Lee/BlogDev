@@ -1,0 +1,13 @@
+@CHARSET "EUC-KR";
+
+.blog-profile-box {
+	background-color: #e1e1e1;
+	border-radius : 5px;
+	padding : 10px 3px 10px 3px;
+	margin-bottom: 30px;
+}
+
+.blog-profile-box .info {
+	margin-top : 8px;
+	margin-bottom: 12px;
+}
