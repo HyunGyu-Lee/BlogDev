@@ -59,39 +59,9 @@ public class TestApplication {
 //		
 //		System.out.println(CollectionUtils.generateBeanAsHashMap(user));
 
-		MainCategoryDTO newCategory = new MainCategoryDTO();
-		newCategory.setUser_id("admin");
-		newCategory.setName("사전");
 		
-		//mCateDao.insert(newCategory);
-		
-		SubCategoryDTO sub = new SubCategoryDTO(0, "admin", "영어사전", 16);
-		SubCategoryDTO sub2 = new SubCategoryDTO(0, "admin", "국어사전", 16);
-
-		sCateDao.insert(sub);
-		sCateDao.insert(sub2);
-		
-		ArrayList<MainCategoryDTO> categories = mCateDao.selectByUserId("admin");
-		ArrayList<SubCategoryDTO> subCate = sCateDao.selectByUserId("admin");
-
-		HashMap<MainCategoryDTO, ArrayList<SubCategoryDTO>> categoryBundle = new HashMap<MainCategoryDTO, ArrayList<SubCategoryDTO>>();
-		
-		for(MainCategoryDTO category : categories)
-		{
-			ArrayList<SubCategoryDTO> sc = new ArrayList<SubCategoryDTO>();
-			
-			for(SubCategoryDTO subC : subCate)
-			{
-				if(subC.getMain_category_id()==category.getId())
-				{
-					sc.add(subC);
-				}
-			}
-			categoryBundle.put(category, sc);
-		}
-		
-		System.out.println(categoryBundle);
-		
+		MainCategoryDTO c = new MainCategoryDTO(0,"admin","요리",2);
+		mCateDao.insert(c);
 		
 		
 	}

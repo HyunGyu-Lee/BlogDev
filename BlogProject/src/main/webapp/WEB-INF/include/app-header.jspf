@@ -15,17 +15,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- 개인 -->
-<script src='js/home.js'></script>
-<script src='js/register.js'></script>
-<script src='js/common.js'></script>
-<script src='js/login.js'></script>
-<script src='js/userInfo.js'></script>
-<script src='js/blog.js'></script>
+<script src='/blog/js/home.js'></script>
+<script src='/blog/js/register.js'></script>
+<script src='/blog/js/common.js'></script>
+<script src='/blog/js/login.js'></script>
+<script src='/blog/js/userInfo.js'></script>
+<script src='/blog/js/blog.js'></script>
+<script src='/blog/js/manage.js'></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
 
-<link rel="stylesheet" href="css/register.css">
-<link rel="stylesheet" href="css/login.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/userInfo.css">
-<link rel="stylesheet" href="css/blog.css">
+<link rel="stylesheet" href="/blog/css/register.css">
+<link rel="stylesheet" href="/blog/css/login.css">
+<link rel="stylesheet" href="/blog/css/home.css">
+<link rel="stylesheet" href="/blog/css/userInfo.css">
+<link rel="stylesheet" href="/blog/css/blog.css">
+<link rel="stylesheet" href="/blog/css/manage.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.css">

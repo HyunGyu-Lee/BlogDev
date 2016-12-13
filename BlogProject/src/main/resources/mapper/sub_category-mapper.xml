@@ -6,15 +6,15 @@
 <mapper namespace="com.leelab.blogproject.category.sub.SubCategoryDAO">
 	
 	<select id="selectAll" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
-		SELECT * FROM SUB_CATEGORY
+		SELECT * FROM SUB_CATEGORY ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
 	<select id="selectByUserId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
-		SELECT * FROM SUB_CATEGORY WHERE USER_ID = #{param1}
+		SELECT * FROM SUB_CATEGORY WHERE USER_ID = #{param1} ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
 	<select id="selectByMainCategoryId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
-		SELECT * FROM SUB_CATEGORY WHERE MAIN_CATEGORY_ID = #{param1}
+		SELECT * FROM SUB_CATEGORY WHERE MAIN_CATEGORY_ID = #{param1} ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
 	<select id="selectById">
@@ -25,8 +25,8 @@
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">
 			SELECT SUB_CATEGORY_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO SUB_CATEGORY(ID, USER_ID, NAME, MAIN_CATEGORY_ID)
-					VALUES(#{id}, #{user_id}, #{name}, #{main_category_id})
+		INSERT INTO SUB_CATEGORY(ID, USER_ID, NAME, MAIN_CATEGORY_ID, CATEGORY_ORDER)
+					VALUES(#{id}, #{user_id}, #{name}, #{main_category_id}, #{category_order})
 	</insert>
 	
 	<delete id="delete">
@@ -40,7 +40,8 @@
 	<update id="update" parameterType="com.leelab.blogproject.category.sub.SubCategoryDTO">
 		UPDATE SUB_CATEGORY 
 			<set>
-				NAME = #{name}
+				<if test="name != null">NAME = #{name},</if>
+				<if test="category_order!=null">CATEGORY_ORDER = #{category_order}</if>
 			</set>
 			WHERE
 				ID = #{id}

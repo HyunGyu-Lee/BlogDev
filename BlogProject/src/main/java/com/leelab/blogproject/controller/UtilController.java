@@ -24,4 +24,10 @@ public class UtilController {
 			response.addCookie(c);
 		}
 	}
+	
+	@RequestMapping("test-*")
+	public String to(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		return uri.substring(uri.lastIndexOf("-")+1, uri.length());
+	}
 }

@@ -1,19 +1,21 @@
 package com.leelab.blogproject.category.sub;
 
-public class SubCategoryDTO {
+public class SubCategoryDTO  {
 	
 	private int id;
 	private String user_id;
 	private String name;
+	private int category_order;
 	private int main_category_id;
 	
 	public SubCategoryDTO(){}
 
-	public SubCategoryDTO(int id, String user_id, String name, int main_category_id) {
+	public SubCategoryDTO(int id, String user_id, String name, int category_order, int main_category_id) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
 		this.name = name;
+		this.category_order = category_order;
 		this.main_category_id = main_category_id;
 	}
 
@@ -41,6 +43,14 @@ public class SubCategoryDTO {
 		this.name = name;
 	}
 
+	public int getCategory_order() {
+		return category_order;
+	}
+
+	public void setCategory_order(int category_order) {
+		this.category_order = category_order;
+	}
+
 	public int getMain_category_id() {
 		return main_category_id;
 	}
@@ -51,8 +61,8 @@ public class SubCategoryDTO {
 
 	@Override
 	public String toString() {
-		return "SubCategoryDTO [id=" + id + ", user_id=" + user_id + ", name=" + name + ", main_category_id="
-				+ main_category_id + "]";
+		return "SubCategoryDTO [id=" + id + ", user_id=" + user_id + ", name=" + name + ", category_order="
+				+ category_order + ", main_category_id=" + main_category_id + "]";
 	}
-	
+
 }

@@ -3,6 +3,7 @@ package com.leelab.blogproject.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -78,7 +79,7 @@ public class HomeController {
 		logger.info("Open Blog to {}", id);
 		
 		UserDTO user = userService.getUser(id);
-		HashMap<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
+		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("category", category);

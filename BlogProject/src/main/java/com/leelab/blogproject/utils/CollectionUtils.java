@@ -1,7 +1,15 @@
 package com.leelab.blogproject.utils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeMap;
+
+import com.leelab.blogproject.category.main.MainCategoryDTO;
+import com.leelab.blogproject.category.sub.SubCategoryDTO;
 
 public class CollectionUtils {
 
@@ -50,4 +58,9 @@ public class CollectionUtils {
 	public static Object[] objectArray(Object...o) {
 		return o;
 	}
+
+//	public static <K, V> void sort(HashMap<K, V> map, Comparator<MainCategoryDTO> comparator) {
+//		TreeMap<K, V> sortedMap = new TreeMap<K, V>(map);
+//		return sortedMap;
+//	}
 }

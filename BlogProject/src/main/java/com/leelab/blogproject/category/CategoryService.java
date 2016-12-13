@@ -1,7 +1,7 @@
 package com.leelab.blogproject.category;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CategoryService {
 		subCategoryDao = this.session.getMapper(SubCategoryDAO.class);
 	}
 	
-	public HashMap<MainCategoryDTO, ArrayList<SubCategoryDTO>> getUserCategory(String id) {
+	public Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> getUserCategory(String id) {
 		CategoryVO categories = new CategoryVO();
 		
 		ArrayList<MainCategoryDTO> mains = mainCategoryDao.selectByUserId(id);
@@ -39,6 +39,23 @@ public class CategoryService {
 		}
 		
 		return categories.getMap();
+	}
+	
+	public void editCategoryName(int id, String name, String type) {
+		if(type.equals("main"))
+		{
+			MainCategoryDTO main = new MainCategoryDTO();
+			main.setId(id);
+			main.setName(name);
+			mainCategoryDao.update(main);
+		}
+		else
+		{
+			SubCategoryDTO sub = new SubCategoryDTO();
+			sub.setId(id);
+			sub.setName(name);
+			subCategoryDao.update(sub);
+		}
 	}
 
 }

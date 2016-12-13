@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/include/app-header.jspf"%>
-		<title>Blog - ${user.nickname}님의 블로그</title>
+		<title>${user.nickname}님의 블로그</title>
 	</head>
 	<body>
 		<div class="container">
@@ -13,7 +13,7 @@
 			<div class="pull-right">
 				<%@ include file="/WEB-INF/jsp/blog/blog-rightSection.jsp" %>				
 			</div>
-			<div class="pull-left" style="width: 25%">
+			<div class="pull-left" style="width: 21%">
 				<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
 			</div>
 		</div>
