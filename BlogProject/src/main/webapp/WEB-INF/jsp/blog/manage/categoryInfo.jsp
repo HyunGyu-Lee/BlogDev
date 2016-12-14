@@ -13,11 +13,13 @@
 						<li>
 							<span class="category-item main"
 								  key="${mainCategory.key.id}"
-								  category_order="${mainCategory.key.category_order}">${mainCategory.key.name}</span>
+								  category_order="${mainCategory.key.category_order}"><strong>${mainCategory.key.name}</strong></span>
 							<ul>
 								<c:forEach items="${mainCategory.value}" var="subCategory">
 								<li>
-									<span class="category-item sub" key="${subCategory.id}">${subCategory.name}</span>
+									<span class="category-item sub"
+										key="${subCategory.id}"
+										category_order="${subCategory.category_order}"><strong>${subCategory.name}</strong></span>
 								</li>
 								</c:forEach>
 							</ul>
@@ -41,18 +43,39 @@
 						</td>
 					</tr>
 					<tr>
-						<td>순서</td>
-						<td align="center">
-							<span class="label label-info">
-								<span class="glyphicon glyphicon-menu-up"></span>
+						<td>
+							카테고리 순서
+						</td>
+						<td>
+							<span class="label label-info order-up">
+								<span class="glyphicon glyphicon-arrow-up"></span>
 								올리기
 							</span> &nbsp&nbsp&nbsp&nbsp
-							<span class="label label-warning">
-								<span class="glyphicon glyphicon-menu-down"></span>
+							<span class="label label-warning order-down">
+								<span class="glyphicon glyphicon-arrow-down"></span>
 								내리기
-							</span>
-						</td>						
+							</span> &nbsp&nbsp&nbsp&nbsp
+						</td>
 						<td></td>
+					</tr>
+					<tr>
+						<td>추가/삭제</td>
+						<td>
+							<span class="label label-success category-main-add">
+								<span class="glyphicon glyphicon-plus"></span>
+								선택한 레벨에 추가
+							</span>&nbsp&nbsp&nbsp&nbsp
+							<span class="label label-info category-sub-add">
+								<span class="glyphicon glyphicon-plus"></span>
+								하위 레벨에 추가
+							</span>
+						</td>
+						<td>
+							<span class="label label-danger category-delete">
+								<span class="glyphicon glyphicon-remove"></span>
+								삭제
+							</span>
+						</td>
 					</tr>
 				</table>
 			</div>

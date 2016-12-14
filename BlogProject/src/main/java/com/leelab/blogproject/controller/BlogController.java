@@ -41,4 +41,31 @@ public class BlogController {
 		categoryService.editCategoryName(id, name, type);		
 	}
 	
+	@RequestMapping(value="manage/editCategoryOrder", method=RequestMethod.POST) 
+	@ResponseBody
+	public void editCategoryOrder(@RequestParam Map<String, String> requestScope) {
+		int targetId = Integer.parseInt(requestScope.get("targetId"));
+		int switchedId = Integer.parseInt(requestScope.get("switchedId"));
+		String type = requestScope.get("type");
+		
+		categoryService.editCategoryOrder(targetId, switchedId, type);
+	}
+	
+	@RequestMapping(value="manage/deleteCategory", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteCategory(@RequestParam Map<String, String> requestScope) {
+		int id = Integer.parseInt(requestScope.get("id"));
+		String type = requestScope.get("type");
+		categoryService.deleteCategory(id, type);
+	}
+	
+	@RequestMapping(value="manage/addCategory", method=RequestMethod.POST) 
+	@ResponseBody
+	public void addCategory(@RequestParam Map<String, String> requestScope) {
+		int id = Integer.parseInt(requestScope.get("id"));
+		String type = requestScope.get("type");
+		String level = requestScope.get("level");
+		
+		categoryService.addCategory(id, type, level);
+	}
 }

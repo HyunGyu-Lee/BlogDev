@@ -14,9 +14,8 @@
 									ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectById">
+	<select id="selectById" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
 		SELECT * FROM MAIN_CATEGORY WHERE ID = #{param1}
-									ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.category.main.MainCategoryDTO" useGeneratedKeys="true">
@@ -39,10 +38,14 @@
 		UPDATE MAIN_CATEGORY 
 			<set>
 				<if test="name != null">NAME = #{name},</if>
-				<if test="category_order!=null">CATEGORY_ORDER = #{category_order}</if>
+				<if test="category_order!=0">CATEGORY_ORDER = #{category_order}</if>
 			</set>
 			WHERE
 				ID = #{id}
 	</update>
+	
+	<select id="getNextOrderByUserId">
+		SELECT MAX(CATEGORY_ORDER)+1 AS CATEGORY_ORDER FROM MAIN_CATEGORY WHERE USER_ID = #{param1};
+	</select>
 	
 </mapper>

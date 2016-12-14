@@ -1,0 +1,43 @@
+@CHARSET "EUC-KR";
+.info-box {
+	
+}
+
+.menu-box {
+	margin-right: 30px;
+}
+
+.category-control-box {
+	margin-left: 100px;
+	width: 60%;
+}
+
+.category-item {
+	cursor: pointer;
+}
+
+.highlight {
+	background-color: #528cea;
+	font-weight : bold;
+	color: white;
+}
+
+.order-up {
+	cursor: pointer;
+}
+
+.order-down {
+	cursor: pointer;
+}
+
+.category-delete {
+	cursor: pointer;
+}
+
+.category-main-add {
+	cursor: pointer;
+}
+
+.category-sub-add {
+	cursor: pointer;
+}

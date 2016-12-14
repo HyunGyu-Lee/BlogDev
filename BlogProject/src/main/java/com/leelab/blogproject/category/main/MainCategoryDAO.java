@@ -18,4 +18,6 @@ public interface MainCategoryDAO {
 	
 	ArrayList<MainCategoryDTO> selectAll();
 	
+	int getNextOrderByUserId(String userId);
+	
 }

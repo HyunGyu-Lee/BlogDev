@@ -58,4 +58,49 @@ public class CategoryService {
 		}
 	}
 
+	public void editCategoryOrder(int targetId, int switchedId, String type) {
+		if(type.equals("main"))
+		{
+			MainCategoryDTO target = mainCategoryDao.selectById(targetId);
+			MainCategoryDTO switched = mainCategoryDao.selectById(switchedId);
+			
+			int temp = target.getCategory_order();
+			
+			target.setCategory_order(switched.getCategory_order());
+			switched.setCategory_order(temp);
+			
+			mainCategoryDao.update(target);
+			mainCategoryDao.update(switched);
+		}
+		else
+		{
+			SubCategoryDTO target = subCategoryDao.selectById(targetId);
+			SubCategoryDTO switched = subCategoryDao.selectById(switchedId);
+			
+			int temp = target.getCategory_order();
+			
+			target.setCategory_order(switched.getCategory_order());
+			switched.setCategory_order(temp);
+			
+			subCategoryDao.update(target);
+			subCategoryDao.update(switched);
+		}
+	}
+
+	public void deleteCategory(int id, String type) {
+		if(type.equals("main"))
+		{
+			mainCategoryDao.delete(id);
+		}
+		else
+		{
+			subCategoryDao.delete(id);
+		}		
+	}
+
+	public void addCategory(int id, String type, String level) {
+		
+		
+	}
+
 }
