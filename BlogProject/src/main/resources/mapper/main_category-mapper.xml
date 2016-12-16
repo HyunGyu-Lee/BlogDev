@@ -44,8 +44,21 @@
 				ID = #{id}
 	</update>
 	
-	<select id="getNextOrderByUserId">
-		SELECT MAX(CATEGORY_ORDER)+1 AS CATEGORY_ORDER FROM MAIN_CATEGORY WHERE USER_ID = #{param1};
+	<update id="pullCategoryOrder">
+		
+	</update>
+	
+	<!-- user_id가 param1인 사람의 카테고리중 category_order가 param2보다 큰 튜플 선택 -->
+	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+		<![CDATA[
+		SELECT * FROM MAIN_CATEGORY
+				WHERE 
+					USER_ID = #{param1}
+				AND 
+					CATEGORY_ORDER > #{param2}
+				ORDER BY 
+					CATEGORY_ORDER ASC
+		]]>
 	</select>
 	
 </mapper>

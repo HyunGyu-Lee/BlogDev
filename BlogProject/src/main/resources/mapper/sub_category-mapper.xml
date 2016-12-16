@@ -47,4 +47,22 @@
 				ID = #{id}
 	</update>
 	
+	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+		<![CDATA[
+		SELECT * FROM SUB_CATEGORY
+				WHERE 
+					USER_ID = #{param1}
+				AND 
+					CATEGORY_ORDER > #{param2}
+				AND
+					MAIN_CATEGORY_ID = #{param3}
+				ORDER BY 
+					CATEGORY_ORDER ASC
+		]]>
+	</select>
+	
+	<select id="getMaxOrderByMainCategoryId" resultType="Integer">
+		SELECT MAX(CATEGORY_ORDER) AS CATEGORY_ORDER FROM SUB_CATEGORY WHERE MAIN_CATEGORY_ID = #{param1}
+	</select>
+	
 </mapper>

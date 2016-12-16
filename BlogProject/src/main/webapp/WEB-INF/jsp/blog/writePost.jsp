@@ -4,18 +4,18 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/include/app-header.jspf"%>
-		<title>${user.nickname}님의 블로그</title>
+		<title>글쓰기</title>
 	</head>
 	<body>
 		<div class="container">
 			<%@ include file="/WEB-INF/jsp/home/home-header.jsp" %>
 			
-			<div class="pull-left" style="width: 21%; margin-right: 50px;">
-				<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
-			</div>
-			<div class="pull-left">
-				<%@ include file="/WEB-INF/jsp/blog/blog-rightSection.jsp" %>				
-			</div>
+			<ul></ul>
+			
+			
+			<div id="editor"></div>
 		</div>
+		
+		
 	</body>
 </html>

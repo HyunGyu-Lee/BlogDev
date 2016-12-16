@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.CategoryService;
+import com.leelab.blogproject.user.UserDTO;
 
 @Controller
 public class BlogController {
@@ -63,9 +65,27 @@ public class BlogController {
 	@ResponseBody
 	public void addCategory(@RequestParam Map<String, String> requestScope) {
 		int id = Integer.parseInt(requestScope.get("id"));
-		String type = requestScope.get("type");
+		String name = requestScope.get("name");
 		String level = requestScope.get("level");
 		
-		categoryService.addCategory(id, type, level);
+		if(level.equals("current"))
+		{
+			int next_category_id = Integer.parseInt(requestScope.get("next_category_id"));
+			String type = requestScope.get("type");
+
+			categoryService.addCategoryOnCurrentLevel(id, next_category_id, type, name);
+		}
+		else
+		{
+			categoryService.addCategoryInnerLevel(id, name);
+		}
+	}
+	
+	@RequestMapping("openWritePost")
+	public ModelAndView openWritePost(@RequestParam("blogId") String id) {
+		ModelAndView mv = new ModelAndView("blog/writePost");
+		mv.addObject("category", categoryService.getUserCategory(id));
+		mv.addObject("id", id);
+		return mv;
 	}
 }

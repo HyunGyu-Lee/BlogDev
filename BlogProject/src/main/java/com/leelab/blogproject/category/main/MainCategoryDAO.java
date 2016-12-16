@@ -14,7 +14,9 @@ public interface MainCategoryDAO {
 	
 	MainCategoryDTO selectById(int id);
 	
-	ArrayList<MainCategoryDTO> selectByUserId(String userId);	
+	ArrayList<MainCategoryDTO> selectByUserId(String userId);
+	
+	ArrayList<MainCategoryDTO> selectByUserIdOver(String userId, int category_order);
 	
 	ArrayList<MainCategoryDTO> selectAll();
 	

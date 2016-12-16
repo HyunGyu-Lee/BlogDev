@@ -1,3 +1,19 @@
+function Category(item) {
+	this.id = item.attr('key');
+	this.category_order = item.attr('category_order');
+}
+
+Category.prototype = {
+	getId : function(){
+		return this.id;
+	},
+	getCategoryOrder : function(){
+		return this.category_order;
+	}
+}
+
+Category.prototype.construct = Category;
+
 function isSelectCategory() {
 	var cnt = 0;
 
@@ -302,32 +318,103 @@ $(function(){
 		var item = getSelectedItemFromCategory('');
 		var type = getItemType(item);
 		
-		var data = {
-			id : item.attr('key'),
-			type : type,
-			level : 'current'
-		};
 		
 		var findFlag = false;
 		var nextItem;
 		
+		if(type=='main')
+		{
+			$('.category-item.main').each(function(){
+				if($(this).attr('key')==item.attr('key'))
+				{
+					findFlag = true;
+					return true;
+				}
+				
+				if(findFlag)
+				{
+					nextItem = $(this);
+					return false;
+				}
+			});
+		}
+		else
+		{
+			$('.category-item.sub').each(function(){
+				if($(this).attr('key')==item.attr('key'))
+				{
+					findFlag = true;
+					return true;
+				}
+				
+				if(findFlag)
+				{
+					nextItem = $(this);
+					return false;
+				}
+			});
+		}
+
+		var currentCategory = new Category(item);
+		var nextCategory;
+		try
+		{
+			nextCategory = new Category(nextItem);
+		}
+		catch(err)
+		{
+			nextCategory = null;
+		}
 		
-		
-		
-//		$.ajax({
-//			url : 'addCategory',
-//			type : 'post',
-//			data : data,
-//			success : function(){
-//				swal('','카테고리가 추가됐습니다.','success').then(function(){location.href='categoryInfo?blogId='+$('#idRef').val();});
-//			},
-//			error : function(){
-//				swal('','서버와 통신이 원할하지 않습니다.','error');
-//			}
-//		});
-		
-		
-		
+
+		swal({
+			title : '추가할 카테고리명을 입력하세요',
+			input : 'text',
+			showCancelButton: true,
+			cancelButtonText: '취소',
+			confirmButtonText: '추가',
+			showLoaderOnConfirm: true,
+			preConfirm : function(text) {
+				return new Promise(function(resolve, reject){
+					var data;
+					
+					if(nextCategory!=null)
+					{
+						data = {
+								level : 'current',	
+								id : currentCategory.getId(),
+								next_category_id : nextCategory.getId(),
+								type : type,
+								name : text
+							};
+					}
+					else
+					{
+						data = {
+								level : 'current',	
+								id : currentCategory.getId(),
+								next_category_id : -999,
+								type : type,
+								name : text
+							};
+					}
+					
+					$.ajax({
+						url : 'addCategory',
+						type : 'post',
+						data : data,
+						success : function(){
+							resolve();
+						},
+						error : function(){
+							swal('','서버와 통신이 원할하지 않습니다.','error');
+						}
+					});
+				})
+			}
+		}).then(function(){
+			swal('','카테고리가 추가됐습니다.','success').then(function(){location.href='categoryInfo?blogId='+$('#idRef').val();});
+		});		
 	});
 	
 	$(document).on('click','.category-sub-add', function(){
@@ -338,12 +425,46 @@ $(function(){
 		}
 		
 		var item = getSelectedItemFromCategory('');
+		var category = new Category(item);
 		var type = getItemType(item);
 		
 		if(type=='sub')
 		{
 			swal('','세부 카테고리는 2단계까지만 추가할 수 있습니다.','error');
+			return;
 		}
+		
+		swal({
+			title : '추가할 카테고리명을 입력하세요',
+			input : 'text',
+			showCancelButton: true,
+			cancelButtonText: '취소',
+			confirmButtonText: '추가',
+			showLoaderOnConfirm: true,
+			preConfirm : function(text) {
+				return new Promise(function(resolve, reject){
+					var data = {
+							id : category.getId(),
+							name : text,
+							level : 'inner'
+						};
+					
+					$.ajax({
+						url : 'addCategory',
+						type : 'post',
+						data : data,
+						success : function(){
+							resolve();
+						},
+						error : function(){
+							swal('','서버와 통신이 원할하지 않습니다.','error');
+						}
+					});
+				})
+			}
+		}).then(function(){
+			swal('','카테고리가 추가됐습니다.','success').then(function(){location.href='categoryInfo?blogId='+$('#idRef').val();});
+		});	
 	});
 
 })

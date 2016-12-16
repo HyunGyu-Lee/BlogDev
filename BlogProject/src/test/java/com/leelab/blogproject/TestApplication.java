@@ -10,12 +10,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.leelab.blogproject.category.CategoryService;
 import com.leelab.blogproject.category.main.MainCategoryDAO;
 import com.leelab.blogproject.category.main.MainCategoryDTO;
 import com.leelab.blogproject.category.sub.SubCategoryDAO;
@@ -33,10 +35,12 @@ import com.leelab.blogproject.utils.json.SimpleHashMap;
 public class TestApplication {
 
 	@Autowired
-	private SqlSession session;
+	private SqlSessionTemplate session;
 	
 	@Autowired
 	private MailTemplate mail;
+
+	CategoryService service;
 	
 	private UserDAO userDao;
 	
@@ -53,17 +57,13 @@ public class TestApplication {
 	
 	@Test
 	public void test() throws MessagingException {
-		//mail.send("gusrb0808@naver.com", "Blog 회원가입 인증 메일입니다.", "<h1>Blog에서 보내드립니다.</h1>인증코드는 이현규짱 입니다.");
-		
-//		UserDTO user = userDao.selectUser("admin");
+		service = new CategoryService();
+		service.setSession(session);
+//		mCateDao.selectByUserId("admin");
 //		
-//		System.out.println(CollectionUtils.generateBeanAsHashMap(user));
-
+//		mCateDao.insert(new MainCategoryDTO(0, "admin", "독서", 8));
 		
-		MainCategoryDTO c = new MainCategoryDTO(0,"admin","요리",2);
-		mCateDao.insert(c);
-		
-		
+		System.out.println(service.getUserCategory("admin"));
 	}
 	
 	

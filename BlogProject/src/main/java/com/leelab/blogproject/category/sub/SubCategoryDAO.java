@@ -13,6 +13,8 @@ public interface SubCategoryDAO {
 	
 	void deleteAll();		
 	
+	Integer getMaxOrderByMainCategoryId(int main_category_id);
+	
 	SubCategoryDTO selectById(int id);
 	
 	ArrayList<SubCategoryDTO> selectByUserId(String userId);	
@@ -21,4 +23,5 @@ public interface SubCategoryDAO {
 	
 	ArrayList<SubCategoryDTO> selectAll();
 	
+	ArrayList<SubCategoryDTO> selectByUserIdOver(String userId, int category_order, int main_category_id);
 }
