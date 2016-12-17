@@ -19,8 +19,7 @@ $(function(){
 		    ['height', ['height']],
 		    ['table', ['table']],
 		    ['insert', ['link', 'picture', 'hr']],
-		    ['view', ['fullscreen', 'codeview']],
-		    ['help', ['help']]
+		    ['view', ['fullscreen', 'codeview']]
 		];
 		
 		var setting = {

@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.CategoryService;
-import com.leelab.blogproject.user.UserDTO;
 
 @Controller
 public class BlogController {
@@ -86,6 +84,22 @@ public class BlogController {
 		ModelAndView mv = new ModelAndView("blog/writePost");
 		mv.addObject("category", categoryService.getUserCategory(id));
 		mv.addObject("id", id);
+		return mv;
+	}
+	
+	// content 한번더 압축해서 보내보기
+	@RequestMapping(value="postPreview", method=RequestMethod.POST)
+	public ModelAndView postPreview(@RequestParam Map<String, String> requestScope) {
+		
+		String ctn = requestScope.get("content");
+		
+		logger.info("Content-length : {}", ctn.length());
+		
+		ModelAndView mv = new ModelAndView("blog/preview");
+		mv.addObject("title", requestScope.get("title"));
+		mv.addObject("categoryName", requestScope.get("categoryName"));
+		mv.addObject("content", requestScope.get("content"));
+		mv.addObject("category", categoryService.getUserCategory(requestScope.get("blogId")));
 		return mv;
 	}
 }

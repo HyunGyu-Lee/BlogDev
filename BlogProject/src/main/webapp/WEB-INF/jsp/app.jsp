@@ -9,44 +9,13 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		
-		<!-- <input type="button" value="HTML코드 보기" id="showHTML"/>
-	 -->
-		<div id="summernote"></div>
-		
-		<!-- <textarea id="htmlText"></textarea>
-		 -->
-		<script type="text/javascript">
-			$(document).ready(function(){
-				var toolbar = [
-					['style', ['bold', 'italic', 'underline', 'clear']],
-				    ['font', ['strikethrough', 'superscript', 'subscript']],
-				    ['fontsize', ['fontsize']],
-				    ['color', ['color']],
-				    ['para', ['ul', 'ol', 'paragraph']],
-				    ['height', ['height']],
-				    ['table', ['table']],
-				    ['insert', ['link', 'picture', 'hr']],
-				    ['view', ['fullscreen', 'codeview']],
-				    ['help', ['help']]
-				];
-				
-				var setting = {
-					height : 300,
-					minHeight: null,
-					maxHeight: null,
-					focus : true,
-					lang : 'ko-KR',	
-					toolbar : toolbar
-				};
-				
-				$('#summernote').summernote(setting);
-			});
-			
-			$(document).on('click','#showHTML',function(){
-				var markUp = $('#summernote').summernote('code');
-				$('#htmlText').val(markUp);
-			});
-		</script>
+		<div class="container">
+			<div class="pull-left" style="width: 21%;">
+				<h1>좌측</h1>
+			</div>
+			<div class="pull-left" style="width: 79%; background-color: red;">
+				<img src="/blog/image/profile_view_placeholder.png" style="width: 64px; height: 64px;">
+			</div>
+		</div>
 	</body>
 </html>

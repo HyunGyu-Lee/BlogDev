@@ -34,7 +34,7 @@
 					<h3>${mainCategory.key.name}</h3>
 					<c:forEach items="${mainCategory.value}" var="subCategory">
 						&nbsp&nbsp&nbsp&nbsp&nbsp${subCategory.name}<br/>
-					</c:forEach>			
+					</c:forEach>
 				</c:forEach>
 			</div>
 			<div class="pull-right">

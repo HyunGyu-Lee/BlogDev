@@ -1,0 +1,13 @@
+@CHARSET "EUC-KR";
+.editor-top {
+	margin-bottom: 17px;
+}
+
+.category-selector {
+	margin-right: 10px;
+}
+
+.post-title {
+	font-size: 27px;
+	margin-right: 10px;
+}

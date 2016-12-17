@@ -1,5 +1,7 @@
 package com.leelab.blogproject.interceptor;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,15 +23,21 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
 		if(session==null||session.getAttribute("user")==null)
 		{
-			String requestURI = request.getRequestURI();
-			if(requestURI.contains("manage"))
+			logger.info("{}",request.getParameterMap().isEmpty());
+
+			StringBuilder sb = new StringBuilder();
+			@SuppressWarnings("unchecked")
+			Map<String, String[]> map = request.getParameterMap();
+			sb.append("?");
+			if(!map.isEmpty())
 			{
-				response.sendRedirect("/blog/openLogin?requestUri=/blog/");
+				for(Map.Entry<String, String[]> entry : map.entrySet())
+				{
+					sb.append(entry.getKey()).append("=").append(entry.getValue()[0]);
+				}
 			}
-			else
-			{
-				response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI());				
-			}
+			response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI()+sb.toString());
+			
 			return false;
 		}
 		return true;
