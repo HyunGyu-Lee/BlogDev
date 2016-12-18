@@ -13,7 +13,7 @@
 			<div class="pull-left" style="width: 21%; margin-right: 50px;">
 				<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
 			</div>
-			<div class="pull-left">
+			<div class="pull-left" style="width: 73%">
 				<%@ include file="/WEB-INF/jsp/blog/blog-rightSection.jsp" %>				
 			</div>
 		</div>

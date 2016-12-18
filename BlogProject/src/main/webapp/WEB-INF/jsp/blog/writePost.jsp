@@ -22,7 +22,7 @@
 						<c:forEach items="${category}" var="mainCategory">
 							<option type="main" key="${mainCategory.key.id}">${mainCategory.key.name}</option>
 							<c:forEach items="${mainCategory.value}" var="subCategory">
-								<option type="sub" key="${subCategory.id}">--${subCategory.name}</option>
+								<option type="sub" main_category_id = "${subCategory.main_category_id}" key="${subCategory.id}">--${subCategory.name}</option>
 							</c:forEach>
 						</c:forEach>
 					</select>
@@ -32,7 +32,7 @@
 			<div id="editor"></div>
 			
 			<input type="button" value="미리보기" class="postPreviewBtn"/>
-			<input type="button" value="저장"/>
+			<input type="button" value="저장" class="postWriteBtn"/>
 		</div>
 	</body>
 </html>

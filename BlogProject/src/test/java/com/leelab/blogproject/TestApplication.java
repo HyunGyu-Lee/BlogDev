@@ -1,19 +1,12 @@
 package com.leelab.blogproject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,6 +16,8 @@ import com.leelab.blogproject.category.main.MainCategoryDTO;
 import com.leelab.blogproject.category.sub.SubCategoryDAO;
 import com.leelab.blogproject.category.sub.SubCategoryDTO;
 import com.leelab.blogproject.mail.MailTemplate;
+import com.leelab.blogproject.post.PostDAO;
+import com.leelab.blogproject.post.PostDTO;
 import com.leelab.blogproject.user.UserDAO;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.utils.CollectionUtils;
@@ -48,22 +43,24 @@ public class TestApplication {
 	
 	private SubCategoryDAO sCateDao;
 	
+	private PostDAO postDao;
+	
 	@Before
 	public void applicationSetup() {
 		userDao = session.getMapper(UserDAO.class);
 		mCateDao = session.getMapper(MainCategoryDAO.class);
 		sCateDao = session.getMapper(SubCategoryDAO.class);
+		postDao = session.getMapper(PostDAO.class);
 	}
 	
 	@Test
 	public void test() throws MessagingException {
-		service = new CategoryService();
-		service.setSession(session);
-//		mCateDao.selectByUserId("admin");
-//		
-//		mCateDao.insert(new MainCategoryDTO(0, "admin", "독서", 8));
 		
-		System.out.println(service.getUserCategory("admin"));
+		//PostDTO post = new PostDTO(0, "admin", "테스트제목", 16, 2, -1, "테스트값", null);
+		//postDao.insert(post);
+		
+		PostDTO post = postDao.selectById(2);
+		System.out.println(post);
 	}
 	
 	

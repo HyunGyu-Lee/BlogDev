@@ -1,5 +1,6 @@
 package com.leelab.blogproject.controller;
 
+import java.sql.Types;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,12 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.CategoryService;
+import com.leelab.blogproject.post.PostService;
 
 @Controller
 public class BlogController {
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	
@@ -101,5 +106,17 @@ public class BlogController {
 		mv.addObject("content", requestScope.get("content"));
 		mv.addObject("category", categoryService.getUserCategory(requestScope.get("blogId")));
 		return mv;
+	}
+	
+	@RequestMapping(value="writePost", method=RequestMethod.POST)
+	@ResponseBody
+	public void writePost(@RequestParam Map<String, String> requestScope) {
+		String user_id = requestScope.get("user_id");
+		String title = requestScope.get("title");
+		String content = requestScope.get("content");
+		int main_category_id = Integer.parseInt(requestScope.get("main_category_id"));
+		int sub_category_id = Integer.parseInt(requestScope.get("sub_category_id"));
+
+		postService.newPost(user_id, title, content, main_category_id, sub_category_id);
 	}
 }

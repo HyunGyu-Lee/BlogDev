@@ -175,4 +175,12 @@ public class CategoryService {
 		subCategoryDao.insert(new SubCategoryDTO(0, main.getUser_id(), name, maxOrder+1, main.getId()));
 	}
 
+	public MainCategoryDTO getMainCategory(int main_category_id) {
+		return mainCategoryDao.selectById(main_category_id);
+	}
+
+	public SubCategoryDTO getSubCategory(int sub_category_id) {
+		return subCategoryDao.selectById(sub_category_id);
+	}
+
 }

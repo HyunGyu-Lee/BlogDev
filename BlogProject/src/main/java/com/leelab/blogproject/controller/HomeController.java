@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.leelab.blogproject.category.CategoryService;
 import com.leelab.blogproject.category.main.MainCategoryDTO;
 import com.leelab.blogproject.category.sub.SubCategoryDTO;
+import com.leelab.blogproject.post.PostDTO;
+import com.leelab.blogproject.post.PostService;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
 
@@ -32,6 +34,9 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -80,10 +85,12 @@ public class HomeController {
 		
 		UserDTO user = userService.getUser(id);
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
+		ArrayList<PostDTO> posts = postService.getUserPost(id);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("category", category);
 		model.addAttribute("category-keySet", category.keySet());
+		model.addAttribute("posts", posts);
 		
 		return "blog/blog";
 	}

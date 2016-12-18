@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.post.PostDAO">
+	
+	<select id="selectById" resultType="com.leelab.blogproject.post.PostDTO">
+		SELECT ID,
+			   USER_ID,
+			   TITLE,
+			   MAIN_CATEGORY_ID,
+			   SUB_CATEGORY_ID,
+			   HIT,
+			   utl_raw.cast_to_varchar2(CONTENT) AS CONTENT,
+			   CREATE_AT
+		FROM BLOG_POST WHERE ID = #{param1}
+	</select>
+	
+	<select id="selectByUserId" resultType="com.leelab.blogproject.post.PostDTO">
+		SELECT ID,
+			   USER_ID,
+			   TITLE,
+			   MAIN_CATEGORY_ID,
+			   SUB_CATEGORY_ID,
+			   HIT,
+			   utl_raw.cast_to_varchar2(CONTENT) AS CONTENT,
+			   CREATE_AT
+		FROM BLOG_POST WHERE USER_ID = #{param1}
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.post.PostDTO">
+		INSERT INTO BLOG_POST(
+						ID,
+  					    USER_ID,
+					    TITLE, 
+					    MAIN_CATEGORY_ID, 
+					    SUB_CATEGORY_ID,
+					    CONTENT
+					)
+					VALUES(
+						BLOG_POST_SEQ.NEXTVAL,
+						#{user_id},
+						#{title},
+						#{main_category_id},
+						#{sub_category_id},
+						utl_raw.cast_to_raw(#{content})
+					)
+	</insert>
+	
+</mapper>

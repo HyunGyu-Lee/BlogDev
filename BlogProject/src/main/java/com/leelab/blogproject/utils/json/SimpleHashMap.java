@@ -1,5 +1,6 @@
 package com.leelab.blogproject.utils.json;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -8,6 +9,31 @@ public class SimpleHashMap extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String DELEMETER = "\"";
+	
+	public static SimpleHashMap objectToMap(Object obj) {
+		SimpleHashMap map = SimpleHashMap.newInstance();
+
+		Field[] entrys = obj.getClass().getDeclaredFields();
+		
+		for(Field entry : entrys)
+		{
+			entry.setAccessible(true);
+			try
+			{
+				map.put(entry.getName(), entry.get(obj));
+			}
+			catch (IllegalArgumentException e)
+			{
+				return null;
+			}
+			catch (IllegalAccessException e)
+			{
+				return null;
+			}
+		}
+		
+		return map;
+	}
 	
 	public SimpleHashMap put(String key, Object value) {
 		super.put(key, value);

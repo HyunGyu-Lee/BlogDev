@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.leelab.blogproject.category.CategoryService;
+import com.leelab.blogproject.category.main.MainCategoryDTO;
+import com.leelab.blogproject.category.sub.SubCategoryDTO;
 import com.leelab.blogproject.resolver.MultipartRequest;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
@@ -34,6 +37,9 @@ public class AjaxCallController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value="duplicate_check", method=RequestMethod.POST)
 	public HashMap<String, Object> duplicateCheck(@RequestParam String id) {
@@ -115,5 +121,18 @@ public class AjaxCallController {
 	@RequestMapping(value="editProfilePhoto", method=RequestMethod.POST)
 	public void editProfilePhoto(MultipartRequest multi,@SessionAttribute("user") UserDTO user) throws IllegalStateException, IOException {
 		userService.editProfilePhoto(user.getId(), multi.getFile(0));
+	}
+	
+	@RequestMapping(value="getCategory", method=RequestMethod.POST)
+	public HashMap<String, Object> getCategory(@RequestParam("main_category_id") String main_category_id,
+											   @RequestParam("sub_category_id") String sub_category_id) {
+		if(Integer.parseInt(sub_category_id)==-999)
+		{
+			return SimpleHashMap.objectToMap(categoryService.getMainCategory(Integer.parseInt(main_category_id)));
+		}
+		else
+		{
+			return SimpleHashMap.objectToMap(categoryService.getSubCategory(Integer.parseInt(sub_category_id)));
+		}
 	}
 }

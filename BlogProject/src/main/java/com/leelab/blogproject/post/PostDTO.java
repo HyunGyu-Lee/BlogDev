@@ -1,24 +1,31 @@
 package com.leelab.blogproject.post;
 
+import java.sql.Blob;
+import java.sql.Timestamp;
+
 public class PostDTO {
-	
 	private int id;
 	private String user_id;
 	private String title;
-	private String content;
 	private int main_category_id;
 	private int sub_category_id;
+	private int hit;
+	private String content;
+	private Timestamp create_at; 
 	
 	public PostDTO(){}
-
-	public PostDTO(int id, String user_id, String title, String content, int main_category_id, int sub_category_id) {
+	
+	public PostDTO(int id, String user_id, String title, int main_category_id, int sub_category_id, int hit,
+		String content, Timestamp create_at) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
 		this.title = title;
-		this.content = content;
 		this.main_category_id = main_category_id;
 		this.sub_category_id = sub_category_id;
+		this.hit = hit;
+		this.content = content;
+		this.create_at = create_at;
 	}
 
 	public int getId() {
@@ -45,14 +52,6 @@ public class PostDTO {
 		this.title = title;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public int getMain_category_id() {
 		return main_category_id;
 	}
@@ -69,10 +68,35 @@ public class PostDTO {
 		this.sub_category_id = sub_category_id;
 	}
 
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Timestamp getCreate_at() {
+		return create_at;
+	}
+
+	public void setCreate_at(Timestamp create_at) {
+		this.create_at = create_at;
+	}
+
 	@Override
 	public String toString() {
-		return "PostDTO [id=" + id + ", user_id=" + user_id + ", title=" + title + ", content=" + content
-				+ ", main_category_id=" + main_category_id + ", sub_category_id=" + sub_category_id + "]";
+		return "PostDTO [id=" + id + ", user_id=" + user_id + ", title=" + title + ", main_category_id="
+				+ main_category_id + ", sub_category_id=" + sub_category_id + ", hit=" + hit + ", content=" + content
+				+ ", create_at=" + create_at + "]";
 	}
 	
 }
