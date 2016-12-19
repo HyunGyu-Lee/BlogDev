@@ -2,7 +2,9 @@ package com.leelab.blogproject.category.sub;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SubCategoryDAO {
 
 	void insert(SubCategoryDTO dto);	

@@ -15,17 +15,11 @@ import com.leelab.blogproject.category.sub.SubCategoryDTO;
 @Service
 public class CategoryService {
 
-	private SqlSessionTemplate session;
-	
-	private MainCategoryDAO mainCategoryDao;
-	private SubCategoryDAO subCategoryDao;
-	
 	@Autowired
-	public void setSession(SqlSessionTemplate session) {
-		this.session = session;
-		mainCategoryDao = this.session.getMapper(MainCategoryDAO.class);
-		subCategoryDao = this.session.getMapper(SubCategoryDAO.class);
-	}
+	private MainCategoryDAO mainCategoryDao;
+
+	@Autowired
+	private SubCategoryDAO subCategoryDao;
 	
 	public Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> getUserCategory(String id) {
 		CategoryVO categories = new CategoryVO();
@@ -181,6 +175,14 @@ public class CategoryService {
 
 	public SubCategoryDTO getSubCategory(int sub_category_id) {
 		return subCategoryDao.selectById(sub_category_id);
+	}
+
+	public void addFirstCategory(String name, String blog_id) {
+		MainCategoryDTO main = new MainCategoryDTO();
+		main.setCategory_order(1);
+		main.setName(name);
+		main.setUser_id(blog_id);
+		mainCategoryDao.insert(main);
 	}
 
 }

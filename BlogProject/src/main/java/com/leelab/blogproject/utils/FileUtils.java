@@ -16,6 +16,7 @@ public class FileUtils {
 	public static final String ROOT_DIRECTORY = "C:\\Users\\leehyungyu\\Desktop\\upload\\";
 	
 	public static final String PROFILE = ROOT_DIRECTORY+"profile\\";
+	public static final String TEMP = ROOT_DIRECTORY+"temp\\";
 	
 	public static void save(MultipartFile file, String saveFileName) throws IllegalStateException, IOException {
 		file.transferTo(new File(saveFileName));

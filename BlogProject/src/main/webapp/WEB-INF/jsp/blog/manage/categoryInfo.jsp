@@ -8,24 +8,31 @@
 		</div>
 		<div class="panel-body">
 			<div class="pull-left">
-				<ul>		
-					<c:forEach items="${category}" var="mainCategory">
-						<li>
-							<span class="category-item main"
-								  key="${mainCategory.key.id}"
-								  category_order="${mainCategory.key.category_order}"><strong>${mainCategory.key.name}</strong></span>
-							<ul>
-								<c:forEach items="${mainCategory.value}" var="subCategory">
+				<c:choose>
+					<c:when test="${not empty category}">
+						<ul>
+							<c:forEach items="${category}" var="mainCategory">
 								<li>
-									<span class="category-item sub"
-										key="${subCategory.id}"
-										category_order="${subCategory.category_order}"><strong>${subCategory.name}</strong></span>
+									<span class="category-item main"
+										  key="${mainCategory.key.id}"
+										  category_order="${mainCategory.key.category_order}"><strong>${mainCategory.key.name}</strong></span>
+									<ul>
+										<c:forEach items="${mainCategory.value}" var="subCategory">
+										<li>
+											<span class="category-item sub"
+												key="${subCategory.id}"
+												category_order="${subCategory.category_order}"><strong>${subCategory.name}</strong></span>
+										</li>
+										</c:forEach>
+									</ul>
 								</li>
-								</c:forEach>
-							</ul>
-						</li>
-					</c:forEach>
-				</ul>
+							</c:forEach>
+						</ul>
+					</c:when>
+					<c:otherwise>
+						<a class="first-category">카테고리를 만들어보세요!</a>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="pull-left category-control-box" align="center">
 				<table class="table">

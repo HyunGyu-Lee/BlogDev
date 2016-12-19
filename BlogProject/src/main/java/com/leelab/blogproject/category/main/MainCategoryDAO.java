@@ -2,6 +2,9 @@ package com.leelab.blogproject.category.main;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface MainCategoryDAO {
 
 	void insert(MainCategoryDTO dto);	

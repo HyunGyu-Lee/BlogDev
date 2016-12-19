@@ -6,16 +6,40 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<%@ include file="/WEB-INF/include/app-header.jspf" %>
-		<title>Insert title here</title>
+		<title>파일파일</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="pull-left" style="width: 21%;">
-				<h1>좌측</h1>
-			</div>
-			<div class="pull-left" style="width: 79%; background-color: red;">
-				<img src="/blog/image/profile_view_placeholder.png" style="width: 64px; height: 64px;">
-			</div>
-		</div>
+		<h4>컨트롤!</h4>
+		<form id="sendForm">
+			<input type="file" name="uploadImage" class="form-control"/><br/><br/>
+			<input type="button" class="send form-control" value="이미지보내기"/><br/><br/>
+		</form>
+
+		<h3>업로드한 사진 보이는곳!</h3>
+		<img id="preview" width="100%" height="auto;"/>
+		
+		<script type="text/javascript">
+			$(document).on('change', 'input[name*=uploadImage]', function(){
+				var file = $(this)[0].files[0];
+				
+				var fr = new FileReader();
+				
+				fr.onload = function(e){
+					$('#preview').attr('src', e.target.result);
+				};
+				
+				fr.readAsDataURL(file);
+			});
+			
+			$(document).on('click','.send',function(){
+				$('#sendForm').ajaxSubmit({
+					url : '/blog/ajax/send',
+					type : 'post',
+					success : function(){
+						swal('♥♥♥♥','사랑해화연아~~~~','success');						
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

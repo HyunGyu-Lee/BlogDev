@@ -1,3 +1,26 @@
+$(document).ready(function(){
+	$.snote.setOnImageUpload(function(files){
+		var tempForm = new FormData();
+		tempForm.append('image', files[0]);
+		$.ajax({
+			url : '/blog/ajax/send',
+			type : 'post',
+			data : tempForm,
+			contentType : false,
+			processData: false,
+			success : function(response){
+				console.log(response.save_url);
+				var url = '/blog/ajax/temp/'+response.save_url;
+				$.snote.image(url, function($image){
+					$image.css('width', '100%');
+					$image.css('height','auto');
+				});
+			}
+		})
+	});	
+	$.snote.initalize('#editor');
+});
+
 $(document).on('click', '.postPreviewBtn', function(){
 	var title = $('input[name*="title"]').val();
 
@@ -14,7 +37,6 @@ $(document).on('click', '.postPreviewBtn', function(){
 	
 	var categoryItem = $('#category option:selected');
 	
-	console.log(categoryItem.attr('type')+' - '+categoryItem.attr('key')+' - '+categoryItem.val());
 	appendForm(form, 'categoryName',categoryItem.val());
 	appendForm(form,'title', title);
 	appendForm(form,'content',content);

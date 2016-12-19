@@ -23,17 +23,11 @@ public class UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
-	private SqlSession session;	
+	@Autowired
 	private UserDAO userDao;
 
 	@Autowired
 	private MailTemplate mail;
-	
-	@Autowired
-	public void setSqlSession(SqlSession session) {
-		this.session = session;
-		userDao = this.session.getMapper(UserDAO.class);
-	}
 	
 	public UserDTO getUser(String id) {
 		return userDao.selectUser(id);

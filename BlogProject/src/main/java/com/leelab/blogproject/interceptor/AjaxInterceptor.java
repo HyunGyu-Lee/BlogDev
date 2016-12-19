@@ -17,13 +17,6 @@ public class AjaxInterceptor extends HandlerInterceptorAdapter {
 		logger.info("=============== Ajax Request Map ==================");
 		logger.info("Request URL : {}", request.getRequestURL());
 		
-//		if(ReflectionUtils.isAnnotatedOn(handler, LoginRequired.class)==true && request.getSession().getAttribute("user")==null) {
-//			logger.info("Login Required");
-//			response.setContentType("application/json");
-//			response.getWriter().println("{\"code\":-1}");
-//			return false;
-//		}
-
 		for(Object key : request.getParameterMap().keySet())
 		{
 			String value = request.getParameter(key.toString());

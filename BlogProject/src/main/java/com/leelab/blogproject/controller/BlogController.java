@@ -1,6 +1,5 @@
 package com.leelab.blogproject.controller;
 
-import java.sql.Types;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -67,20 +66,25 @@ public class BlogController {
 	@RequestMapping(value="manage/addCategory", method=RequestMethod.POST) 
 	@ResponseBody
 	public void addCategory(@RequestParam Map<String, String> requestScope) {
-		int id = Integer.parseInt(requestScope.get("id"));
+		String id = requestScope.get("id");
 		String name = requestScope.get("name");
 		String level = requestScope.get("level");
+		String blog_id = requestScope.get("blogId");
 		
 		if(level.equals("current"))
 		{
 			int next_category_id = Integer.parseInt(requestScope.get("next_category_id"));
 			String type = requestScope.get("type");
 
-			categoryService.addCategoryOnCurrentLevel(id, next_category_id, type, name);
+			categoryService.addCategoryOnCurrentLevel(Integer.parseInt(id), next_category_id, type, name);
+		}
+		else if(level.equals("first"))
+		{
+			categoryService.addFirstCategory(name, blog_id);
 		}
 		else
 		{
-			categoryService.addCategoryInnerLevel(id, name);
+			categoryService.addCategoryInnerLevel(Integer.parseInt(id), name);
 		}
 	}
 	

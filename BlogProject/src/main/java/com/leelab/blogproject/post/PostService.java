@@ -13,16 +13,8 @@ public class PostService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 	
-	private SqlSessionTemplate session;
-	
-	PostDAO postDao;
-	
-	
 	@Autowired
-	public void setSession(SqlSessionTemplate session) {
-		this.session = session;
-		postDao = this.session.getMapper(PostDAO.class);
-	}
+	PostDAO postDao;
 
 	public void newPost(String user_id, String title, String content, int main_category_id, int sub_category_id) {
 		PostDTO post = new PostDTO(0, user_id, title, main_category_id, sub_category_id, 0, content, null);

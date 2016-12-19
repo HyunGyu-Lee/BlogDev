@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.leelab.blogproject.category.CategoryService;
-import com.leelab.blogproject.category.main.MainCategoryDTO;
-import com.leelab.blogproject.category.sub.SubCategoryDTO;
 import com.leelab.blogproject.resolver.MultipartRequest;
 import com.leelab.blogproject.user.UserDTO;
 import com.leelab.blogproject.user.UserService;
+import com.leelab.blogproject.utils.FileUtils;
+import com.leelab.blogproject.utils.StringUtils;
 import com.leelab.blogproject.utils.json.SimpleHashMap;
 
 @RestController
@@ -106,6 +107,15 @@ public class AjaxCallController {
 		return new ResponseEntity<byte[]>(userService.getProfileImage(id), header, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping("/temp/{filename:.+}")
+	public ResponseEntity<byte[]> tempView(@PathVariable String filename) throws IOException {
+		logger.info("Return Temp image data");
+		logger.info(filename);
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<byte[]>(FileUtils.read(FileUtils.TEMP+filename), header, HttpStatus.CREATED);
+	}
+	
 	@RequestMapping(value="passwordAuth", method=RequestMethod.POST)
 	public HashMap<String, Object> passwordAuth(@RequestParam String password, @SessionAttribute UserDTO user) {
 		boolean result = userService.passwordAuth(user.getId(), password);		
@@ -134,5 +144,17 @@ public class AjaxCallController {
 		{
 			return SimpleHashMap.objectToMap(categoryService.getSubCategory(Integer.parseInt(sub_category_id)));
 		}
+	}
+	
+	@RequestMapping(value="send", method=RequestMethod.POST)
+	public HashMap<String, Object> f(MultipartRequest multi) throws IllegalStateException, IOException {
+		MultipartFile file = multi.getFile(0);
+		
+		String saveURL = StringUtils.getRandomString()+FileUtils.getFileExtension(file.getOriginalFilename());
+		String savePath = FileUtils.TEMP + saveURL;
+		
+		FileUtils.save(file, savePath);
+		
+		return SimpleHashMap.newInstance().put("save_url", saveURL);
 	}
 }

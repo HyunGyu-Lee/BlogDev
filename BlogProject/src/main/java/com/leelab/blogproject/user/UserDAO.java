@@ -2,9 +2,12 @@ package com.leelab.blogproject.user;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * Table : BLOG_USER
  * */
+@Repository
 public interface UserDAO {
 
 	/* 모든 사용자 선택 */

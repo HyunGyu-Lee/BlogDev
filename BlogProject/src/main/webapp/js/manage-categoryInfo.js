@@ -16,7 +16,6 @@ Category.prototype.construct = Category;
 
 function isSelectCategory() {
 	var cnt = 0;
-
 	$('.category-item').each(function(){
 		if($(this).hasClass('highlight')) {
 			cnt = cnt + 1;
@@ -113,6 +112,40 @@ $(function(){
 				});
 			}
 		});	
+	});
+	
+	$(document).on('click','.first-category', function(){
+		swal({
+			title : '카테고리 추가',
+			html : '카테고리명을 입력하세요',
+			input : 'text',
+			type : 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '추가',
+			cancelButtonText: '취소',
+			preConfirm : function(text){
+				return new Promise(function(resolve, reject){
+					var data = {
+						blogId : $('#idRef').val(),
+						name : text,
+						level : 'first'
+					};
+					$.ajax({
+						url : 'addCategory',
+						type : 'post',
+						data : data,
+						success : function(){resolve();}
+					})
+				});
+			}
+		}).then(function(){
+			swal('','축하합니다. 첫 카테고리가 성공적으로 만들어졌습니다.','success').then(function(){
+				location.href = 'categoryInfo?blogId='+$('#idRef').val();
+			});
+		}, function(){});
+		
 	});
 	
 	$(document).on('click','.order-up', function(){

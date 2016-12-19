@@ -33,6 +33,6 @@
 			
 			<input type="button" value="미리보기" class="postPreviewBtn"/>
 			<input type="button" value="저장" class="postWriteBtn"/>
-		</div>
+		</div>		
 	</body>
 </html>

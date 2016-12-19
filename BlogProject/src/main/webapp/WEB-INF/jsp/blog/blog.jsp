@@ -17,5 +17,26 @@
 				<%@ include file="/WEB-INF/jsp/blog/blog-rightSection.jsp" %>				
 			</div>
 		</div>
+		<script type="text/javascript">
+			$(window).load(function(){
+				var categoryView = $('.post-category');
+				
+				categoryView.each(function(){
+					var currentView = $(this);
+					var data = {
+						main_category_id : $(this).attr('main_category_id'),
+						sub_category_id : $(this).attr('sub_category_id')
+					};
+					$.ajax({
+						url : 'ajax/getCategory',
+						type : 'post',
+						data : data,
+						success : function(response){
+							currentView.text(response.name);
+						}
+					});
+				});
+			})	
+		</script>		
 	</body>
 </html>

@@ -12,7 +12,7 @@
 			   MAIN_CATEGORY_ID,
 			   SUB_CATEGORY_ID,
 			   HIT,
-			   utl_raw.cast_to_varchar2(CONTENT) AS CONTENT,
+			   CONTENT,
 			   CREATE_AT
 		FROM BLOG_POST WHERE ID = #{param1}
 	</select>
@@ -24,7 +24,7 @@
 			   MAIN_CATEGORY_ID,
 			   SUB_CATEGORY_ID,
 			   HIT,
-			   utl_raw.cast_to_varchar2(CONTENT) AS CONTENT,
+			   CONTENT,
 			   CREATE_AT
 		FROM BLOG_POST WHERE USER_ID = #{param1}
 	</select>
@@ -44,7 +44,7 @@
 						#{title},
 						#{main_category_id},
 						#{sub_category_id},
-						utl_raw.cast_to_raw(#{content})
+						#{content}
 					)
 	</insert>
 	
