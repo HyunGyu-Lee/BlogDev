@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="blog-profile-box row">
 	<div class="col-md-12">
-		<img src="ajax/profileImage/${user.id}" class="profile_view pull-left" style="margin-right: 20px;">
+		<c:url value="/ajax/profileImage/${user.id}" var="IMAGE"/>
+		<img src="${IMAGE}" class="profile_view pull-left" style="margin-right: 20px;">
 		<div class="info">
 			${user.nickname} 님
 			<!-- <a href="logout" class="label label-danger">로그아웃</a> -->
@@ -30,12 +31,17 @@
 		</div>
 		<div class="panel-body">
 			<div class="pull-left">
+			<ul>
 				<c:forEach items="${category}" var="mainCategory">
-					<h3>${mainCategory.key.name}</h3>
+					<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
+					<ul>
 					<c:forEach items="${mainCategory.value}" var="subCategory">
-						&nbsp&nbsp&nbsp&nbsp&nbsp${subCategory.name}<br/>
+						<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
 					</c:forEach>
-				</c:forEach>
+					</ul>
+					</li>
+				</c:forEach>				
+			</ul>
 			</div>
 			<div class="pull-right">
 			<c:choose>

@@ -20,19 +20,22 @@
 		<script type="text/javascript">
 			$(window).load(function(){
 				var categoryView = $('.post-category');
-				
+				var postCategoryArea = $('.post-category-area');
 				categoryView.each(function(){
 					var currentView = $(this);
+					console.log(currentView);
 					var data = {
 						main_category_id : $(this).attr('main_category_id'),
 						sub_category_id : $(this).attr('sub_category_id')
 					};
+
 					$.ajax({
-						url : 'ajax/getCategory',
+						url : '/blog/ajax/getCategory',
 						type : 'post',
 						data : data,
 						success : function(response){
 							currentView.text(response.name);
+							postCategoryArea.html(response.name);
 						}
 					});
 				});

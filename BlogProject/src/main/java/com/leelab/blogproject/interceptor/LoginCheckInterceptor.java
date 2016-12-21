@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.leelab.blogproject.annotation.NotLoginCheck;
 import com.leelab.blogproject.user.UserDTO;
+import com.leelab.blogproject.utils.ReflectionUtils;
 
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	
@@ -23,7 +25,11 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
 		if(session==null||session.getAttribute("user")==null)
 		{
-			logger.info("{}",request.getParameterMap().isEmpty());
+			if(ReflectionUtils.isAnnotatedOn(handler, NotLoginCheck.class))
+			{
+				logger.info("{} -> Login Check Off", request.getRequestURI());
+				return true;
+			}
 
 			StringBuilder sb = new StringBuilder();
 			@SuppressWarnings("unchecked")

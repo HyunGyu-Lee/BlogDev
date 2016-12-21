@@ -62,12 +62,6 @@
 		    <version>1.1.2</version>
 		</dependency>
 		
-		<!-- Object Mapper -->
-		<!-- 		<dependency>
-		    <groupId>org.codehaus.jackson</groupId>
-		    <artifactId>jackson-mapper-asl</artifactId>
-		    <version>1.9.13</version>
-		</dependency> -->
 		<!-- Json response -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
@@ -102,6 +96,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- Mybatis Query View -->
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>0.2.7</version>
 		</dependency>
 		
 		<!-- File upload -->

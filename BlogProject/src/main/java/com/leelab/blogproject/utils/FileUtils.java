@@ -26,7 +26,6 @@ public class FileUtils {
 	public static byte[] read(String readFileName) throws IOException {
 		byte[] fileData = null;
 		fileData = IOUtils.toByteArray(new FileInputStream(new File(readFileName)));
-		logger.info("File size : {}", fileData.length);
 		return fileData;
 	}
 	

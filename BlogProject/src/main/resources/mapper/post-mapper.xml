@@ -5,6 +5,20 @@
     
 <mapper namespace="com.leelab.blogproject.post.PostDAO">
 	
+	<select id="selectByCategoryId">
+		SELECT
+			*
+		FROM
+			BLOG_POST
+		WHERE
+		<if test='#{type} == "main"'>
+			MAIN_CATEGORY_ID = #{param1}
+		</if>
+		<if test='#{type} == "sub"'>
+			SUB_CATEGORY_ID = #{param1}
+		</if>
+	</select>
+	
 	<select id="selectById" resultType="com.leelab.blogproject.post.PostDTO">
 		SELECT ID,
 			   USER_ID,
@@ -17,7 +31,7 @@
 		FROM BLOG_POST WHERE ID = #{param1}
 	</select>
 	
-	<select id="selectByUserId" resultType="com.leelab.blogproject.post.PostDTO">
+	<select id="selectPosts" parameterType="com.leelab.blogproject.post.SearchVO"  resultType="com.leelab.blogproject.post.PostDTO">
 		SELECT ID,
 			   USER_ID,
 			   TITLE,
@@ -26,7 +40,21 @@
 			   HIT,
 			   CONTENT,
 			   CREATE_AT
-		FROM BLOG_POST WHERE USER_ID = #{param1}
+		FROM
+			BLOG_POST
+		<where>
+			<if test="search.user_id != null">
+			AND USER_ID = #{search.user_id}
+			</if>
+			<if test="search.main_category_id != 0">
+			AND MAIN_CATEGORY_ID = #{search.main_category_id}
+			</if>
+			<if test="search.sub_category_id != 0">
+			AND SUB_CATEGORY_ID = #{search.sub_category_id}
+			</if>
+		</where>
+		ORDER BY
+			CREATE_AT DESC
 	</select>
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.post.PostDTO">

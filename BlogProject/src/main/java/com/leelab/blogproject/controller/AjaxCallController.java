@@ -101,7 +101,6 @@ public class AjaxCallController {
 	
 	@RequestMapping("/profileImage/{id}")
 	public ResponseEntity<byte[]> profileImage(@PathVariable String id) throws IOException {
-		logger.info("Return profile image data");
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(userService.getProfileImage(id), header, HttpStatus.CREATED);
@@ -109,8 +108,6 @@ public class AjaxCallController {
 	
 	@RequestMapping("/temp/{filename:.+}")
 	public ResponseEntity<byte[]> tempView(@PathVariable String filename) throws IOException {
-		logger.info("Return Temp image data");
-		logger.info(filename);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(FileUtils.read(FileUtils.TEMP+filename), header, HttpStatus.CREATED);
