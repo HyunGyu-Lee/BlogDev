@@ -147,5 +147,13 @@ public class PageVo {
 	public void setNextPage(int nextPage) {
 		this.nextPage = nextPage;
 	}
+
+	@Override
+	public String toString() {
+		return "PageVo [totalRecord=" + totalRecord + ", pageSize=" + pageSize + ", groupSize=" + groupSize
+				+ ", currentPage=" + currentPage + ", firstRecord=" + firstRecord + ", lastRecord=" + lastRecord
+				+ ", totalPage=" + totalPage + ", groupNo=" + groupNo + ", firstPage=" + firstPage + ", lastPage="
+				+ lastPage + ", prevPage=" + prevPage + ", nextPage=" + nextPage + "]";
+	}
 	
 }

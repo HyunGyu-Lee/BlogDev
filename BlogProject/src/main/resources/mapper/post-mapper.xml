@@ -3,9 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.leelab.blogproject.post.PostDAO">
+<mapper namespace="com.leelab.blogproject.post.dao.PostDAO">
 	
-	<select id="getPostsCount" parameterType="com.leelab.blogproject.post.SearchVO" resultType="int">
+	<select id="getPostsCount" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
@@ -35,7 +35,7 @@
 		</if>
 	</select>
 	
-	<select id="selectById" parameterType="com.leelab.blogproject.post.SearchVO" resultType="com.leelab.blogproject.post.PostVO">
+	<select id="selectById" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="com.leelab.blogproject.post.vo.PostVO">
 		SELECT 
 			POST.*,
 			MCATE.NAME AS MAIN_CATEGORY_NAME
@@ -65,7 +65,7 @@
 			CREATE_AT DESC
 	</select>
 	
-	<select id="selectPosts" parameterType="hashmap"  resultType="com.leelab.blogproject.post.PostVO">
+	<select id="selectPosts" parameterType="hashmap"  resultType="com.leelab.blogproject.post.vo.PostVO">
 		SELECT
 			*
 		FROM
@@ -106,7 +106,7 @@
 			RNUM > (#{vos.page.currentPage}-1) * 5]]>
 	</select>
 	
-	<insert id="insert" parameterType="com.leelab.blogproject.post.PostDTO">
+	<insert id="insert" parameterType="com.leelab.blogproject.post.dto.PostDTO">
 		INSERT INTO BLOG_POST(
 						ID,
   					    USER_ID,

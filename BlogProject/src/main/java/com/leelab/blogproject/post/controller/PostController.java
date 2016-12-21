@@ -83,7 +83,6 @@ public class PostController {
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
 
 		searchVo.setUser_id(id);
-		logger.info("{}", searchVo);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 
@@ -92,16 +91,30 @@ public class PostController {
 		mv.addObject("category", category);
 		mv.addObject("posts", posts);
 		mv.addObject("page", pageVo);
+		mv.addObject("search", searchVo);
+		logger.info("{}", searchVo);
+		logger.info("{}", pageVo);
+
 		return mv;
 	}
 	
+	@SuppressWarnings("unused")
 	@NotLoginCheck
 	@RequestMapping("/postview/{id}/{post_id}")
-	public ModelAndView viewPost(@PathVariable(name="id") String id, @PathVariable(name="post_id") String postId, SearchVO searchVO) {
+	public ModelAndView viewPost(@PathVariable(name="id") String id, @PathVariable(name="post_id") String postId, SearchVO searchVo) {
 		logger.info("Open blog to {} - No.{}'s post",id, postId);
+		logger.info("{}", searchVo);
 		ModelAndView mv = new ModelAndView("blog/blog");
 		
-		PostDTO post = postService.getPostDetail(searchVO);
+		PostDTO post = postService.getPostDetail(searchVo);
+		searchVo.setUser_id(id);
+		searchVo.setMain_category_id(post.getMain_category_id());
+		searchVo.setSub_category_id(post.getSub_category_id());
+		ArrayList<PostDTO> posts = postService.getPosts(searchVo, new PageVo());
+		
+		for(PostDTO p : posts){
+			logger.info("{}",p);
+		}
 		
 		if(post==null)
 		{
@@ -113,6 +126,7 @@ public class PostController {
 		mv.addObject("user", userService.getUser(id));
 		mv.addObject("category", category);
 		mv.addObject("post", post);
+		mv.addObject("footer", posts);
 		return mv;
 	}
 	

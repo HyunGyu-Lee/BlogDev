@@ -32,6 +32,7 @@
 		<div class="panel-body">
 			<div class="pull-left">
 			<ul>
+				<li><a href="/blog/${user.id}?currentPage=1">전체보기</a></li>
 				<c:forEach items="${category}" var="mainCategory">
 					<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
 					<ul>

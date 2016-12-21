@@ -3,22 +3,22 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.leelab.blogproject.category.main.MainCategoryDAO">
+<mapper namespace="com.leelab.blogproject.category.dao.MainCategoryDAO">
 	
-	<select id="selectAll" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+	<select id="selectAll" resultType="com.leelab.blogproject.category.dto.MainCategoryDTO">
 		SELECT * FROM MAIN_CATEGORY ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectByUserId" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+	<select id="selectByUserId" resultType="com.leelab.blogproject.category.dto.MainCategoryDTO">
 		SELECT * FROM MAIN_CATEGORY WHERE USER_ID = #{param1} 
 									ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectById" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+	<select id="selectById" resultType="com.leelab.blogproject.category.dto.MainCategoryDTO">
 		SELECT * FROM MAIN_CATEGORY WHERE ID = #{param1}
 	</select>
 	
-	<insert id="insert" parameterType="com.leelab.blogproject.category.main.MainCategoryDTO" useGeneratedKeys="true">
+	<insert id="insert" parameterType="com.leelab.blogproject.category.dto.MainCategoryDTO" useGeneratedKeys="true">
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">
 			SELECT MAIN_CATEGORY_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
@@ -34,7 +34,7 @@
 		DELETE FROM MAIN_CATEGORY
 	</delete>
 	
-	<update id="update" parameterType="com.leelab.blogproject.category.main.MainCategoryDTO">
+	<update id="update" parameterType="com.leelab.blogproject.category.dto.MainCategoryDTO">
 		UPDATE MAIN_CATEGORY 
 			<set>
 				<if test="name != null">NAME = #{name},</if>
@@ -49,7 +49,7 @@
 	</update>
 	
 	<!-- user_id가 param1인 사람의 카테고리중 category_order가 param2보다 큰 튜플 선택 -->
-	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.main.MainCategoryDTO">
+	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.dto.MainCategoryDTO">
 		<![CDATA[
 		SELECT * FROM MAIN_CATEGORY
 				WHERE 

@@ -3,25 +3,25 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.leelab.blogproject.category.sub.SubCategoryDAO">
+<mapper namespace="com.leelab.blogproject.category.dao.SubCategoryDAO">
 	
-	<select id="selectAll" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<select id="selectAll" resultType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		SELECT * FROM SUB_CATEGORY ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectByUserId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<select id="selectByUserId" resultType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		SELECT * FROM SUB_CATEGORY WHERE USER_ID = #{param1} ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectByMainCategoryId" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<select id="selectByMainCategoryId" resultType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		SELECT * FROM SUB_CATEGORY WHERE MAIN_CATEGORY_ID = #{param1} ORDER BY CATEGORY_ORDER ASC
 	</select>
 	
-	<select id="selectById" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<select id="selectById" resultType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		SELECT * FROM SUB_CATEGORY WHERE ID = #{param1}
 	</select>
 	
-	<insert id="insert" parameterType="com.leelab.blogproject.category.sub.SubCategoryDTO" useGeneratedKeys="true">
+	<insert id="insert" parameterType="com.leelab.blogproject.category.dto.SubCategoryDTO" useGeneratedKeys="true">
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">
 			SELECT SUB_CATEGORY_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
@@ -37,7 +37,7 @@
 		DELETE FROM SUB_CATEGORY
 	</delete>
 	
-	<update id="update" parameterType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<update id="update" parameterType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		UPDATE SUB_CATEGORY 
 			<set>
 				<if test="name != null">NAME = #{name},</if>
@@ -47,7 +47,7 @@
 				ID = #{id}
 	</update>
 	
-	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.sub.SubCategoryDTO">
+	<select id="selectByUserIdOver" resultType="com.leelab.blogproject.category.dto.SubCategoryDTO">
 		<![CDATA[
 		SELECT * FROM SUB_CATEGORY
 				WHERE 

@@ -3,17 +3,17 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.leelab.blogproject.user.UserDAO">
+<mapper namespace="com.leelab.blogproject.user.dao.UserDAO">
 	
-	<select id="selectAll" resultType="com.leelab.blogproject.user.UserDTO">
+	<select id="selectAll" resultType="com.leelab.blogproject.user.dto.UserDTO">
 		SELECT * FROM BLOG_USER
 	</select>
 	
-	<select id="selectUser" resultType="com.leelab.blogproject.user.UserDTO">
+	<select id="selectUser" resultType="com.leelab.blogproject.user.dto.UserDTO">
 		SELECT * FROM BLOG_USER WHERE ID = #{id}
 	</select>
 	
-	<insert id="add" parameterType="com.leelab.blogproject.user.UserDTO">
+	<insert id="add" parameterType="com.leelab.blogproject.user.dto.UserDTO">
 		INSERT INTO BLOG_USER(ID,
 							  PASSWORD,
 							  PHONE,
@@ -30,7 +30,7 @@
 					         #{profile_url})
 	</insert>
 	
-	<update id="update" parameterType="com.leelab.blogproject.user.UserDTO">
+	<update id="update" parameterType="com.leelab.blogproject.user.dto.UserDTO">
 		UPDATE BLOG_USER
 			<set>
 				<if test="password!=null">PASSWORD = #{password},</if>

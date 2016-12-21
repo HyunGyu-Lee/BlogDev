@@ -30,5 +30,10 @@ public class SearchVO {
 	public void setPost_id(int post_id) {
 		this.post_id = post_id;
 	}
+	@Override
+	public String toString() {
+		return "SearchVO [post_id=" + post_id + ", user_id=" + user_id + ", main_category_id=" + main_category_id
+				+ ", sub_category_id=" + sub_category_id + "]";
+	}
 	
 }

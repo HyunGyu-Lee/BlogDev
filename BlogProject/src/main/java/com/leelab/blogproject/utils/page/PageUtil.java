@@ -8,7 +8,7 @@ public class PageUtil {
 		if(lastRecord > totalRecord) lastRecord = totalRecord;
 		
 		int firstRecord = lastRecord - (pageSize - 1);
-		if(firstRecord < 0) firstRecord = 1;
+		if(firstRecord <= 0) firstRecord = 1;
 		
 		int totalPage = totalRecord / pageSize + (totalRecord % pageSize == 0 ? 0 : 1);
 		if(currentPage > totalPage) currentPage = totalPage;
@@ -19,9 +19,12 @@ public class PageUtil {
 		if(lastPage > totalPage) lastPage = totalPage;
 		
 		int firstPage = lastPage - (groupSize - 1);
+		if(firstPage <= 0) firstPage = 1;
 		
 		int prevPage = firstPage - groupSize;
+		if(prevPage <= 0) prevPage = 1;
 		int nextPage = firstPage + groupSize;
+		if(nextPage > totalPage) nextPage = totalPage;
 		
 		return new PageVo(totalRecord, pageSize, groupSize, currentPage, firstRecord, lastRecord, totalPage, groupNo, firstPage, lastPage, prevPage, nextPage);
 	}
