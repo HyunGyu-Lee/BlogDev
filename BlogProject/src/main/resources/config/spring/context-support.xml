@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 	
-	<bean class="com.leelab.blogproject.mail.MailTemplate">
+	<bean class="com.leelab.blogproject.utils.mail.MailTemplate">
 		<property name="from" value="dlgusrb0808@gmail.com"/>
 		<property name="encoding" value="UTF-8"/>
 		<property name="mailSender" ref="mailSender"/>

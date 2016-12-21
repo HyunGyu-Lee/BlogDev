@@ -10,7 +10,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<span class="pull-left"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
-					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}"></span>
+					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
+						<c:choose>
+							<c:when test="${empty post.sub_category_name}">
+								${post.main_category_name}
+							</c:when>
+							<c:otherwise>
+								${post.sub_category_name}
+							</c:otherwise>
+						</c:choose>
+					</span>
 					<span class="pull-right">
 						<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>	| 
 						<c:if test="${sessionScope.user.id eq user.id}">
@@ -22,7 +31,7 @@
 				</div>
 				<div class="panel-body post-content">
 					<div align="right" style="margin-bottom: 20px;">
-						<a href="/blog/postview/${user.id}/${post.id}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
+						<a href="/blog/postview/${user.id}/${post.id}?sub_category_id=${post.sub_category_id}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
 					</div>
 					<div>
 						${post.content}
@@ -30,12 +39,28 @@
 				</div>
 			</div>
 		</c:forEach>
+		<div class="well" align="center">
+		<a href="/blog/${user.id}?currentPage=${page.prevPage}">prev</a> |
+		<c:forEach begin="${page.firstPage}" end="${page.lastPage}" var="pageIdx">
+			<a href="/blog/${user.id}?currentPage=${pageIdx}">${pageIdx}</a> | 
+		</c:forEach>
+		<a href="/blog/${user.id}?currentPage=${page.nextPage}">next</a>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span class="pull-left"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
-				<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}"></span>
+				<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
+						<c:choose>
+							<c:when test="${empty post.sub_category_name}">
+								${post.main_category_name}
+							</c:when>
+							<c:otherwise>
+								${post.sub_category_name}
+							</c:otherwise>
+						</c:choose>
+					</span>
 				<span class="pull-right">
 					<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>	| 
 					<c:if test="${sessionScope.user.id eq user.id}">

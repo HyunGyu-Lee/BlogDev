@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.leelab.blogproject.category.CategoryService;
-import com.leelab.blogproject.category.main.MainCategoryDAO;
-import com.leelab.blogproject.category.main.MainCategoryDTO;
-import com.leelab.blogproject.category.sub.SubCategoryDAO;
-import com.leelab.blogproject.category.sub.SubCategoryDTO;
-import com.leelab.blogproject.mail.MailTemplate;
-import com.leelab.blogproject.post.PostDAO;
-import com.leelab.blogproject.post.PostDTO;
-import com.leelab.blogproject.user.UserDAO;
-import com.leelab.blogproject.user.UserDTO;
+import com.leelab.blogproject.category.dao.MainCategoryDAO;
+import com.leelab.blogproject.category.dao.SubCategoryDAO;
+import com.leelab.blogproject.category.dto.MainCategoryDTO;
+import com.leelab.blogproject.category.dto.SubCategoryDTO;
+import com.leelab.blogproject.category.service.CategoryService;
+import com.leelab.blogproject.post.dao.PostDAO;
+import com.leelab.blogproject.post.dto.PostDTO;
+import com.leelab.blogproject.user.dao.UserDAO;
+import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.utils.CollectionUtils;
 import com.leelab.blogproject.utils.json.SimpleHashMap;
+import com.leelab.blogproject.utils.mail.MailTemplate;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -59,8 +59,8 @@ public class TestApplication {
 		//PostDTO post = new PostDTO(0, "admin", "테스트제목", 16, 2, -1, "테스트값", null);
 		//postDao.insert(post);
 		
-		PostDTO post = postDao.selectById(2);
-		System.out.println(post);
+		//PostDTO post = postDao.selectById(2);
+		//System.out.println(post);
 	}
 	
 	

@@ -19,7 +19,7 @@
 			<exclude-mapping path="/util/**"/>
 			<exclude-mapping path="/ajax/**"/>
 			<exclude-mapping path="/resources/**"/>
-			<beans:bean class="com.leelab.blogproject.interceptor.LoginCheckInterceptor"/>
+			<beans:bean class="com.leelab.blogproject.common.interceptor.LoginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
 	
@@ -32,7 +32,7 @@
 			<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 		</message-converters>
 		<argument-resolvers>
-			<beans:bean class="com.leelab.blogproject.resolver.CustomMultipartRequestResolver"/>
+			<beans:bean class="com.leelab.blogproject.common.resolver.CustomMultipartRequestResolver"/>
 		</argument-resolvers>
 	</annotation-driven>
 	

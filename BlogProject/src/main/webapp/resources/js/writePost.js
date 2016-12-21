@@ -58,7 +58,7 @@ $(document).on('click','.postWriteBtn', function(){
 	if(categoryItem.attr('type')=='main')
 	{
 		main_category_id = categoryItem.attr('key');
-		sub_category_id = -999;
+		sub_category_id = 0;
 	}
 	else
 	{

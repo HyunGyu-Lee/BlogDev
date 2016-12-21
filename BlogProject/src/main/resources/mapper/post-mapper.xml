@@ -5,6 +5,22 @@
     
 <mapper namespace="com.leelab.blogproject.post.PostDAO">
 	
+	<select id="getPostsCount" parameterType="com.leelab.blogproject.post.SearchVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BLOG_POST
+		<where>
+			USER_ID = #{search.user_id}
+			<if test="search.main_category_id != 0">
+			AND MAIN_CATEGORY_ID = #{search.main_category_id}
+			</if>
+			<if test="search.sub_category_id != 0">
+			AND SUB_CATEGORY_ID = #{search.sub_category_id}
+			</if>
+		</where>
+	</select>
+	
 	<select id="selectByCategoryId">
 		SELECT
 			*
@@ -19,42 +35,75 @@
 		</if>
 	</select>
 	
-	<select id="selectById" resultType="com.leelab.blogproject.post.PostDTO">
-		SELECT ID,
-			   USER_ID,
-			   TITLE,
-			   MAIN_CATEGORY_ID,
-			   SUB_CATEGORY_ID,
-			   HIT,
-			   CONTENT,
-			   CREATE_AT
-		FROM BLOG_POST WHERE ID = #{param1}
-	</select>
-	
-	<select id="selectPosts" parameterType="com.leelab.blogproject.post.SearchVO"  resultType="com.leelab.blogproject.post.PostDTO">
-		SELECT ID,
-			   USER_ID,
-			   TITLE,
-			   MAIN_CATEGORY_ID,
-			   SUB_CATEGORY_ID,
-			   HIT,
-			   CONTENT,
-			   CREATE_AT
+	<select id="selectById" parameterType="com.leelab.blogproject.post.SearchVO" resultType="com.leelab.blogproject.post.PostVO">
+		SELECT 
+			POST.*,
+			MCATE.NAME AS MAIN_CATEGORY_NAME
+			<if test="search.sub_category_id != 0">
+			,SCATE.NAME AS SUB_CATEGORY_NAME
+			</if>
 		FROM
-			BLOG_POST
+			BLOG_POST POST
+			,MAIN_CATEGORY MCATE
+			<if test="search.sub_category_id != 0">
+			, SUB_CATEGORY SCATE
+			</if>
 		<where>
-			<if test="search.user_id != null">
-			AND USER_ID = #{search.user_id}
+			AND POST.ID = #{search.post_id}
+			AND MCATE.ID = POST.MAIN_CATEGORY_ID
+			<if test="search.sub_category_id != 0">
+			AND SCATE.ID = POST.SUB_CATEGORY_ID
 			</if>
 			<if test="search.main_category_id != 0">
-			AND MAIN_CATEGORY_ID = #{search.main_category_id}
+			AND POST.MAIN_CATEGORY_ID = #{search.main_category_id}
 			</if>
 			<if test="search.sub_category_id != 0">
-			AND SUB_CATEGORY_ID = #{search.sub_category_id}
+			AND POST.SUB_CATEGORY_ID = #{search.sub_category_id}
 			</if>
 		</where>
 		ORDER BY
 			CREATE_AT DESC
+	</select>
+	
+	<select id="selectPosts" parameterType="hashmap"  resultType="com.leelab.blogproject.post.PostVO">
+		SELECT
+			*
+		FROM
+			(SELECT
+				PAGE.*, ROWNUM AS RNUM
+			 FROM
+			 	(SELECT 
+					POST.*,
+					MCATE.NAME AS MAIN_CATEGORY_NAME
+					<if test="vos.search.sub_category_id != 0">
+					,SCATE.NAME AS SUB_CATEGORY_NAME
+					</if>
+				FROM
+					BLOG_POST POST
+					,MAIN_CATEGORY MCATE
+					<if test="vos.search.sub_category_id != 0">
+					, SUB_CATEGORY SCATE
+					</if>
+				<where>
+					AND POST.USER_ID = #{vos.search.user_id}
+					AND MCATE.ID = POST.MAIN_CATEGORY_ID
+					<if test="vos.search.sub_category_id != 0">
+					AND SCATE.ID = POST.SUB_CATEGORY_ID
+					</if>
+					<if test="vos.search.main_category_id != 0">
+					AND POST.MAIN_CATEGORY_ID = #{vos.search.main_category_id}
+					</if>
+					<if test="vos.search.sub_category_id != 0">
+					AND POST.SUB_CATEGORY_ID = #{vos.search.sub_category_id}
+					</if>
+				</where>
+				ORDER BY
+					CREATE_AT DESC) PAGE
+				<![CDATA[
+			  WHERE
+			  	ROWNUM <= #{vos.page.currentPage} * 5)
+		WHERE
+			RNUM > (#{vos.page.currentPage}-1) * 5]]>
 	</select>
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.post.PostDTO">

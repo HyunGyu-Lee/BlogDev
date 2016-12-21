@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-import com.leelab.blogproject.category.main.MainCategoryDTO;
-import com.leelab.blogproject.category.sub.SubCategoryDTO;
+import com.leelab.blogproject.category.dto.MainCategoryDTO;
+import com.leelab.blogproject.category.dto.SubCategoryDTO;
 
 public class CollectionUtils {
 
