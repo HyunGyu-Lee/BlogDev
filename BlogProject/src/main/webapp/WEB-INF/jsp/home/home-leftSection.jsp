@@ -8,5 +8,16 @@
 </c:if>
 
 <div>
+	<div>
+		<input type="text" name="blog_id"/> <input type="button" value="블로그이동">
+	</div>
 	메인 영역
+	
+	<script type="text/javascript">
+		$(document).on('click','input[type="button"]', function(){
+			var id = $('input[name="blog_id"]').val();
+			location.href = "/blog/"+id;
+		});		
+	</script>
+	
 </div>

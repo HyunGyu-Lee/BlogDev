@@ -1,13 +1,13 @@
 $(function(){
 	
 	$('.login-button').click(function(){
-		var id = $('input[name*="id"]').val();
-		var password = $('input[name*="password"]').val();
-		
+		var id = $('input[name="id"]').val();
+		var password = $('input[name="password"]').val();
+		console.log($('input[name="id"]').val());
 		if(!isEmptyString(id)&&!isEmptyString(password))
 		{
 			$.ajax({
-				url : 'ajax/login',
+				url : '/blog/ajax/login',
 				type : 'post',
 				data : $('#login').serialize(),
 				dataType : 'json',

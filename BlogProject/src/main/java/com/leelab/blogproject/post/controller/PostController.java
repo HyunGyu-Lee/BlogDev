@@ -78,14 +78,19 @@ public class PostController {
 	@RequestMapping("/{id}") 
 	public ModelAndView viewPosts(SearchVO searchVo, PageVo pageVo, @PathVariable String id) {
 		logger.info("Open Blog to {}", id);
-		
+
+		/* 유저 정보 */
 		UserDTO user = userService.getUser(id);
+		
+		/* 유저의 카테고리 정보 */
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
 
+		/* 포스트 정보 */
 		searchVo.setUser_id(id);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 
+		
 		ModelAndView mv = new ModelAndView("blog/blog");		
 		mv.addObject("user", user);
 		mv.addObject("category", category);
@@ -94,28 +99,23 @@ public class PostController {
 		mv.addObject("search", searchVo);
 		logger.info("{}", searchVo);
 		logger.info("{}", pageVo);
-
 		return mv;
 	}
 	
 	@SuppressWarnings("unused")
 	@NotLoginCheck
 	@RequestMapping("/postview/{id}/{post_id}")
-	public ModelAndView viewPost(@PathVariable(name="id") String id, @PathVariable(name="post_id") String postId, SearchVO searchVo) {
+	public ModelAndView viewPost(@PathVariable(name="id") String id, @PathVariable(name="post_id") String postId, SearchVO searchVo, PageVo pageVo) {
 		logger.info("Open blog to {} - No.{}'s post",id, postId);
-		logger.info("{}", searchVo);
 		ModelAndView mv = new ModelAndView("blog/blog");
 		
 		PostDTO post = postService.getPostDetail(searchVo);
 		searchVo.setUser_id(id);
 		searchVo.setMain_category_id(post.getMain_category_id());
 		searchVo.setSub_category_id(post.getSub_category_id());
-		ArrayList<PostDTO> posts = postService.getPosts(searchVo, new PageVo());
-		
-		for(PostDTO p : posts){
-			logger.info("{}",p);
-		}
-		
+		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
+		pageVo = postService.getPageInfo(searchVo, pageVo);
+		logger.info("viewPost pageVo {}", pageVo);		
 		if(post==null)
 		{
 			mv.setViewName("error");
@@ -127,8 +127,16 @@ public class PostController {
 		mv.addObject("category", category);
 		mv.addObject("post", post);
 		mv.addObject("footer", posts);
+		mv.addObject("page", pageVo);
+		mv.addObject("search", searchVo);
 		return mv;
 	}
 	
+	@RequestMapping(value="/getPostList", method=RequestMethod.POST)
+	public void getPostList(SearchVO searchVo, PageVo pageVo){
+		
+		logger.info("{}", searchVo);
+		logger.info("{}", pageVo);		
+	}
 	
 }

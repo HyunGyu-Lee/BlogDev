@@ -31,10 +31,10 @@
 				</div>
 				<div class="panel-body post-content">
 					<div align="right" style="margin-bottom: 20px;">
-						<a href="/blog/postview/${user.id}/${post.id}?sub_category_id=${post.sub_category_id}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
+						<a href="/blog/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
 					</div>
 					<div>
-						${post.content}
+					${post.id}	${post.content}
 					</div>					
 				</div>
 			</div>
@@ -46,15 +46,23 @@
 		<c:if test="${search.sub_category_id != 0}">
 			<c:set var="queryString" value="${queryString}&sub_category_id=${search.sub_category_id}"/>
 		</c:if>
-		
-			<a href="/blog/${user.id}?${queryString}&currentPage=${page.prevPage}">prev</a> |
+			<a href="/blog/${user.id}${queryString}&currentPage=${page.prevPage}">prev</a> |
 				<c:forEach begin="${page.firstPage}" end="${page.lastPage}" var="pageIdx">
-					<a href="/blog/${user.id}?${queryString}&currentPage=${pageIdx}">${pageIdx}</a> | 
+					<a href="/blog/${user.id}${queryString}&currentPage=${pageIdx}">${pageIdx}</a> | 
 				</c:forEach>
-			<a href="/blog/${user.id}?${queryString}&currentPage=${page.nextPage}">next</a>
+			<a href="/blog/${user.id}${queryString}&currentPage=${page.nextPage}">next</a>
 		</div>
 	</c:when>
+	<c:when test="${empty post}">
+		포스트가 없습니다.
+	</c:when>
 	<c:otherwise>
+		<c:if test="${search.main_category_id != 0}">
+			<c:set var="queryString" value="?main_category_id=${search.main_category_id}"/>
+		</c:if>
+		<c:if test="${search.sub_category_id != 0}">
+			<c:set var="queryString" value="${queryString}&sub_category_id=${search.sub_category_id}"/>
+		</c:if>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span class="pull-left"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
@@ -79,10 +87,10 @@
 			</div>
 			<div class="panel-body post-content">
 				<div align="right" style="margin-bottom: 20px;">
-					<a href="/blog/postview/${user.id}/${post.id}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
+					<a href="/blog/postview/${user.id}/${post.id}${queryString}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
 				</div>
 				<div>
-					${post.content}
+				${post.content}
 				</div>					
 			</div>
 			<div class="panel-footer">
@@ -98,13 +106,14 @@
 					</c:choose>
 				</span>
 			</strong> 카테고리의 다른 글<br/><br/>
+			
 			<table class="table">
 				<c:forEach items="${footer}" var="footItem">
 					<c:if test="${post.id == footItem.id}"><tr class="success"></c:if>
 					<c:if test="${post.id != footItem.id}"><tr></c:if>
 						<td align="left">
 						<c:if test="${post.id == footItem.id}"><span class="glyphicon glyphicon-ok"></span></c:if>
-							${footItem.title}
+							<a href="/blog/postview/${user.id}/${footItem.id}${queryString}&currentPage=${page.currentPage}">${footItem.title}</a>
 						</td>
 						<td align="right">
 							<fmt:formatDate value="${footItem.create_at}" pattern="yyyy.MM.dd"/>
@@ -113,7 +122,14 @@
 				</c:forEach>
 			</table>
 			<div align="center">
-				이전 | 다음
+				<!-- Ajax로 요청 날려 다음 페이지 목록 받은 후 위 table을 갱신해야함 -->
+				<c:if test="${page.currentPage == page.prevPage}">
+					<a class="prevPostListBtn disabled" prev_page="${page.prevPage}">이전</a>
+				</c:if>
+				<c:if test="${page.currentPage != page.prevPage}">
+					<a class="prevPostListBtn" prev_page="${page.prevPage}" query_string="${queryString}">이전</a>
+				</c:if>
+				| <a class="nextPostListBtn" next_page="${page.nextPage}" query_string="${queryString}">다음</a> 
 			</div>
 		</div></div>
 	</c:otherwise>

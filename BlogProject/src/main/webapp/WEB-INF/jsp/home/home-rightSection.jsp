@@ -6,7 +6,7 @@
 			<table class="table table-borderless">
 				<tr>
 					<td><input type="text" id="id" name="id" class="form-control"/></td>
-					<td rowspan="2"><input type="button" value="로그인" class="form-control login-button"/></td>
+					<td rowspan="2"><button type="button" value="로그인" class="form-control login-button"> 로그인</button></td>
 				</tr>
 				<tr>
 					<td><input type="password" id="password" name="password" class="form-control"/></td>

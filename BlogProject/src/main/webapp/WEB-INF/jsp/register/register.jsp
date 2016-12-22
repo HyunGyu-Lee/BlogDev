@@ -17,7 +17,7 @@
 					<form id="register" enctype="multipart/form-data">
 					<div align="center">
 						<label for=".profile_view">권장 크기 (64X64)px</label><br/>
-						<img src="image/profile_view_placeholder.png" class="profile_view"> <br/><br/>
+						<img src="/blog/resources/image/profile_view_placeholder.png" class="profile_view"> <br/><br/>
 						<input type="file" name="profile_url" accept="image/*"/>
 					</div>
 					<br/><br/>

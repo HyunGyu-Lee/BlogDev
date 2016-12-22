@@ -56,11 +56,16 @@ public class TestApplication {
 	@Test
 	public void test() throws MessagingException {
 		
-		//PostDTO post = new PostDTO(0, "admin", "테스트제목", 16, 2, -1, "테스트값", null);
-		//postDao.insert(post);
+		for(int i=1;i<=50;i++)
+		{
+			postDao.insert(new PostDTO(0, "admin", i+"번째제목", 16, 2, 0, "내용", null));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		
-		//PostDTO post = postDao.selectById(2);
-		//System.out.println(post);
 	}
 	
 	

@@ -1,3 +1,9 @@
+function valueFromQueryString(query_string, key) {
+	key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+    var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
+    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+}
+
 function setImageFromFile(input, expression) {
 	if (input.files && input.files[0])
 	{
