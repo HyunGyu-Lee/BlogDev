@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<input type="hidden" id="idRef" value="${user.id}"/>
 <div class="blog-profile-box row">
 	<div class="col-md-12">
 		<c:url value="/ajax/profileImage/${user.id}" var="IMAGE"/>
@@ -19,7 +20,6 @@
 				<a href="#" class="label label-primary">이웃 추가</a>
 			</c:otherwise>
 		</c:choose>
-
 		</span>
 	</div>
 </div>

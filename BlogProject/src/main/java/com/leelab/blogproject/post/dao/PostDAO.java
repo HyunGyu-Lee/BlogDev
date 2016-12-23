@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.leelab.blogproject.post.dto.PostDTO;
+import com.leelab.blogproject.post.vo.PostVO;
 import com.leelab.blogproject.post.vo.SearchVO;
 
 @Repository
@@ -22,6 +23,6 @@ public interface PostDAO {
 	
 	int getPostsCount(@Param("search") SearchVO searchVo);
 
-	
+	ArrayList<PostVO> selectPostsInPage(@Param("search")SearchVO searchVo);
 	
 }

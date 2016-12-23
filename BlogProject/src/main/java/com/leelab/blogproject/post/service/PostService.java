@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.leelab.blogproject.post.dao.PostDAO;
 import com.leelab.blogproject.post.dto.PostDTO;
+import com.leelab.blogproject.post.vo.PostVO;
 import com.leelab.blogproject.post.vo.SearchVO;
 import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageUtil;
@@ -56,14 +57,16 @@ public class PostService {
 	}
 
 	public ArrayList<PostDTO> getPosts(SearchVO searchVo, PageVo pageVo) {
-		if(pageVo.getCurrentPage()==0)pageVo.setCurrentPage(1);
-		
 		return postDao.selectPosts(SimpleHashMap.newInstance().put("search", searchVo).put("page", pageVo));
 	}
 
+	public ArrayList<PostVO> getPostsInPage(SearchVO searchVo, PageVo pageVo) {
+		return postDao.selectPostsInPage(searchVo);
+	};
+	
 	public PageVo getPageInfo(SearchVO searchVo, PageVo pageVo) {
 		int totalRecord = postDao.getPostsCount(searchVo);
-		
+		if(pageVo.getCurrentPage()==0)pageVo.setCurrentPage(1);
 		if(pageVo.getPageSize()==0) pageVo.setPageSize(5);
 		if(pageVo.getGroupSize()==0)pageVo.setGroupSize(5);
 		

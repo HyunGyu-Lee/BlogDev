@@ -1,6 +1,7 @@
 package com.leelab.blogproject.post.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -20,9 +21,11 @@ import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.post.service.PostService;
+import com.leelab.blogproject.post.vo.PostVO;
 import com.leelab.blogproject.post.vo.SearchVO;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
+import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageVo;
 
 @Controller
@@ -87,10 +90,9 @@ public class PostController {
 
 		/* 포스트 정보 */
 		searchVo.setUser_id(id);
-		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		pageVo = postService.getPageInfo(searchVo, pageVo);
+		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 
-		
 		ModelAndView mv = new ModelAndView("blog/blog");		
 		mv.addObject("user", user);
 		mv.addObject("category", category);
@@ -113,9 +115,17 @@ public class PostController {
 		searchVo.setUser_id(id);
 		searchVo.setMain_category_id(post.getMain_category_id());
 		searchVo.setSub_category_id(post.getSub_category_id());
-		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
+
+		ArrayList<PostVO> posts = postService.getPostsInPage(searchVo, pageVo);
+		pageVo.setCurrentPage(posts.get(0).getCurrentPage());
 		pageVo = postService.getPageInfo(searchVo, pageVo);
-		logger.info("viewPost pageVo {}", pageVo);		
+		logger.info("{}", searchVo);
+		
+		logger.info("viewPost pageVo {}", pageVo);
+		for(PostVO p : posts)
+		{
+			logger.info("{}",p);
+		}
 		if(post==null)
 		{
 			mv.setViewName("error");
@@ -132,11 +142,24 @@ public class PostController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/getPostList", method=RequestMethod.POST)
-	public void getPostList(SearchVO searchVo, PageVo pageVo){
+	@RequestMapping(value="ajax/getPostList", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> getPostList(SearchVO searchVo, PageVo pageVo){
 		
+		pageVo = postService.getPageInfo(searchVo, pageVo);
+		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
+		
+		for(PostDTO p : posts)
+		{
+			logger.info("{}",p);
+		}
+		
+		HashMap<String, Object> result = SimpleHashMap.newInstance().put("posts", posts).put("page", pageVo).put("search", searchVo);
+
 		logger.info("{}", searchVo);
-		logger.info("{}", pageVo);		
+		logger.info("{}", pageVo);
+		
+		return result;
 	}
 	
 }

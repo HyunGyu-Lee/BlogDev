@@ -107,6 +107,40 @@
 		WHERE
 			RNUM > (#{vos.page.currentPage}-1) * 5]]>
 	</select>
+
+	<select id="selectPostsInPage" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="com.leelab.blogproject.post.vo.PostVO">
+		WITH
+			PAGED_SELECT
+		AS
+			(
+				SELECT
+					CEIL(ROWNUM / 5) AS CURRENTPAGE,
+					POST.*
+				 FROM (SELECT * FROM BLOG_POST ORDER BY CREATE_AT DESC) POST
+				 WHERE
+				 	POST.MAIN_CATEGORY_ID = #{search.main_category_id}
+				 	<if test="search.sub_category_id != 0">
+				 	AND POST.SUB_CATEGORY_ID = #{search.sub_category_id}
+				 	</if>
+				 ORDER BY
+					POST.CREATE_AT DESC
+			 )
+		SELECT
+			*
+		FROM
+			PAGED_SELECT
+		WHERE
+			CURRENTPAGE = (
+						SELECT
+							CURRENTPAGE
+						FROM
+							PAGED_SELECT
+						WHERE
+							ID = #{search.post_id}
+				   )
+	</select>
+	
+
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.post.dto.PostDTO">
 		INSERT INTO BLOG_POST(

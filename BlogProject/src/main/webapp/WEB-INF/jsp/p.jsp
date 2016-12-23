@@ -10,25 +10,14 @@
 		
 		<input type="button" class="btn" value="Ajax예제"/>
 		
-		<div id="area"></div>
+		<div id="area" style="width: 500px; height: 500px; background-color: red;">
+			AREA
+		</div>
 		
 		<script type="text/javascript">
 			
 			$('.btn').click(function(){
-				
-				var data = {
-					name : '이현규',
-					phone : '01032216564'
-				};
-				
-				$.ajax({
-					url : '/blog/util/ajaxTest',
-					type : 'post',
-					data : data,
-					success : function(response){
-						$('#area').html(response.a);
-					}
-				});
+				$('#area').hide();
 				
 			});
 		</script>		

@@ -6,6 +6,7 @@ public class PostVO extends PostDTO {
 
 	private String main_category_name;
 	private String sub_category_name;
+	private int currentPage;
 	
 	public String getMain_category_name() {
 		return main_category_name;
@@ -19,4 +20,10 @@ public class PostVO extends PostDTO {
 	public void setSub_category_name(String sub_category_name) {
 		this.sub_category_name = sub_category_name;
 	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}	
 }
