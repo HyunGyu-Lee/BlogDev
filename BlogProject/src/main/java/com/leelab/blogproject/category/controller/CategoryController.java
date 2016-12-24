@@ -2,6 +2,8 @@ package com.leelab.blogproject.category.controller;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import com.leelab.blogproject.post.service.PostService;
 @Controller
 public class CategoryController {
 
+	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+	
 	@Autowired
 	private CategoryService categoryService;
 	
@@ -56,7 +60,7 @@ public class CategoryController {
 	public void deleteCategory(@RequestParam Map<String, String> requestScope) {
 		int id = Integer.parseInt(requestScope.get("id"));
 		String type = requestScope.get("type");
-		
+		logger.info("{} - {} ªË¡¶",type,id);
 		categoryService.deleteCategory(id, type);
 	}
 	

@@ -18,6 +18,14 @@ public class CategoryService {
 
 	@Autowired
 	private MainCategoryDAO mainCategoryDao;
+	
+	public void setMainCategoryDao(MainCategoryDAO mainCategoryDao) {
+		this.mainCategoryDao = mainCategoryDao;
+	}
+
+	public void setSubCategoryDao(SubCategoryDAO subCategoryDao) {
+		this.subCategoryDao = subCategoryDao;
+	}
 
 	@Autowired
 	private SubCategoryDAO subCategoryDao;

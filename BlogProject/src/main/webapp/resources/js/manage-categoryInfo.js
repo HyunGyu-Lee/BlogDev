@@ -323,7 +323,7 @@ $(function(){
 				id : item.attr('key'),
 				type : type
 			};
-			
+			console.log(data);
 			$.ajax({
 				url : 'deleteCategory',
 				type : 'post',
