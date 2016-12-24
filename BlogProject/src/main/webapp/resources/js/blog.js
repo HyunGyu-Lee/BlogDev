@@ -1,3 +1,53 @@
+$(document).on('click', '.viewCommentBtn',function(){
+	var icon = 'glyphicon glyphicon-triangle-';
+	var area = $('.post-comment-area');
+	
+	if(area.is(':visible'))
+	{
+		$(this).children(0).removeClass(icon+'top');
+		$(this).children(0).addClass(icon+'bottom');
+		area.hide();
+	}
+	else
+	{
+		$(this).children(0).removeClass(icon+'bottom');
+		$(this).children(0).addClass(icon+'top');
+		area.show();
+	}	
+});
+
+$(document).on('click','.postEditBtn',function(){
+	var post_id = $(this).attr('post_id');
+	var frmObj = new FormObject('/blog/openUpdatePost','post');
+	frmObj.append('post_id', post_id);
+	frmObj.submit();
+});
+
+$(document).on('click','.postDeleteBtn',function(){
+	var post_id = $(this).attr('post_id');
+
+	var mci = $(this).attr('main_category_id');
+	var sci = $(this).attr('sub_category_id');
+	
+	var data = {
+		user_id : $('#idRef').val(),
+		post_id : post_id,
+		main_category_id : mci,
+		sub_category_id : sci
+	}
+	
+	$.ajax({
+		url:'/blog/deletePost',
+		type:'post',
+		data : data,
+		success : function(){
+			swal('','포스트가 삭제됐습니다.','success').then(function(){
+				location.href = '/blog/'+$('#idRef').val()+'?main_category_id='+mci+'&sub_category_id='+sci;
+			});
+		}
+	});
+});
+
 $(document).on('click', '.editCategoryBtn', function(){
 	var id = $('#idRef').val();
 	location.href='/blog/manage/categoryInfo?blogId='+id;

@@ -1,3 +1,15 @@
+function FormObject(url, type){
+	this.formObj = $.parseHTML('<form action="'+url+'" method="'+type+'"></form>');
+}
+
+FormObject.prototype.append = function(key,value) {
+	$(this.formObj).append('<input type="hidden" name="'+key+'" value="'+value+'"/>');
+};
+
+FormObject.prototype.submit = function(){
+	$(this.formObj).submit();
+}
+
 function valueFromQueryString(query_string, key) {
 	key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));

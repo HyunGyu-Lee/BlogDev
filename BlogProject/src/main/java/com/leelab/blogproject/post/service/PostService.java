@@ -72,7 +72,17 @@ public class PostService {
 		
 		return PageUtil.getPageInfo(totalRecord, pageVo.getPageSize(), pageVo.getGroupSize(), pageVo.getCurrentPage());
 	}
+
+	public void deletePost(int post_id) {
+		postDao.delete(post_id);
+	}
+
+	public void updatePost(PostDTO post) {
+		postDao.update(post);
+	}
 	
-	
+	public void increaseHit(int post_id) {
+		
+	}
 	
 }

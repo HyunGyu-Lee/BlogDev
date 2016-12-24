@@ -23,8 +23,8 @@
 					<span class="pull-right">
 						<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>	| 
 						<c:if test="${sessionScope.user.id eq user.id}">
-							<a href="#" class="label label-warning">수정</a> | 
-							<a href="#" class="label label-danger">삭제</a> | 
+							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a> | 
+							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a> | 
 						</c:if>
 						<a href="#" class="label label-primary">전용뷰어</a>
 					</span>
@@ -37,6 +37,37 @@
 					${post.content}
 					</div>					
 				</div>
+				<div class="panel-footer">
+				<div class="post-footer-control clearfix">
+					<div class="pull-left">
+						<span class="viewCommentBtn"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+					</div>
+					<div class="pull-right">
+						<span>공유하기</span>
+						<span>수정</span>
+						<span>삭제</span>
+						<span>설정</span>
+					</div>
+				</div>
+				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
+					<table class="table table-borderless">
+						<tr>
+							<td>사용자이름</td>
+							<td>날짜</td>
+							<td align="right">
+								답글 | 수정 | 삭제
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								댓글 내용
+							</td>
+						</tr>
+					</table>
+					<textarea class="form-control" rows="3" style="width: 88%"></textarea>
+					<input type="button" class="btn btn-primary" value="comment"/>
+				</div>
+			</div>
 			</div>
 		</c:forEach>
 		<div class="well" align="center">
@@ -95,8 +126,8 @@
 				<span class="pull-right">
 					<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>	| 
 					<c:if test="${sessionScope.user.id eq user.id}">
-						<a href="#" class="label label-warning">수정</a> | 
-						<a href="#" class="label label-danger">삭제</a> | 
+						<a class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a> | 
+						<a class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a> | 
 					</c:if>
 					<a href="#" class="label label-primary">전용뷰어</a>
 				</span>
@@ -110,7 +141,35 @@
 				</div>					
 			</div>
 			<div class="panel-footer">
-				댓글보기, 공유하기, 수정, 삭제, 설정 버튼 추가
+				<div class="post-footer-control clearfix">
+					<div class="pull-left">
+						<span class="viewCommentBtn"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+					</div>
+					<div class="pull-right">
+						<span>공유하기</span>
+						<span>수정</span>
+						<span>삭제</span>
+						<span>설정</span>
+					</div>
+				</div>
+				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
+					<table class="table table-borderless">
+						<tr>
+							<td>사용자이름</td>
+							<td>날짜</td>
+							<td align="right">
+								답글 | 수정 | 삭제
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								댓글 내용
+							</td>
+						</tr>
+					</table>
+					<textarea class="form-control" rows="3" style="width: 88%"></textarea>
+					<input type="button" class="btn btn-primary" value="comment"/>
+				</div>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -157,7 +216,6 @@
 				<c:if test="${page.currentPage != page.totalPage}">
 					<a class="nextPostListBtn" next_page="${page.currentPage+1}" query_string="${queryString}">다음</a> 				
 				</c:if>
-
 			</div>
 		</div>
 		</div>

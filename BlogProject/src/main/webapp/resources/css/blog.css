@@ -1,5 +1,23 @@
 @CHARSET "EUC-KR";
 
+.table-borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+	border: none;
+}
+
+.viewCommentBtn {
+	cursor: pointer;
+}
+
+.editor-box {
+	width: 85%;
+	margin: auto;
+}
+
 .disabled {
     pointer-events: none;
     cursor: default;

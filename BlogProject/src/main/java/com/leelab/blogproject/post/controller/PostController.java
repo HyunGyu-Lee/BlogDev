@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,4 +163,27 @@ public class PostController {
 		return result;
 	}
 	
+	@RequestMapping(value="deletePost", method=RequestMethod.POST)
+	@ResponseBody
+	public void deletePost(SearchVO searchVo) {
+		int post_id = searchVo.getPost_id();
+		logger.info("Delete post - {}", post_id);		
+		postService.deletePost(post_id);
+	}
+	
+	@RequestMapping("openUpdatePost")
+	public ModelAndView openUpdatePost(SearchVO searchVo) {
+		ModelAndView mv = new ModelAndView("blog/updatePost");
+		PostDTO post = postService.getPostDetail(searchVo);
+		mv.addObject("category", categoryService.getUserCategory(post.getUser_id()));
+		post.setContent(StringEscapeUtils.escapeJavaScript(post.getContent()));
+		mv.addObject("post", post);
+		return mv;		
+	}
+	
+	@RequestMapping(value="updatePost", method=RequestMethod.POST)
+	@ResponseBody
+	public void updatePost(PostDTO post) {
+		postService.updatePost(post);
+	}
 }

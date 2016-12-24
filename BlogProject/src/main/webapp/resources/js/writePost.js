@@ -32,7 +32,7 @@ $(document).on('click', '.postPreviewBtn', function(){
 
 	var form = $('<form action="postPreview" method="post" target="w"></form>');
 	
-	window.open('','w','width=1024,height=768');
+	//window.open('','w','width=1024,height=768');
 	window.open('','w');
 	
 	var categoryItem = $('#category option:selected');

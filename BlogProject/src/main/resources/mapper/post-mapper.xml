@@ -4,6 +4,20 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.leelab.blogproject.post.dao.PostDAO">
+	<update id="update" parameterType="com.leelab.blogproject.post.dto.PostDTO">
+		UPDATE
+			BLOG_POST
+		SET
+			TITLE = #{post.title},
+			CONTENT = #{post.content},
+			MAIN_CATEGORY_ID = #{post.main_category_id},
+			SUB_CATEGORY_ID = #{post.sub_category_id}
+		WHERE
+			ID = #{post.id}
+	</update>
+	<delete id="delete">
+		DELETE FROM BLOG_POST WHERE ID = #{param1}
+	</delete>
 	
 	<select id="getPostsCount" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="int">
 		SELECT

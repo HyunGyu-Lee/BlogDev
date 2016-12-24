@@ -24,5 +24,9 @@ public interface PostDAO {
 	int getPostsCount(@Param("search") SearchVO searchVo);
 
 	ArrayList<PostVO> selectPostsInPage(@Param("search")SearchVO searchVo);
+
+	void delete(int post_id);
+
+	void update(@Param("post") PostDTO post);
 	
 }

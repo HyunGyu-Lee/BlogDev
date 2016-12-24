@@ -11,13 +11,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
-		<link rel="stylesheet" href="/blog/css/register.css">
-		<link rel="stylesheet" href="/blog/css/login.css">
-		<link rel="stylesheet" href="/blog/css/home.css">
-		<link rel="stylesheet" href="/blog/css/userInfo.css">
-		<link rel="stylesheet" href="/blog/css/blog.css">
-		<link rel="stylesheet" href="/blog/css/manage-categoryInfo.css">
-		<link rel="stylesheet" href="/blog/css/writePost.css">
+		<link rel="stylesheet" href="/blog/resources/css/register.css">
+		<link rel="stylesheet" href="/blog/resources/css/login.css">
+		<link rel="stylesheet" href="/blog/resources/css/home.css">
+		<link rel="stylesheet" href="/blog/resources/css/userInfo.css">
+		<link rel="stylesheet" href="/blog/resources/css/blog.css">
+		<link rel="stylesheet" href="/blog/resources/css/manage-categoryInfo.css">
+		<link rel="stylesheet" href="/blog/resources/css/writePost.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.css">
 		<title>포스트 미리보기</title>
 	</head>
@@ -29,7 +29,7 @@
 				<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
 			</div>
 			<div id="post" class="pull-left" style="width: 73%;">
-				<div class="panel panel-info">
+				<div class="panel panel-default">
 					<div class="panel-heading">
 						<span class="post-title"><strong>${title}</strong></span><span class="post-category"> | ${categoryName}</span>
 					</div>
