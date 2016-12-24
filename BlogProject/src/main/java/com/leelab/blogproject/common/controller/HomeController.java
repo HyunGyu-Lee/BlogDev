@@ -41,6 +41,7 @@ public class HomeController {
 	
 	@RequestMapping("/openRegister")
 	public String openRegister() {
+		logger.info("회원가입창 오픈");
 		return "register/register";
 	}
 	

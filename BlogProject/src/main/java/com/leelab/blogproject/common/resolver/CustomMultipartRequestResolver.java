@@ -13,8 +13,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.leelab.blogproject.utils.StringUtils;
-
 public class CustomMultipartRequestResolver implements HandlerMethodArgumentResolver {
 
 	public static final Logger logger = LoggerFactory.getLogger(CustomMultipartRequestResolver.class);
@@ -29,7 +27,7 @@ public class CustomMultipartRequestResolver implements HandlerMethodArgumentReso
 		while(paramNames.hasMoreElements())
 		{
 			String key = paramNames.nextElement();
-			multipartRequest.set(key, StringUtils.encodeUTF_8(request.getParameter(key)));
+			multipartRequest.set(key, request.getParameter(key));
 		}
 
 		return multipartRequest;

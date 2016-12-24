@@ -57,8 +57,6 @@ public class CategoryController {
 		int id = Integer.parseInt(requestScope.get("id"));
 		String type = requestScope.get("type");
 		
-		postService.getPostByCategoryId(id, type);
-		
 		categoryService.deleteCategory(id, type);
 	}
 	

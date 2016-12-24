@@ -15,7 +15,7 @@
 		</form>
 	</div>
 	<div align="right">
-		<input type="button" class="btn register" value="회원가입"/>
+		<button type="button" class="btn register">회원가입</button>
 	</div>
 </c:if>
 <c:if test="${not empty sessionScope.user.id}">

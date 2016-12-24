@@ -6,20 +6,28 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.leelab.blogproject.user.service.UserService;
+import com.leelab.blogproject.utils.json.SimpleHashMap;
+
 @Controller
 @RequestMapping("/util")
 public class UtilController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UtilController.class);
+	
+	@Autowired
+	UserService service;
 	
 	@RequestMapping("/deleteAllCookie")
 	public void clearCookie(HttpServletRequest request, HttpServletResponse response) {
@@ -37,17 +45,25 @@ public class UtilController {
 		return uri.substring(uri.lastIndexOf("-")+1, uri.length());
 	}
 	
-	@RequestMapping(value="ajaxTest", method = RequestMethod.POST)
+	@RequestMapping(value="login", method=RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> ajaxTest(@RequestParam Map<String,String> data) {
+	public HashMap<String, Object> login(@RequestParam Map<String, String> map, HttpSession session) {
+		boolean result = false;
+
+		result = service.login(map.get("id"), map.get("password"));
 		
-		logger.info("Ajax요청 들어옴 {}, {}", data.get("name"), data.get("phone"));
-		
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		
-		result.put("a", "이건A");
-		result.put("b", "이건B");
-		
-		return result;
+		if(result)
+		{
+			session.setAttribute("user", service.getUser(map.get("id")));
+		}
+
+		return SimpleHashMap.newInstance().put("result", result);
 	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:test-p";
+	}
+	
 }

@@ -1,10 +1,10 @@
 $(function(){
 	$(".login").click(function(){
-		location.href = "openLogin";
+		location.href = "/blog/openLogin";
 	});
 	
 	$(".register").click(function(){
-		location.href = "openRegister";
+		location.href = "/blog/openRegister";
 	});
 	
 	$(".home").click(function(){
@@ -12,7 +12,7 @@ $(function(){
 	});
 
 	$('.username').click(function(){
-		location.href = 'userInfo';
+		location.href = '/blog/userInfo';
 	});
 	
 	$(document).on('click', '.openMyBlog', function(){
