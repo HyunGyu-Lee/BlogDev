@@ -5,7 +5,6 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Insert title here</title>
-		<%@ include file="/WEB-INF/include/app-header.jspf" %>
 	</head>
 	<body>
 		<p><img src="/blog/ajax/temp/4ea0e9a7b3594557ae5187577bbc2428.jpg" style="width: 100%; height: auto;"><br></p>

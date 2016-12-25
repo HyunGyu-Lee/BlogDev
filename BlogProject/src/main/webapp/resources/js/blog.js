@@ -8,6 +8,19 @@ $(document).on('click', '.viewCommentBtn.openToggle', function(){
 })
 
 $(document).on('click', '.viewCommentBtn.closeToggle',function(){
+	
+	$.ajax({
+		url : '/blog/comment',
+		data : {
+			post_id : $(this).attr('post_id')
+		},
+		success : function(response) {
+			$.each(response.comments, function(i, comment){
+				console.log(comment); 
+			});
+		}
+	});
+	
 	var icon = 'glyphicon glyphicon-triangle-';
 	$(this).removeClass('closeToggle');
 	$(this).addClass('openToggle');

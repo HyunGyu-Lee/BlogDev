@@ -4,12 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<%@ include file="/WEB-INF/include/app-header.jspf"%>
 		<title>포스트 수정</title>
 	</head>
 	<body>
-		<div class="container">
-			<%@ include file="/WEB-INF/jsp/home/home-header.jsp"%>
 			<div class="alert alert-info" role="alert" style="width: 35%;">
 				주의! 이미지는 최대 680px의 넓이로 제한됩니다.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -36,7 +33,6 @@
 				<input type="button" value="수정" class="btn btn-info postUpdateBtn"/>
 				</div>
 			</div>
-		</div>
 		<script type="text/javascript">
 			$(document).on('click','.postUpdateBtn',function(){
 				var user_id = '${post.user_id}';
@@ -99,13 +95,11 @@
 							$(this).attr('selected','selected');
 						}
 					}					
-				})
+				});
 				
 				/* 포스트 본문 */
 				$('#editor').summernote('code', '${post.content}');
 			});
-			
-			
 		</script>
 	</body>
 </html>

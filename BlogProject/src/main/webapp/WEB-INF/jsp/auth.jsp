@@ -1,18 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Blog - 인증</title>
-		<%@ include file="/WEB-INF/include/app-header.jspf" %>
 	</head>
 	<body>
-		<div class="container">
-			<%@ include file="/WEB-INF/jsp/home/home-header.jsp" %>
-		
-			<div align="center">
-				<div class="panel panel-primary" style="width: 50%;">
+		<div align="center">
+			<div class="panel panel-primary" style="width: 50%;">
 				<div class="panel panel-heading"><h3>이메일 인증</h3></div>
 				<div class="panel panel-body" align="left">
 					<b>${sessionScope.user.nickname}</b>님의 계정은 아직 이메일 인증이 되지 않은 계정입니다.<br/>
@@ -30,9 +24,7 @@
 					</div>
 				</div>
 			</div>
-			</div>
 		</div>
-		
 	<script type="text/javascript">
 	$(function(){
 		

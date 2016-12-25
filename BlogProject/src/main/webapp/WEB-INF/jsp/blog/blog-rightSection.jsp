@@ -2,7 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
 <div>
-	<div class="blog-header">블로그 헤더 영역으로 활용하자</div>
+	<div class="blog-header">
+		<div class="alert alert-info alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h6>From <span style="font-size: 15px;"> 블로그씨</span></h6>
+			블로그에 스킨 기능이 1달내로 적용될 예정입니다!
+		</div>
+	</div>
 	
 	<c:choose>
 	<c:when test="${not empty posts}">
@@ -40,7 +46,7 @@
 				<div class="panel-footer">
 				<div class="post-footer-control clearfix">
 					<div class="pull-left">
-						<span class="viewCommentBtn closeToggle"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>
@@ -143,7 +149,7 @@
 			<div class="panel-footer">
 				<div class="post-footer-control clearfix">
 					<div class="pull-left">
-						<span class="viewCommentBtn closeToggle"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>

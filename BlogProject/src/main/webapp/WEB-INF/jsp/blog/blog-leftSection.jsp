@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <input type="hidden" id="idRef" value="${user.id}"/>
-<div class="blog-profile-box row">
-	<div class="col-md-12">
+<div class="blog-profile-box">
+	<div class="clearfix">
 		<c:url value="/ajax/profileImage/${user.id}" var="IMAGE"/>
 		<img src="${IMAGE}" class="profile_view pull-left" style="margin-right: 20px;">
 		<div class="info">
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<div class="category-box row">
+<div class="category-box">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			카테고리
