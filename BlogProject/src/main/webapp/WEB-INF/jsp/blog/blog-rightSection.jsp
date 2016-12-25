@@ -40,7 +40,7 @@
 				<div class="panel-footer">
 				<div class="post-footer-control clearfix">
 					<div class="pull-left">
-						<span class="viewCommentBtn"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+						<span class="viewCommentBtn closeToggle"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>
@@ -143,7 +143,7 @@
 			<div class="panel-footer">
 				<div class="post-footer-control clearfix">
 					<div class="pull-left">
-						<span class="viewCommentBtn"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
+						<span class="viewCommentBtn closeToggle"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>

@@ -1,19 +1,19 @@
-$(document).on('click', '.viewCommentBtn',function(){
+$(document).on('click', '.viewCommentBtn.openToggle', function(){
 	var icon = 'glyphicon glyphicon-triangle-';
-	var area = $('.post-comment-area');
-	
-	if(area.is(':visible'))
-	{
-		$(this).children(0).removeClass(icon+'top');
-		$(this).children(0).addClass(icon+'bottom');
-		area.hide();
-	}
-	else
-	{
-		$(this).children(0).removeClass(icon+'bottom');
-		$(this).children(0).addClass(icon+'top');
-		area.show();
-	}	
+	$(this).removeClass('openToggle');
+	$(this).addClass('closeToggle');
+	$(this).children(0).removeClass(icon+'top');
+	$(this).children(0).addClass(icon+'bottom');	
+	$('.post-comment-area').hide();
+})
+
+$(document).on('click', '.viewCommentBtn.closeToggle',function(){
+	var icon = 'glyphicon glyphicon-triangle-';
+	$(this).removeClass('closeToggle');
+	$(this).addClass('openToggle');
+	$(this).children(0).removeClass(icon+'bottom');
+	$(this).children(0).addClass(icon+'top');	
+	$('.post-comment-area').show();
 });
 
 $(document).on('click','.postEditBtn',function(){

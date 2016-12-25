@@ -8,42 +8,6 @@
 		<%@ include file="/WEB-INF/include/app-header.jspf" %>
 	</head>
 	<body>
-				
-		<c:if test="${empty sessionScope.user}">
-			<form id="loginForm">
-				아이디 : <input type="text" name="id"/><br/>
-				비밀번호 : <input type="password" name="password"/><br/>
-				<input type="button" value="로그인"/>
-			</form>		
-		</c:if>
-		<c:if test="${not empty sessionScope.user}">
-			<img class="profile_view" src="/blog/ajax/profileImage/${sessionScope.user.id}">
-			<strong>${sessionScope.user.nickname}</strong>님 환영합니다
-			<a href="/blog/util/logout">로그아웃</a>
-		</c:if>
-		
-		<script type="text/javascript">
-			$(document).on('click','input[type="button"]', function(){				
-				var data = $('#loginForm').serialize();
-				
-				$.ajax({
-					url : '/blog/util/login',
-					type : 'post',
-					data : data,
-					success : function(response){
-						if(response.result)
-						{
-							swal('','로그인성공','success').then(function(){
-								location.href = '/blog/util/test-p';
-							});
-						}
-						else
-						{
-							swal('','로그인실패','error');
-						}	
-					}
-				});
-			});
-		</script>
+		<p><img src="/blog/ajax/temp/4ea0e9a7b3594557ae5187577bbc2428.jpg" style="width: 100%; height: auto;"><br></p>
 	</body>
 </html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.comment.dao.CommentDAO">
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.comment.vo.CommentVO" parameterType="com.leelab.blogproject.post.vo.SearchVO">
+		WITH
+		SELECT
+			C.*,
+			U.NICKNAME			
+		FROM
+			BLOG_COMMENT C,
+			BLOG_USER U
+		<where>
+			C.USER_ID = U.ID
+			AND C.POST_ID = #{search.post_id}
+		</where>
+		ORDER BY
+			C.CREATE_AT DESC
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.comment.vo.CommentVO">
+		INSERT INTO
+			BLOG_COMMENT
+			(
+				ID,
+				USER_ID,
+				CONTENT,
+				POST_ID
+			)
+			VALUES
+			(
+				BLOG_COMMENT_SEQ.NEXTVAL,
+				#{comment.user_id},
+				#{comment.content},
+				#{comment.post_id}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.leelab.blogproject.comment.vo.CommentVO">
+	
+	</update>
+	
+	<delete id="delete" parameterType="com.leelab.blogproject.post.vo.SearchVO">
+		DELETE FROM
+			BLOG_COMMENT
+		<where>
+			<if test="search.post_id!=null">
+			POST_ID = #{search.post_id}
+			</if>	
+		</where>
+	</delete>		
+</mapper>
