@@ -22,7 +22,8 @@
 		<link rel="stylesheet" href="/blog/resources/css/writePost.css">
 		<title><decorator:title default="Welcome Public Blog"/> </title>
 	</head>
-	<body>
+	<body style="background-color: #e8f7ff;">
+
 		<div class="container">
 
 			<page:applyDecorator name="header"/>

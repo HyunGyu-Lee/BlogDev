@@ -5,20 +5,31 @@
     
 <mapper namespace="com.leelab.blogproject.comment.dao.CommentDAO">
 	
-	<select id="selectAll" resultType="com.leelab.blogproject.comment.vo.CommentVO" parameterType="com.leelab.blogproject.post.vo.SearchVO">
-		WITH
+	<select id="getCommentsCount" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="int">
 		SELECT
-			C.*,
-			U.NICKNAME			
+			COUNT(*)
 		FROM
-			BLOG_COMMENT C,
-			BLOG_USER U
+			BLOG_COMMENT
 		<where>
-			C.USER_ID = U.ID
-			AND C.POST_ID = #{search.post_id}
-		</where>
-		ORDER BY
-			C.CREATE_AT DESC
+			POST_ID = #{search.post_id}
+		</where>	
+	</select>
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.comment.vo.CommentVO" parameterType="hashmap">
+		WITH
+			DATA
+		AS
+			(SELECT rownum, C.*, U.NICKNAME FROM BLOG_COMMENT C, BLOG_USER U WHERE C.USER_ID = U.ID AND C.POST_ID = 270 ORDER BY C.CREATE_AT ASC)
+		select
+		  *
+		from
+		  (select
+		    PAGESET.*, ROWNUM AS RNUM
+		  from
+		    (select PAGE.* from DATA PAGE) PAGESET
+		  where
+		    rownum <![CDATA[<= #{vos.page.currentPage} * #{vos.page.pageSize} )
+		where RNUM > (#{vos.page.currentPage}-1) * #{vos.page.pageSize}]]>
 	</select>
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.comment.vo.CommentVO">

@@ -8,16 +8,32 @@ $(document).on('click', '.viewCommentBtn.openToggle', function(){
 })
 
 $(document).on('click', '.viewCommentBtn.closeToggle',function(){
-	
+	var post_id = $(this).attr('post_id');
+	var area = $('.post-comment-area');
+
 	$.ajax({
-		url : '/blog/comment',
-		data : {
-			post_id : $(this).attr('post_id')
-		},
+		url : 'postComment',
+		type : 'post',
+		data : {post_id : post_id},
 		success : function(response) {
-			$.each(response.comments, function(i, comment){
-				console.log(comment); 
-			});
+			var comments = response.comments;
+			var row_template = '<tr style="height:25px;"><td></td><td></td><td align="right">답글 | 수정 | 삭제</td></tr><tr><td colspan="4"></td></tr>';
+			
+			$.each(comments, function(i, comment){
+				var item = $($.parseHTML(row_template));
+				var nicknameView = $(item.get(0).cells[0]);
+				var createAtView = $(item.get(0).cells[1]);
+				var contentView = $(item.get(1).cells[0]);
+				
+				nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
+				createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));
+				contentView.html(comment.content);
+				
+				area.find('table').append(item);
+			});		
+		},
+		error(e) {
+			swal('','서버와 통신이 원할하지 않습니다.','error');
 		}
 	});
 	
@@ -26,7 +42,7 @@ $(document).on('click', '.viewCommentBtn.closeToggle',function(){
 	$(this).addClass('openToggle');
 	$(this).children(0).removeClass(icon+'bottom');
 	$(this).children(0).addClass(icon+'top');	
-	$('.post-comment-area').show();
+	area.show();
 });
 
 $(document).on('click','.postEditBtn',function(){

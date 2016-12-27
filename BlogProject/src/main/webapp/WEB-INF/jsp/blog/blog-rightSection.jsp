@@ -57,7 +57,7 @@
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
 					<table class="table table-borderless">
-						<tr>
+						<!-- <tr>
 							<td>사용자이름</td>
 							<td>날짜</td>
 							<td align="right">
@@ -68,7 +68,7 @@
 							<td colspan="4">
 								댓글 내용
 							</td>
-						</tr>
+						</tr> -->
 					</table>
 					<textarea class="form-control" rows="3" style="width: 88%"></textarea>
 					<input type="button" class="btn btn-primary" value="comment"/>

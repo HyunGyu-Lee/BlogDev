@@ -117,9 +117,9 @@
 					CREATE_AT DESC) PAGE
 				<![CDATA[
 			  WHERE
-			  	ROWNUM <= #{vos.page.currentPage} * 5)
+			  	ROWNUM <= #{vos.page.currentPage} * #{vos.page.pageSize})
 		WHERE
-			RNUM > (#{vos.page.currentPage}-1) * 5]]>
+			RNUM > (#{vos.page.currentPage}-1) * #{vos.page.pageSize}]]>
 	</select>
 
 	<select id="selectPostsInPage" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="com.leelab.blogproject.post.vo.PostVO">

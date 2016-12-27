@@ -26,13 +26,8 @@ public class CommentTestCase {
 	
 	@Test
 	public void test() {
-		SearchVO svo = new SearchVO();
-		svo.setPost_id(270);
-		for(CommentVO vo : dao.selectAll(svo))
-		{
-			logger.info("작성자 : {}",vo.getNickname());
-			logger.info("내용   : {}",vo.getContent());
-		}
+		SearchVO search = new SearchVO();
+
 		
 	}
 	

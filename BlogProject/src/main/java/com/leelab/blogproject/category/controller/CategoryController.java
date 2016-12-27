@@ -60,7 +60,7 @@ public class CategoryController {
 	public void deleteCategory(@RequestParam Map<String, String> requestScope) {
 		int id = Integer.parseInt(requestScope.get("id"));
 		String type = requestScope.get("type");
-		logger.info("{} - {} »èÁ¦",type,id);
+		logger.info("{} - {} ì¹´í…Œê³ ë¦¬ ì‚­ì œ",type,id);
 		categoryService.deleteCategory(id, type);
 	}
 	
