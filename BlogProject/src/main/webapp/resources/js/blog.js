@@ -17,7 +17,7 @@ $(document).on('click', '.viewCommentBtn.closeToggle',function(){
 		data : {post_id : post_id},
 		success : function(response) {
 			var comments = response.comments;
-			var row_template = '<tr style="height:25px;"><td></td><td></td><td align="right">답글 | 수정 | 삭제</td></tr><tr><td colspan="4"></td></tr>';
+			var row_template = '<tr style="height:15px; line-height: 15px; min-height: 15px;"><td></td><td></td><td align="right">답글 | 수정 | 삭제</td></tr><tr><td colspan="4"></td></tr>';
 			
 			$.each(comments, function(i, comment){
 				var item = $($.parseHTML(row_template));
@@ -28,12 +28,9 @@ $(document).on('click', '.viewCommentBtn.closeToggle',function(){
 				nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
 				createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));
 				contentView.html(comment.content);
-				
+
 				area.find('table').append(item);
 			});		
-		},
-		error(e) {
-			swal('','서버와 통신이 원할하지 않습니다.','error');
 		}
 	});
 	

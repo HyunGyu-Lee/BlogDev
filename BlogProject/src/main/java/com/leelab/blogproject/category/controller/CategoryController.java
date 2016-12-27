@@ -22,7 +22,7 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private PostService postService;
 	
@@ -60,7 +60,6 @@ public class CategoryController {
 	public void deleteCategory(@RequestParam Map<String, String> requestScope) {
 		int id = Integer.parseInt(requestScope.get("id"));
 		String type = requestScope.get("type");
-		// 주석
 		logger.info("{} - {} Delete category",type,id);
 		categoryService.deleteCategory(id, type);
 	}
