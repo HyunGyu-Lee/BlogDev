@@ -9,7 +9,8 @@
 			블로그에 스킨 기능이 1달내로 적용될 예정입니다!
 		</div>
 	</div>
-	
+	<input type="hidden" id="user_id" value="${user.id}"/>
+	<input type="hidden" id="session_user_id" value="${sessionScope.user.id}"/>
 	<c:choose>
 	<c:when test="${not empty posts}">
 		<c:forEach items="${posts}" var="post">
@@ -50,28 +51,29 @@
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>
-						<span>수정</span>
-						<span>삭제</span>
-						<span>설정</span>
+						<c:if test="${sessionScope.user.id eq user.id}">
+							<span>수정</span>
+							<span>삭제</span>
+							<span>설정</span>
+						</c:if>	
 					</div>
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
-					<table class="table table-borderless">
-						<!-- <tr>
-							<td>사용자이름</td>
-							<td>날짜</td>
-							<td align="right">
-								답글 | 수정 | 삭제
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								댓글 내용
-							</td>
-						</tr> -->
-					</table>
-					<textarea class="form-control" rows="3" style="width: 88%"></textarea>
-					<input type="button" class="btn btn-primary" value="comment"/>
+					<div class="comments">
+
+					</div>
+					<div class="comment-paging-area" align="center">
+						
+					</div>
+					<div class="comment-input-box" align="center">
+					<c:if test="${empty sessionScope.user}">
+						댓글을 작성하시려면 로그인 해주세요!
+					</c:if>
+					<c:if test="${not empty sessionScope.user}">					
+						<textarea class="form-control comment-input-content" rows="3" name="content" style="width: 88%"></textarea>
+						<input type="button" class="btn btn-primary addComment" value="comment"/>
+					</c:if>
+					</div>
 				</div>
 			</div>
 			</div>
@@ -153,28 +155,23 @@
 					</div>
 					<div class="pull-right">
 						<span>공유하기</span>
-						<span>수정</span>
-						<span>삭제</span>
-						<span>설정</span>
+						<c:if test="${sessionScope.user.id eq user.id}">
+							<span>수정</span>
+							<span>삭제</span>
+							<span>설정</span>
+						</c:if>						
 					</div>
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
 					<table class="table table-borderless">
-						<tr>
-							<td>사용자이름</td>
-							<td>날짜</td>
-							<td align="right">
-								답글 | 수정 | 삭제
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								댓글 내용
-							</td>
-						</tr>
 					</table>
-					<textarea class="form-control" rows="3" style="width: 88%"></textarea>
-					<input type="button" class="btn btn-primary" value="comment"/>
+					<div class="comment-paging-area" align="center">					
+						
+					</div>
+					<div class="comment-input-box">
+						<textarea class="form-control" rows="3" style="width: 88%"></textarea>
+						<input type="button" class="btn btn-primary" value="comment"/>
+					</div>
 				</div>
 			</div>
 		</div>

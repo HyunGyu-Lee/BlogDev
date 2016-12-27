@@ -7,6 +7,25 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<p><img src="/blog/ajax/temp/4ea0e9a7b3594557ae5187577bbc2428.jpg" style="width: 100%; height: auto;"><br></p>
+		<div class="comment-row">
+			<div class="pull-left">
+				<img src="/blog/ajax/profileImage/admin" style="width: 45px; height: 45px;"/>
+			</div>
+			<div class="clearfix comment-desc">
+				<div class="pull-left">
+					<div>
+						<span class="comment-nickname">작성자명</span>
+						<span class="comment-createAt">작성시간</span>
+					</div>
+					<div class="comment-content">
+						내용ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+					</div>					
+				</div>
+				<div class="pull-right">
+				<span class="pull-right comment-control">답글 | 수정 | 삭제</span>				
+				</div>
+			</div>			
+			<hr/>
+		</div>
 	</body>
 </html>

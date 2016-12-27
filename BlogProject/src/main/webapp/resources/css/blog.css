@@ -1,5 +1,34 @@
 @CHARSET "EUC-KR";
 
+
+.comment-row {
+	margin-bottom: 20px;
+}
+
+.comment-paging-area {
+	margin-bottom: 15px;
+}
+
+.comment-content {
+	padding-top: 5px;
+}
+
+.comment-desc {
+	margin-bottom: 3px;
+}
+
+.comment-control {
+	
+}
+
+.comment-createAt {
+	
+}
+
+.comment-nickname {
+	margin-right: 15px;
+}
+
 .table-borderless tbody tr td,
 .table-borderless tbody tr th,
 .table-borderless thead tr th,

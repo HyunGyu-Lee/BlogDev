@@ -32,8 +32,10 @@ public class CommentController {
 	public Map<String, Object> commentList(SearchVO searchVo, PageVo pageVo) {
 		logger.info("Comments In {}'s post", searchVo.getPost_id());
 		pageVo = commentService.getPageInfo(searchVo, pageVo);
+		logger.info("{}",pageVo);
 		List<CommentVO> comments = commentService.getComments(searchVo, pageVo);
-		return SimpleHashMap.newInstance().put("comments", comments);
+		return SimpleHashMap.newInstance().put("comments", comments).put("page", pageVo);
 	}
 	
+
 }

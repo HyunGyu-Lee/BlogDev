@@ -1,3 +1,12 @@
+$(document).on('click', '.addComment', function(){
+	var data = {
+		content :  $('.comment-input-content').val(),	
+		user_id : $('#session_user_id').val()
+	};
+	
+	console.log(data);
+})
+
 $(document).on('click', '.viewCommentBtn.openToggle', function(){
 	var icon = 'glyphicon glyphicon-triangle-';
 	$(this).removeClass('openToggle');
@@ -7,32 +16,113 @@ $(document).on('click', '.viewCommentBtn.openToggle', function(){
 	$('.post-comment-area').hide();
 })
 
-$(document).on('click', '.viewCommentBtn.closeToggle',function(){
-	var post_id = $(this).attr('post_id');
-	var area = $('.post-comment-area');
-
+function generateComment(post_id, area, currentPage) {
+	var post_id = post_id
+	var area = area;
+	$('.comments').html('');
 	$.ajax({
 		url : 'postComment',
 		type : 'post',
-		data : {post_id : post_id},
+		data : {post_id : post_id, currentPage : currentPage},
 		success : function(response) {
 			var comments = response.comments;
-			var row_template = '<tr style="height:15px; line-height: 15px; min-height: 15px;"><td></td><td></td><td align="right">답글 | 수정 | 삭제</td></tr><tr><td colspan="4"></td></tr>';
+			var page = response.page;
+			var a = '<div class="comment-row"><div class="clearfix comment-desc"><span class="pull-left comment-nickname"></span><span class="comment-createAt"></span><span class="pull-right comment-control">답글 | 수정 | 삭제</span></div><div class="comment-content">내용</div><hr/></div>';
+			
+			var aWithImage = '<div class="comment-row">'+
+								'<div class="pull-left" style="margin-right:15px;">'+
+								'<img src="" style="width: 45px; height: 45px;"/>'+
+								'</div>'+
+								'<div class="clearfix comment-desc">'+
+									'<div class="pull-left">'+
+										'<div>'+
+											'<span class="comment-nickname">작성자명</span>'+
+											'<span class="comment-createAt">작성시간</span>'+
+										'</div>'+
+										'<div class="comment-content">'+
+											'내용'+
+										'</div>'+					
+									'</div>'+
+									'<div class="pull-right">'+
+									'<span class="pull-right comment-control">답글 | 수정 | 삭제</span>'+	
+									'</div>'+
+								'</div>'+	
+								'<hr/></div>';
 			
 			$.each(comments, function(i, comment){
-				var item = $($.parseHTML(row_template));
-				var nicknameView = $(item.get(0).cells[0]);
-				var createAtView = $(item.get(0).cells[1]);
-				var contentView = $(item.get(1).cells[0]);
+				var item = $($.parseHTML(aWithImage));
 				
+				var nicknameView = $(item.find('div').eq(1).find('span').eq(0));
+				var createAtView = $(item.find('div').eq(1).find('span').eq(1));
+				var contentView = $(item.find('div').eq(4));
+				
+				$(item.find('img').eq(0)).attr('src','/blog/ajax/profileImage/'+comment.user_id);
 				nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
-				createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));
+				createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));				
 				contentView.html(comment.content);
 
-				area.find('table').append(item);
-			});		
+				$('.comments').append(item);
+			});
+			
+			var paging = '';
+			
+			if(page.prevPage==currentPage)
+			{
+				paging += '<a class="disable">이전</a>';
+			}
+			else
+			{
+				paging += '<a style="cursor : pointer;" class="otherPost" prevpage="'+page.prevPage+'" action="prev" post_id="'+post_id+'">이전</a>';				
+			}
+			
+			paging += ' | ';
+			
+			for(var i=page.firstPage;i<=page.lastPage;i++)
+			{
+				paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'">'+i+'</a> | ';
+			}
+			
+			if(page.nextPage==currentPage)
+			{
+				paging += '<a class="disable">다음</a>';
+			}
+			else
+			{
+				paging += '<a style="cursor : pointer;" class="otherPost" nextpage="'+page.nextPage+'" action="next" post_id="'+post_id+'">다음</a>';				
+			}
+			
+			$('.comment-paging-area').html(paging);
 		}
 	});
+}
+
+$(document).on('click', '.otherPost', function(){
+	var post_id = $(this).attr('post_id');
+	var area = $('.post-comment-area');
+	
+	var currentPage = $(this).attr('currentpage');
+	var prevPage = $(this).attr('prevpage');
+	var nextPage = $(this).attr('nextpage');
+	
+	if($(this).attr('action')=='next')
+	{
+		generateComment(post_id, area, nextPage);
+	}
+	else if($(this).attr('action')=='prev')
+	{
+		generateComment(post_id, area, prevPage);		
+	}
+	else
+	{
+		generateComment(post_id, area, currentPage);		
+	}
+});
+
+$(document).on('click', '.viewCommentBtn.closeToggle',function(){
+	var post_id = $(this).attr('post_id');
+	var area = $('.post-comment-area');
+	
+	generateComment(post_id, area, 1);
 	
 	var icon = 'glyphicon glyphicon-triangle-';
 	$(this).removeClass('closeToggle');
