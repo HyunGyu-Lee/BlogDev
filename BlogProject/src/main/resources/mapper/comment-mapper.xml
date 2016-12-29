@@ -5,6 +5,10 @@
     
 <mapper namespace="com.leelab.blogproject.comment.dao.CommentDAO">
 	
+	<select id="select" resultType="com.leelab.blogproject.comment.vo.CommentVO">
+		SELECT * FROM BLOG_COMMENT WHERE ID = #{param1}
+	</select>
+	
 	<select id="getCommentsCount" parameterType="com.leelab.blogproject.post.vo.SearchVO" resultType="int">
 		SELECT
 			COUNT(*)
@@ -19,7 +23,7 @@
 		WITH
 			DATA
 		AS
-			(SELECT rownum, C.*, U.NICKNAME FROM BLOG_COMMENT C, BLOG_USER U WHERE C.USER_ID = U.ID AND C.POST_ID = 270 ORDER BY C.CREATE_AT ASC)
+			(SELECT rownum, C.*, U.NICKNAME FROM BLOG_COMMENT C, BLOG_USER U WHERE C.USER_ID = U.ID AND C.POST_ID = #{vos.search.post_id} ORDER BY C.CREATE_AT ASC)
 		select
 		  *
 		from
@@ -33,6 +37,9 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.comment.vo.CommentVO">
+		<selectKey keyProperty="comment.id" order="BEFORE" resultType="int">
+			SELECT BLOG_COMMENT_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
 		INSERT INTO
 			BLOG_COMMENT
 			(
@@ -43,7 +50,7 @@
 			)
 			VALUES
 			(
-				BLOG_COMMENT_SEQ.NEXTVAL,
+				#{comment.id},
 				#{comment.user_id},
 				#{comment.content},
 				#{comment.post_id}

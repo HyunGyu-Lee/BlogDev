@@ -30,5 +30,13 @@ public class CommentService {
 	public List<CommentVO> getComments(SearchVO searchVo, PageVo pageVo) {
 		return commentDao.selectAll(SimpleHashMap.newInstance().put("search", searchVo).put("page", pageVo));
 	}
-	
+
+	public void addComment(CommentVO commentVo) {
+		commentDao.insert(commentVo);		
+	}
+
+	public CommentVO getComment(int id) {
+		return commentDao.select(id);
+	}
+
 }

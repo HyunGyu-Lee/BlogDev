@@ -71,7 +71,7 @@
 					</c:if>
 					<c:if test="${not empty sessionScope.user}">					
 						<textarea class="form-control comment-input-content" rows="3" name="content" style="width: 88%"></textarea>
-						<input type="button" class="btn btn-primary addComment" value="comment"/>
+						<input type="button" class="btn btn-primary addComment" post_id="${post.id}"value="comment"/>
 					</c:if>
 					</div>
 				</div>
@@ -95,7 +95,12 @@
 			|
 			<!-- 페이지 버튼 5개씩 출력 -->
 			<c:forEach begin="${page.firstPage}" end="${page.lastPage}" var="pageIdx">
+				<c:if test="${pageIdx == page.currentPage}">
+				<a href="/blog/${user.id}?${queryString}currentPage=${pageIdx}"><b><u>${pageIdx}</u></b></a> | 
+				</c:if>
+				<c:if test="${pageIdx != page.currentPage}">
 				<a href="/blog/${user.id}?${queryString}currentPage=${pageIdx}">${pageIdx}</a> | 
+				</c:if>
 			</c:forEach>
 				
 			<!-- 다음 버튼 -->
@@ -159,18 +164,24 @@
 							<span>수정</span>
 							<span>삭제</span>
 							<span>설정</span>
-						</c:if>						
+						</c:if>	
 					</div>
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
-					<table class="table table-borderless">
-					</table>
-					<div class="comment-paging-area" align="center">					
+					<div class="comments">
+
+					</div>
+					<div class="comment-paging-area" align="center">
 						
 					</div>
-					<div class="comment-input-box">
-						<textarea class="form-control" rows="3" style="width: 88%"></textarea>
-						<input type="button" class="btn btn-primary" value="comment"/>
+					<div class="comment-input-box" align="center">
+					<c:if test="${empty sessionScope.user}">
+						댓글을 작성하시려면 로그인 해주세요!
+					</c:if>
+					<c:if test="${not empty sessionScope.user}">					
+						<textarea class="form-control comment-input-content" rows="3" name="content" style="width: 88%"></textarea>
+						<input type="button" class="btn btn-primary addComment" value="comment"/>
+					</c:if>
 					</div>
 				</div>
 			</div>

@@ -37,5 +37,18 @@ public class CommentController {
 		return SimpleHashMap.newInstance().put("comments", comments).put("page", pageVo);
 	}
 	
+	@RequestMapping(value="addComment", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> addComment(CommentVO commentVo, PageVo pageVo) {
+		commentService.addComment(commentVo);
+		SearchVO searchVo = new SearchVO();
+		searchVo.setPost_id(commentVo.getPost_id());
+		pageVo = commentService.getPageInfo(searchVo, pageVo);
+		logger.info("{}", commentVo);
+		logger.info("{}", searchVo);
+		logger.info("{}", pageVo);
+		return SimpleHashMap.newInstance().put("comments", commentService.getComments(searchVo, pageVo)).put("page", pageVo);
+	}
+	
 
 }

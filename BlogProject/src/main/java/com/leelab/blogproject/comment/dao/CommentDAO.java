@@ -22,4 +22,6 @@ public interface CommentDAO {
 
 	int getCommentsCount(@Param("search") SearchVO searchVo);
 
+	CommentVO select(int id);
+
 }

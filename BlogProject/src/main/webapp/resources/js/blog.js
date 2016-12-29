@@ -1,10 +1,94 @@
+var aWithImage = '<div class="comment-row">'+
+						'<div class="pull-left" style="margin-right:15px;">'+
+						'<a><img src="" style="width: 45px; height: 45px;"/></a>'+
+						'</div>'+
+						'<div class="clearfix comment-desc">'+
+							'<div class="pull-left">'+
+								'<div>'+
+									'<span class="comment-nickname">작성자명</span>'+
+									'<span class="comment-createAt">작성시간</span>'+
+								'</div>'+
+								'<div class="comment-content">'+
+									'내용'+
+								'</div>'+					
+							'</div>'+
+							'<div class="pull-right">'+
+							'<span class="pull-right comment-control">답글 | 수정 | 삭제</span>'+	
+							'</div>'+
+						'</div>'+	
+						'<hr/></div>';
+
 $(document).on('click', '.addComment', function(){
+	var btn = $(this);
+	var area = $(this).parent().parent();
+	console.log(area);
 	var data = {
-		content :  $('.comment-input-content').val(),	
-		user_id : $('#session_user_id').val()
+		content :  $(this).prev().val(),	
+		user_id : $('#session_user_id').val(),
+		post_id : $(this).attr('post_id'),
+		currentPage : $('#totalPage').val()
 	};
-	
-	console.log(data);
+
+	$.ajax({
+		url : '/blog/addComment',
+		type : 'post',
+		data : data,
+		dataType : 'json',
+		success : function(response) {
+			if(response.status==-1)
+			{
+				location.href = '/blog/openLogin';
+			}
+			else
+			{
+				var comments = response.comments;
+				var page = response.page;
+				var post_id = btn.attr('post_id');
+
+				area.find('div').eq(0).html('');
+				
+				$.each(comments, function(i, comment){
+					appendComment(comment, area);
+				});
+				
+				var paging = '<input type="hidden" id="totalPage" value="'+page.totalPage+'"/>';
+				
+				if(page.prevPage==page.currentPage)
+				{
+					paging += '<a class="disable">이전</a>';
+				}
+				else
+				{
+					paging += '<a style="cursor : pointer;" class="otherPost" prevpage="'+page.prevPage+'" action="prev" post_id="'+post_id+'">이전</a>';				
+				}
+				
+				paging += ' | ';
+				
+				for(var i=page.firstPage;i<=page.lastPage;i++)
+				{
+					if(page.currentPage==i)
+					{
+						paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'"><b><u>'+i+'</u></b></a> | ';						
+					}
+					else
+					{
+						paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'">'+i+'</a> | ';
+					}
+				}
+				
+				if(page.nextPage==page.currentPage)
+				{
+					paging += '<a class="disable">다음</a>';
+				}
+				else
+				{
+					paging += '<a style="cursor : pointer;" class="otherPost" nextpage="'+page.nextPage+'" action="next" post_id="'+post_id+'">다음</a>';				
+				}
+				
+				area.children('.comment-paging-area').html(paging);
+			}
+		}
+	});
 })
 
 $(document).on('click', '.viewCommentBtn.openToggle', function(){
@@ -13,15 +97,30 @@ $(document).on('click', '.viewCommentBtn.openToggle', function(){
 	$(this).addClass('closeToggle');
 	$(this).children(0).removeClass(icon+'top');
 	$(this).children(0).addClass(icon+'bottom');	
-	$('.post-comment-area').hide();
+	$(this).parent().parent().next().hide();
 })
+
+function appendComment(comment, area) {
+	var item = $($.parseHTML(aWithImage));
+	var nicknameView = $(item.find('div').eq(1).find('span').eq(0));
+	var createAtView = $(item.find('div').eq(1).find('span').eq(1));
+	var contentView = $(item.find('div').eq(4));
+	$(item.find('a').eq(0)).attr('href','/blog/'+comment.user_id);
+	$(item.find('img').eq(0)).attr('src','/blog/ajax/profileImage/'+comment.user_id);
+	nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
+	createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));				
+	contentView.html(comment.content);
+	
+	area.find('div').eq(0).append(item);
+}
 
 function generateComment(post_id, area, currentPage) {
 	var post_id = post_id
 	var area = area;
-	$('.comments').html('');
+
+	area.find('div').eq(0).html('');
 	$.ajax({
-		url : 'postComment',
+		url : '/blog/postComment',
 		type : 'post',
 		data : {post_id : post_id, currentPage : currentPage},
 		success : function(response) {
@@ -31,7 +130,7 @@ function generateComment(post_id, area, currentPage) {
 			
 			var aWithImage = '<div class="comment-row">'+
 								'<div class="pull-left" style="margin-right:15px;">'+
-								'<img src="" style="width: 45px; height: 45px;"/>'+
+								'<a><img src="" style="width: 45px; height: 45px;"/></a>'+
 								'</div>'+
 								'<div class="clearfix comment-desc">'+
 									'<div class="pull-left">'+
@@ -50,21 +149,10 @@ function generateComment(post_id, area, currentPage) {
 								'<hr/></div>';
 			
 			$.each(comments, function(i, comment){
-				var item = $($.parseHTML(aWithImage));
-				
-				var nicknameView = $(item.find('div').eq(1).find('span').eq(0));
-				var createAtView = $(item.find('div').eq(1).find('span').eq(1));
-				var contentView = $(item.find('div').eq(4));
-				
-				$(item.find('img').eq(0)).attr('src','/blog/ajax/profileImage/'+comment.user_id);
-				nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
-				createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));				
-				contentView.html(comment.content);
-
-				$('.comments').append(item);
+				appendComment(comment, area);
 			});
 			
-			var paging = '';
+			var paging = '<input type="hidden" id="totalPage" value="'+page.totalPage+'"/>';
 			
 			if(page.prevPage==currentPage)
 			{
@@ -79,7 +167,14 @@ function generateComment(post_id, area, currentPage) {
 			
 			for(var i=page.firstPage;i<=page.lastPage;i++)
 			{
-				paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'">'+i+'</a> | ';
+				if(page.currentPage==i)
+				{
+					paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'"><b><u>'+i+'</u></b></a> | ';						
+				}
+				else
+				{
+					paging += '<a style="cursor : pointer;" class="otherPost" post_id="'+post_id+'" currentpage="'+i+'" post_id="'+post_id+'">'+i+'</a> | ';
+				}
 			}
 			
 			if(page.nextPage==currentPage)
@@ -90,15 +185,14 @@ function generateComment(post_id, area, currentPage) {
 			{
 				paging += '<a style="cursor : pointer;" class="otherPost" nextpage="'+page.nextPage+'" action="next" post_id="'+post_id+'">다음</a>';				
 			}
-			
-			$('.comment-paging-area').html(paging);
+			area.children('.comment-paging-area').html(paging)
 		}
 	});
 }
 
 $(document).on('click', '.otherPost', function(){
 	var post_id = $(this).attr('post_id');
-	var area = $('.post-comment-area');
+	var area = $(this).parent().parent();
 	
 	var currentPage = $(this).attr('currentpage');
 	var prevPage = $(this).attr('prevpage');
@@ -120,7 +214,7 @@ $(document).on('click', '.otherPost', function(){
 
 $(document).on('click', '.viewCommentBtn.closeToggle',function(){
 	var post_id = $(this).attr('post_id');
-	var area = $('.post-comment-area');
+	var area = $(this).parent().parent().next();
 	
 	generateComment(post_id, area, 1);
 	

@@ -42,7 +42,18 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 					sb.append(entry.getKey()).append("=").append(entry.getValue()[0]);
 				}
 			}
-			response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI()+sb.toString());
+			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With")))
+			{
+				logger.info("Ajax Request Not Auth");
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println("{\"status\":-1}");
+				response.getWriter().flush();
+				response.getWriter().close();
+			}
+			else
+			{				
+				response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI()+sb.toString());
+			}
 			
 			return false;
 		}

@@ -69,6 +69,7 @@ public class UserController {
 		String password = requestScope.get("password");
 		String redirectUri = requestScope.get("redirectUri");
 		logger.info(redirectUri);
+		if(redirectUri==null||redirectUri.equals("/"))redirectUri="/blog";
 		boolean result = userService.login(id, password);
 		if(result)
 		{
