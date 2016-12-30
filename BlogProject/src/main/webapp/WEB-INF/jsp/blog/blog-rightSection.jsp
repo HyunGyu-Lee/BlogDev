@@ -50,11 +50,11 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<span>공유하기</span>
+						<span class="label label-success clickable">공유하기</span>
 						<c:if test="${sessionScope.user.id eq user.id}">
-							<span>수정</span>
-							<span>삭제</span>
-							<span>설정</span>
+							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
+							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a>
+							<span class="label label-default">설정</span>
 						</c:if>	
 					</div>
 				</div>
@@ -69,7 +69,7 @@
 					<c:if test="${empty sessionScope.user}">
 						댓글을 작성하시려면 로그인 해주세요!
 					</c:if>
-					<c:if test="${not empty sessionScope.user}">					
+					<c:if test="${not empty sessionScope.user}">
 						<textarea class="form-control comment-input-content" rows="3" name="content" style="width: 88%"></textarea>
 						<input type="button" class="btn btn-primary addComment" post_id="${post.id}"value="comment"/>
 					</c:if>
@@ -159,12 +159,12 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<span>공유하기</span>
+						<span class="label label-success clickable">공유하기</span>
 						<c:if test="${sessionScope.user.id eq user.id}">
-							<span>수정</span>
-							<span>삭제</span>
-							<span>설정</span>
-						</c:if>	
+							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
+							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a>
+							<span class="label label-default">설정</span>
+						</c:if>
 					</div>
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
@@ -178,9 +178,9 @@
 					<c:if test="${empty sessionScope.user}">
 						댓글을 작성하시려면 로그인 해주세요!
 					</c:if>
-					<c:if test="${not empty sessionScope.user}">					
+					<c:if test="${not empty sessionScope.user}">
 						<textarea class="form-control comment-input-content" rows="3" name="content" style="width: 88%"></textarea>
-						<input type="button" class="btn btn-primary addComment" value="comment"/>
+						<input type="button" class="btn btn-primary addComment" post_id="${post.id}"value="comment"/>
 					</c:if>
 					</div>
 				</div>

@@ -1,8 +1,15 @@
 @CHARSET "EUC-KR";
 
+.clickable {
+	cursor: pointer;
+}
 
 .comment-row {
 	margin-bottom: 20px;
+}
+
+.comment-row:HOVER {
+	background-color: #E0E0E0;
 }
 
 .comment-paging-area {

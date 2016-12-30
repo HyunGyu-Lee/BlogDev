@@ -1,22 +1,73 @@
-var aWithImage = '<div class="comment-row">'+
-						'<div class="pull-left" style="margin-right:15px;">'+
-						'<a><img src="" style="width: 45px; height: 45px;"/></a>'+
-						'</div>'+
-						'<div class="clearfix comment-desc">'+
-							'<div class="pull-left">'+
-								'<div>'+
-									'<span class="comment-nickname">작성자명</span>'+
-									'<span class="comment-createAt">작성시간</span>'+
-								'</div>'+
-								'<div class="comment-content">'+
-									'내용'+
-								'</div>'+					
-							'</div>'+
-							'<div class="pull-right">'+
-							'<span class="pull-right comment-control">답글 | 수정 | 삭제</span>'+	
-							'</div>'+
-						'</div>'+	
-						'<hr/></div>';
+$(document).on('click','.deleteComment',function(){
+	var comment_id = $(this).parent().parent().parent().parent().attr('comment_id');
+	var post_id = $(this).attr('post_id');
+	swal({
+		title : '댓글 삭제',
+		text : '정말 댓글을 삭제하시겠습니까?',
+		type : 'question',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: '삭제',
+		cancelButtonText: '취소',
+		preConfirm : function(){
+			return new Promise(function(resolve, reject) {
+				$.ajax({
+					url : '/blog/deleteComment',
+					type : 'post',
+					data : {id : comment_id},
+					success : function(){resolve();}
+				});
+			});
+		}
+	}).then(function(){
+		swal('','댓글이 삭제됐습니다.','success').then(function(){
+			location.href = '/blog/postview/'+$('#user_id').val()+'/'+post_id;
+		});
+	}, function(){});
+});
+
+$(document).on('click', '.doEdit', function(){
+	var comment_id = $(this).attr('comment_id');
+	var content = $('#comment-edit-'+comment_id).val();
+	
+	var data = {
+		id : comment_id,
+		content : content
+	};
+	
+	$.ajax({
+		url : '/blog/editComment',
+		type : 'post',
+		data : data,
+		success : function(response) {
+			if(response.result==1)
+			{
+				swal('','댓글이 수정됐습니다.','success').then(function(){
+					$('#comment-edit-'+comment_id).parent().html(content);
+				});
+			}
+			else
+			{
+				
+			}
+		}
+	})
+	
+	console.log(data);
+});
+
+$(document).on('click', '.editComment', function(){
+	var w = $(this).parent().parent().parent().parent().width()-400;
+	var comment_id = $(this).parent().parent().parent().parent().attr('comment_id');
+	var content_area = $(this).parent().parent().parent().find('div').eq(2);
+	var content = content_area.html();
+	console.log('길이 : '+w);
+	var editForm = '<textarea class="form-control" style="width: '+w+'px; margin-right: 10px;" id="comment-edit-'+comment_id+'">'+content+'</textarea>'+
+				   '<input type="button" class="doEdit btn btn-primary" comment_id="'+comment_id+'" value="Edit"/>';
+	
+	content_area.html(editForm);	
+});
 
 $(document).on('click', '.addComment', function(){
 	var btn = $(this);
@@ -28,7 +79,7 @@ $(document).on('click', '.addComment', function(){
 		post_id : $(this).attr('post_id'),
 		currentPage : $('#totalPage').val()
 	};
-
+	$(this).prev().val('');
 	$.ajax({
 		url : '/blog/addComment',
 		type : 'post',
@@ -101,6 +152,35 @@ $(document).on('click', '.viewCommentBtn.openToggle', function(){
 })
 
 function appendComment(comment, area) {
+	var uid = comment.user_id;
+	var suid = $('#session_user_id').val();
+	var controlBtns = '<span class="label label-default clickable addSubComment">답글</span>';
+	if(uid==suid)
+	{
+		controlBtns += ' | <span class="label label-default clickable editComment">수정</span> | <span class="label label-default clickable deleteComment" post_id="'+comment.post_id+'">삭제</span>';
+	}
+	
+	
+	var aWithImage = '<div class="comment-row" comment_id="'+comment.id+'">'+
+						'<div class="pull-left" style="margin-right:15px;">'+
+						'<a><img src="" style="width: 45px; height: 45px;"/></a>'+
+						'</div>'+
+						'<div class="clearfix comment-desc">'+
+							'<div class="pull-left">'+
+								'<div>'+
+									'<span class="comment-nickname">작성자명</span>'+
+									'<span class="comment-createAt">작성시간</span>'+
+								'</div>'+
+								'<div class="comment-content">'+
+									'내용'+
+								'</div>'+					
+							'</div>'+
+							'<div class="pull-right">'+
+							'<span class="pull-right comment-control">'+controlBtns+'</span>'+	
+							'</div>'+
+						'</div>'+	
+						'<hr/></div>';
+	
 	var item = $($.parseHTML(aWithImage));
 	var nicknameView = $(item.find('div').eq(1).find('span').eq(0));
 	var createAtView = $(item.find('div').eq(1).find('span').eq(1));
@@ -117,7 +197,7 @@ function appendComment(comment, area) {
 function generateComment(post_id, area, currentPage) {
 	var post_id = post_id
 	var area = area;
-
+	
 	area.find('div').eq(0).html('');
 	$.ajax({
 		url : '/blog/postComment',
@@ -126,27 +206,6 @@ function generateComment(post_id, area, currentPage) {
 		success : function(response) {
 			var comments = response.comments;
 			var page = response.page;
-			var a = '<div class="comment-row"><div class="clearfix comment-desc"><span class="pull-left comment-nickname"></span><span class="comment-createAt"></span><span class="pull-right comment-control">답글 | 수정 | 삭제</span></div><div class="comment-content">내용</div><hr/></div>';
-			
-			var aWithImage = '<div class="comment-row">'+
-								'<div class="pull-left" style="margin-right:15px;">'+
-								'<a><img src="" style="width: 45px; height: 45px;"/></a>'+
-								'</div>'+
-								'<div class="clearfix comment-desc">'+
-									'<div class="pull-left">'+
-										'<div>'+
-											'<span class="comment-nickname">작성자명</span>'+
-											'<span class="comment-createAt">작성시간</span>'+
-										'</div>'+
-										'<div class="comment-content">'+
-											'내용'+
-										'</div>'+					
-									'</div>'+
-									'<div class="pull-right">'+
-									'<span class="pull-right comment-control">답글 | 수정 | 삭제</span>'+	
-									'</div>'+
-								'</div>'+	
-								'<hr/></div>';
 			
 			$.each(comments, function(i, comment){
 				appendComment(comment, area);

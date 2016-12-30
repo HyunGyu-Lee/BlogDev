@@ -39,4 +39,12 @@ public class CommentService {
 		return commentDao.select(id);
 	}
 
+	public void editComment(CommentVO commentVo) {
+		commentDao.update(commentVo);		
+	}
+
+	public void deleteComment(CommentVO commentVo) {
+		commentDao.delete(commentVo.getId());		
+	}
+
 }

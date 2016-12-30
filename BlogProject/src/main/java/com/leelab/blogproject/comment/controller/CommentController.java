@@ -40,15 +40,28 @@ public class CommentController {
 	@RequestMapping(value="addComment", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addComment(CommentVO commentVo, PageVo pageVo) {
+		logger.info("{}", commentVo);
 		commentService.addComment(commentVo);
 		SearchVO searchVo = new SearchVO();
 		searchVo.setPost_id(commentVo.getPost_id());
 		pageVo = commentService.getPageInfo(searchVo, pageVo);
-		logger.info("{}", commentVo);
 		logger.info("{}", searchVo);
 		logger.info("{}", pageVo);
 		return SimpleHashMap.newInstance().put("comments", commentService.getComments(searchVo, pageVo)).put("page", pageVo);
 	}
 	
+	@RequestMapping(value="editComment", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> editComment(CommentVO commentVo) {
+		logger.info("{}", commentVo);
+		commentService.editComment(commentVo);
+		return SimpleHashMap.newInstance().put("result", 1);
+	}
+	
+	@RequestMapping(value="deleteComment", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteComment(CommentVO commentVo) {
+		commentService.deleteComment(commentVo);
+	}
 
 }

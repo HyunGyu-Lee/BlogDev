@@ -58,16 +58,20 @@
 	</insert>
 	
 	<update id="update" parameterType="com.leelab.blogproject.comment.vo.CommentVO">
-	
+		UPDATE
+			BLOG_COMMENT
+		<set>
+			<if test="comment.content != null">CONTENT = #{comment.content}</if>
+		</set>
+		<where>
+			ID = #{comment.id}
+		</where>
 	</update>
 	
-	<delete id="delete" parameterType="com.leelab.blogproject.post.vo.SearchVO">
+	<delete id="delete">
 		DELETE FROM
 			BLOG_COMMENT
-		<where>
-			<if test="search.post_id!=null">
-			POST_ID = #{search.post_id}
-			</if>	
-		</where>
+		WHERE
+			ID = #{param1}
 	</delete>		
 </mapper>
