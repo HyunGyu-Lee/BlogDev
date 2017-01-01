@@ -5,10 +5,15 @@
 		<title>${user.nickname}님의 블로그</title>
 	</head>
 	<body>
-		<div class="pull-left" style="width: 25%;">
+		<!-- Blog Feature - Background Title Image -->
+		<div style="margin-top: 20px; margin-bottom:10px; width: 100%; height: 300px;">
+			<img src="/blog/blogBgImage/${user.id}" class="bgimg">
+		</div>
+	
+		<div class="pull-left" style="width: 20%;">
 			<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
 		</div>
-		<div class="pull-right" style="width: 70%;">
+		<div class="pull-right" style="width: 75%;">
 			<%@ include file="/WEB-INF/jsp/blog/blog-rightSection.jsp" %>				
 		</div>
 	</body>

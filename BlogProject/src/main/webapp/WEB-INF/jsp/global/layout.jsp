@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/blog/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/blog/resources/css/summernote.css">
 		<link rel="stylesheet" href="/blog/resources/css/register.css">
 		<link rel="stylesheet" href="/blog/resources/css/login.css">
@@ -25,16 +25,27 @@
 		<title><decorator:title default="Welcome Public Blog"/> </title>
 	</head>
 	<body class="has-drawer" style=" padding-top: 70px;">
+		<!-- Header -->
 		<page:applyDecorator name="header"/>
-		
-		<div class="container-fluid" style="padding: 0px">
 
+		<!-- 기기 속성에 따른 Container 설정 -->
+		<c:choose>
+			<c:when test="${device eq 'mobile'}">
+				<c:set var="container" value="container-fluid"/>
+			</c:when>
+			<c:otherwise>
+				<c:set var="container" value="container"/>		
+			</c:otherwise>
+		</c:choose>
+		
+		<!-- Body -->
+		<div class="${container}" style="padding: 0px">			
 			<div class="clearfix">
 				<decorator:body/>
 			</div>
-
-			<page:applyDecorator name="footer"/>
-
 		</div>
+		
+		<!-- Footer -->
+		<page:applyDecorator name="footer"/>		
 	</body>
 </html>

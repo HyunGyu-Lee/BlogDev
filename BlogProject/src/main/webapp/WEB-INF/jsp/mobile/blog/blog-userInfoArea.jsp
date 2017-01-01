@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <input type="hidden" id="idRef" value="${user.id}"/>
-
-<%-- <div style="width: 100%; height: 300px; background-image: url(''); background-size: contain; background-repeat:no-repeat;">
-
-</div> --%>
+<c:choose>
+<c:when test="${not empty posts}">
 <div class="mobile-blog-info-box">
 	<img src="/blog/blogBgImage/${user.id}" class="bgimg">
 	<div class="overary">
@@ -56,3 +54,38 @@
 		</div>
 	</div>
 </div>
+</c:when>
+<c:otherwise>
+<div class="category-box">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			카테고리
+		</div>
+		<div class="clearfix">
+			<div class="pull-left">
+				<ul>
+					<li><a href="/blog/${user.id}?currentPage=1">전체보기</a></li>
+					<c:forEach items="${category}" var="mainCategory">
+						<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
+						<ul>
+						<c:forEach items="${mainCategory.value}" var="subCategory">
+							<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
+						</c:forEach>
+						</ul>
+						</li>
+					</c:forEach>				
+				</ul>
+			</div>
+			<div class="pull-right">
+				<c:choose>
+					<c:when test="${sessionScope.user.id eq user.id}">
+						<input type="hidden" id="idRef" value="${user.id}"/>
+						<span class="label label-info editCategoryBtn">Edit</span>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+</div>
+</c:otherwise>
+</c:choose>

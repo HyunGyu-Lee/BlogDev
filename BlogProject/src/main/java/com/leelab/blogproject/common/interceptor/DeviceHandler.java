@@ -25,6 +25,7 @@ public class DeviceHandler extends DeviceResolverHandlerInterceptor {
 			Device device = DeviceUtils.getCurrentDevice(request);
 			if(device.isMobile())
 			{
+				modelAndView.addObject("device", "mobile");
 				if(modelAndView.getViewName().contains("blog/")||modelAndView.getViewName().contains("register/"))
 				{
 					modelAndView.setViewName("mobile/"+modelAndView.getViewName());

@@ -2,14 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <input type="hidden" id="idRef" value="${user.id}"/>
 <div class="blog-profile-box">
-	<div class="clearfix">
-		<c:url value="/ajax/profileImage/${user.id}" var="IMAGE"/>
-		<img src="${IMAGE}" class="profile_view pull-left" style="margin-right: 20px;">
-		<div class="info">
-			${user.nickname} 님
-			<!-- <a href="logout" class="label label-danger">로그아웃</a> -->
-		</div>
-		<span class="control">
+	<div style="width: 100%; height: 100px;">
+		<img src="/blog/ajax/profileImage/${user.id}" class="bgimg">
+	</div>
+	<div style="margin-top: 10px;">
+		<span>${user.nickname}</span><br/>
+		<span>(${user.id})</span><br/>
+		<p>${feature.description}</p>
 		<c:choose>
 			<c:when test="${sessionScope.user.id eq user.id}">
 				<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>
@@ -20,7 +19,6 @@
 				<a href="#" class="label label-primary">이웃 추가</a>
 			</c:otherwise>
 		</c:choose>
-		</span>
 	</div>
 </div>
 

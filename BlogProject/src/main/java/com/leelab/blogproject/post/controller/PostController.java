@@ -145,6 +145,7 @@ public class PostController {
 		mv.addObject("footer", posts);
 		mv.addObject("page", pageVo);
 		mv.addObject("search", searchVo);
+		mv.addObject("feature", featureService.getBlogFeature(searchVo.getUser_id()));
 		return mv;
 	}
 	

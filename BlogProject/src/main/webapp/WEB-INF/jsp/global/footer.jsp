@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="/blog/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 <script src='/blog/resources/js/table-util.js'></script>
 <script src='/blog/resources/js/summernote.js'></script>
 <script src='/blog/resources/js/home.js'></script>
