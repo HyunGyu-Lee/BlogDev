@@ -9,7 +9,10 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<interceptors>
-		<beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean class="com.leelab.blogproject.common.interceptor.DeviceHandler"/>
+		</interceptor>
 		<interceptor>
 			<mapping path="/**"/>
 			<exclude-mapping path="/"/>

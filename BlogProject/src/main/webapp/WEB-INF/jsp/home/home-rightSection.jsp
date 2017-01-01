@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${empty sessionScope.user.id}">
+<%-- <c:if test="${empty sessionScope.user.id}">
 	<div>
 		<form id="login">
 			<table class="table table-borderless">
@@ -30,4 +30,4 @@
 			<a href="#" class="label label-success openMyBlog">내 블로그</a>
 		</div>
 	</div>
-</c:if>
+</c:if> --%>

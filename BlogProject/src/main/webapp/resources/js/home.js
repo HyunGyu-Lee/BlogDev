@@ -19,4 +19,5 @@ $(function(){
 		var id = $('#idRef').val();
 		location. href = '/blog/'+id;
 	})
+
 })

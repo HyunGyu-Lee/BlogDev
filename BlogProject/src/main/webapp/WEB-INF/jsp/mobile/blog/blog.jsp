@@ -2,14 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Blog - 메인</title>
+		<title>${user.nickname}님의 블로그</title>
 	</head>
 	<body>
-		<div class="">
-			<%@ include file="/WEB-INF/jsp/home/home-leftSection.jsp" %>
+		<div>
+			<%@ include file="/WEB-INF/jsp/mobile/blog/blog-userInfoArea.jsp" %>
 		</div>
-		<%-- <div class="pull-right">
-			<%@ include file="/WEB-INF/jsp/home/home-rightSection.jsp" %>				
-		</div> --%>
+		
+		<div>
+			<%@ include file="/WEB-INF/jsp/mobile/blog/blog-postArea.jsp" %>				
+		</div>
 	</body>
 </html>

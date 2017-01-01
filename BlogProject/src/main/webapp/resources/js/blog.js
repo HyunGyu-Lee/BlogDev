@@ -1,3 +1,17 @@
+$(document).on('click','.categoryToggle',function(){
+	var content = $('.category-box');
+	var visible = content.is(':visible');
+	
+	if(visible)
+	{
+		content.hide();
+	}
+	else
+	{
+		content.show();
+	}
+})
+
 $(document).on('click','.deleteComment',function(){
 	var comment_id = $(this).parent().parent().parent().parent().attr('comment_id');
 	var post_id = $(this).attr('post_id');

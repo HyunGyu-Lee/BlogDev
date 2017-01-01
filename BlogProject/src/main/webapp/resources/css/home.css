@@ -1,11 +1,16 @@
 @CHARSET "EUC-KR";
 .profile-box {
-	background-color: rgb(239, 240, 242);
-	padding: 7px;
+
 }
 
 .userInfo {
 	
+}
+
+.user-control {
+	color : white;
+	margin-top : 12px;
+	margin-left: 12px;
 }
 
 .username {
@@ -27,8 +32,35 @@
 	font-size: 11px;
 }
 
-.home {
-	cursor: pointer;
-	font-size: 35px;
-	font-style: inherit;
+.navigation {
+	margin : 0px;
+	padding-left : 5px;
+	height : 70px;
+	padding-top : 16px;
+	background-color : #2196F3;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.navigation ul {
+	margin : 0px;
+	padding : 0px;
+	list-style-type : none;
+}
+
+.navigation li {
+	display: inline;
+	margin-right : 15px;
+	font-size: 30px;
+	color: white;
+}
+
+.nav-title {
+
+}
+
+.navigation li a {
+	color: white;
 }

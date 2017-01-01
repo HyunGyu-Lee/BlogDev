@@ -1,5 +1,59 @@
 @CHARSET "EUC-KR";
 
+.feature-description {
+	padding-left: 15px;
+}
+
+.mobile-blog-info-box {
+	width: 100%;
+	height: 380px;
+	padding: 0;
+	position: relative;
+}
+
+.bgimg{
+	width: 100%;
+	height: 100%;
+}
+
+.overary {
+	padding-left : 15px;
+	position: absolute;
+	bottom: 30px;
+}
+
+.overary .user-nick {
+	color : white;
+	font-size: 20px;
+}
+
+.overary .feature {
+	color : white;
+	margin-bottom: 100px;
+}
+
+.overary .control {
+	margin: 0;
+	padding: 0;
+	margin-top: 15px;
+}
+
+.overary .control li {
+	display : inline;
+	list-style: none;
+}
+
+.outline-btn {
+	background: none;
+	padding: 8px 18px;
+	border: 1px solid #ffffff;
+	color: white;
+	font-size: 25px;
+}
+
+
+
+
 .clickable {
 	cursor: pointer;
 }

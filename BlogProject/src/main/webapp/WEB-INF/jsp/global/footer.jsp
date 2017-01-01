@@ -13,4 +13,5 @@
 <script src='/blog/resources/js/summernote-wrapper.js'></script>
 <script src='/blog/resources/js/writePost.js'></script>
 <script src='/blog/resources/js/lang/summernote-ko-KR.js'></script>
+<script src='/blog/resources/js/drawer.min.js'></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>

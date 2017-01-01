@@ -36,7 +36,8 @@ public class CategoryTestCase {
 	@Test
 	public void test() {
 		
-		service.deleteCategory(1, "main");
+		//service.deleteCategory(1, "main");
+
 		
 	}
 	

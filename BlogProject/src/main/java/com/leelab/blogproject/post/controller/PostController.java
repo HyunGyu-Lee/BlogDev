@@ -20,6 +20,7 @@ import com.leelab.blogproject.category.dto.MainCategoryDTO;
 import com.leelab.blogproject.category.dto.SubCategoryDTO;
 import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
+import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.post.service.PostService;
 import com.leelab.blogproject.post.vo.PostVO;
@@ -40,6 +41,9 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private FeatureService featureService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 	
@@ -100,6 +104,7 @@ public class PostController {
 		mv.addObject("posts", posts);
 		mv.addObject("page", pageVo);
 		mv.addObject("search", searchVo);
+		mv.addObject("feature", featureService.getBlogFeature(searchVo.getUser_id()));
 		logger.info("{}", searchVo);
 		logger.info("{}", pageVo);
 		return mv;
