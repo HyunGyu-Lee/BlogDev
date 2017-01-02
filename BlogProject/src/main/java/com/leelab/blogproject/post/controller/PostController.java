@@ -21,6 +21,7 @@ import com.leelab.blogproject.category.dto.SubCategoryDTO;
 import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
 import com.leelab.blogproject.feature.service.FeatureService;
+import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.post.service.PostService;
 import com.leelab.blogproject.post.vo.PostVO;
@@ -97,15 +98,17 @@ public class PostController {
 		searchVo.setUser_id(id);
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
-
+		
+		FeatureVo feature = featureService.getBlogFeature(searchVo.getUser_id());
+		
 		ModelAndView mv = new ModelAndView("blog/blog");		
 		mv.addObject("user", user);
 		mv.addObject("category", category);
 		mv.addObject("posts", posts);
 		mv.addObject("page", pageVo);
 		mv.addObject("search", searchVo);
-		mv.addObject("feature", featureService.getBlogFeature(searchVo.getUser_id()));
-		logger.info("{}", searchVo);
+		mv.addObject("feature", feature);
+		logger.info("{}", feature);
 		logger.info("{}", pageVo);
 		return mv;
 	}

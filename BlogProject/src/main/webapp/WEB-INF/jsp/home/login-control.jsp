@@ -12,7 +12,7 @@
 			</tr>
 		</table>
 	</form>
-	<a href="/blog/openRegister" style="color:white;">아직 회원이 아니세요?</a>
+	<a href="/blog/openRegister" style="color:white;">아직 회원이 아니세요? 클릭</a>
 </c:if>
 <c:if test="${not empty sessionScope.user.id}">
 	<div class="profile-box clearfix">

@@ -1,22 +1,22 @@
 $(function(){
 	
 	$('.login-button').click(function(){
-		var id = $('input[name="id"]').val();
-		var password = $('input[name="password"]').val();
-		console.log($('input[name="id"]').val());
+		var id = $(this).parent().parent().parent().find('input[name="id"]').val();
+		var password = $(this).parent().parent().parent().find('input[name="password"]').val();
+		
 		if(!isEmptyString(id)&&!isEmptyString(password))
 		{
 			$.ajax({
 				url : '/blog/ajax/login',
 				type : 'post',
-				data : $('#login').serialize(),
+				data : {id : id, password : password},
 				dataType : 'json',
 				success : function(response) {
 					if(response.result==true)
 					{
-						if(response.redirectUri==null)
+						if(response.redirectUri=='/blog')
 						{
-							location.href = '/blog/';
+							window.location = '/blog';
 						}
 						else
 						{

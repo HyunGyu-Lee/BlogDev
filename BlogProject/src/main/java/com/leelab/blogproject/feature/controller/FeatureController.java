@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
 import com.leelab.blogproject.feature.service.FeatureService;
@@ -33,6 +34,12 @@ public class FeatureController {
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(featureService.getBackgroundImage(id), header, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping("manage")
+	public ModelAndView manage() {
+		ModelAndView mv = new ModelAndView("blog/manage/manage");
+		return mv;
 	}
 	
 }

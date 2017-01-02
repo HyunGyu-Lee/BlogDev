@@ -29,7 +29,7 @@
         </div>
         <div class="drawer-body">
         	<nav>
-        		<ul class="nav nav-tabs nav-justified">
+        		<ul class="">
 	        		<li><span class="glyphicon glyphicon-bell"></span></li>
 	        		<li><span class="glyphicon glyphicon glyphicon-user"></span></li>
 	        		<li><span class="glyphicon glyphicon glyphicon-cog"></span></li>        		
@@ -37,7 +37,7 @@
         	</nav>
         </div>
         <ul class="drawer-nav">
-            <li role="presentation" class="active"><a href="#">컨텐츠1</a></li>
+            <li role="presentation" class="active"><a href="/blog/${sessionScope.user.id}">내 블로그</a></li>
             <li role="presentation"><a href="#">컨텐츠2</a></li>
             <li role="presentation"><a href="#">컨텐츠3</a></li>
         </ul>

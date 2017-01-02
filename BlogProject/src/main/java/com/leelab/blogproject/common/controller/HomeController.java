@@ -12,17 +12,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.leelab.blogproject.subject.service.SubjectService;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
 
 @Controller
 public class HomeController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
 	@Autowired
 	private UserService userService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	@Autowired
+	private SubjectService subjectService;
 	
 	/**
 	 * Home ∫‰ ø‰√ª
@@ -30,13 +35,16 @@ public class HomeController {
 	 * @return String - "home/home"
 	 * */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(HttpSession session) {
+	public ModelAndView home(HttpSession session) {
 		if(session.getAttribute("user")!=null)
 		{
 			String id = ((UserDTO)session.getAttribute("user")).getId();
 			session.setAttribute("user", userService.getUser(id));
 		}
-		return "home/home";
+		
+		ModelAndView mv = new ModelAndView("home/home");
+		mv.addObject("subjects", subjectService.getSubjects());
+		return mv;
 	}
 	
 	/**
