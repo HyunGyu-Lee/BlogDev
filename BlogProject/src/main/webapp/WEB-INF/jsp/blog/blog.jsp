@@ -3,19 +3,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>${user.nickname}님의 블로그</title>
+		<title>${feature.title} : Public Blog</title>
 	</head>
 	<body>
 		<!-- Blog Feature - Background Title Image -->
-		<c:if test="${not empty feature}">
+		<c:if test="${not empty feature.bgimg}">
 			<div style="margin-top: 20px; margin-bottom:10px; width: 100%; height: 300px;">
 				<img src="/blog/blogBgImage/${user.id}" class="bgimg">
 			</div>
 		</c:if>
-		<c:if test="${empty feature and sessionScope.user.id eq user.id}">
+		<c:if test="${empty feature.bgimg and sessionScope.user.id eq user.id}">
 			<div style="margin-top: 20px; margin-bottom:10px; width: 100%;">
-				<div class="alert alert-danger" role="alert">
-					블로그에 추가정보가 필요합니다! <br/>
+				<div class="alert alert-warning" role="alert">
+					블로그에 커버이미지가 없습니다. <br/>
 					<a href="/blog/manage?type=typography&user_id=${user.id}" class="alert-link">관리</a>페이지에서 블로그 배경화면과 블로그 정보를 설정할 수 있습니다.
 				</div>
 			</div>

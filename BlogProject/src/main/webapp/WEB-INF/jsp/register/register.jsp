@@ -24,12 +24,12 @@
 					<table class="table" cellpadding="0" cellspacing="0" style="width:70%;">
 						<tr>
 							<td><span class="register_form_label">아이디</span></td>
-							<td><input type="text" name="id" class="register_form_control"/></td>
+							<td><input type="text" name="reg_id" class="register_form_control"/></td>
 							<td align="center"><input type="button" class="btn btn-info duplicate-check" value="중복확인"/></td>
 						</tr>
 						<tr>
 							<td><span class="register_form_label">비밀번호</span></td>
-							<td><input type="password" name="password" class="register_form_control"/></td>
+							<td><input type="password" name="reg_password" class="register_form_control"/></td>
 							<td></td>
 						</tr>
 						<tr>

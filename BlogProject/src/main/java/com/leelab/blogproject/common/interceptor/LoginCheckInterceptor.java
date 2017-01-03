@@ -52,10 +52,12 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 				response.getWriter().close();
 			}
 			else
-			{	
-				sb.delete(sb.length()-3, sb.length()-1);
-				sb.deleteCharAt(sb.length()-1);
-				logger.info("{}", sb.toString());
+			{	if(sb.length()!=1)
+				{
+					logger.info("{}", sb.toString());
+					sb.delete(sb.length()-3, sb.length()-1);
+					sb.deleteCharAt(sb.length()-1);
+				}
 				response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI()+sb.toString());
 			}
 			

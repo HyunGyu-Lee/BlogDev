@@ -5,13 +5,14 @@ import java.util.HashMap;
 
 import javax.mail.MessagingException;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.leelab.blogproject.feature.dao.FeatureDAO;
+import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.user.dao.UserDAO;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.utils.CollectionUtils;
@@ -28,6 +29,9 @@ public class UserService {
 	@Autowired
 	private UserDAO userDao;
 
+	@Autowired
+	private FeatureDAO featureDao;
+	
 	@Autowired
 	private MailTemplate mail;
 	
@@ -76,8 +80,11 @@ public class UserService {
 					+ "#인증코드<br/>"
 					+ "<b>"+user.getAuth_key()+"</b>";
 		
-		mail.send(user.getEmail(), "Blog 회원가입 인증 메일입니다.", html);
+		mail.send("Blog 회원가입 인증 메일입니다.", html, new String[]{user.getEmail()});
 		logger.info("Send mail complete");
+		
+		/* Default Feature 생성 */
+		featureDao.insert(new FeatureVo(id, nickname+"님의 블로그", nickname+"님의 블로그입니다.", null, "", 1));
 	}
 	
 	public boolean login(String id, String password) {
@@ -117,7 +124,7 @@ public class UserService {
 		    .plain("#인증코드").br()
 		    .b(auth_key);
 		
-		mail.send(user.getEmail(), "Blog 이메일 인증 인증코드입니다.", html.generateHTML());
+		mail.send("Blog 이메일 인증 인증코드입니다.", html.generateHTML(), new String[]{user.getEmail()});
 		
 		userDao.update(user);
 	}

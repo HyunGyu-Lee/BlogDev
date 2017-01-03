@@ -12,11 +12,11 @@ function isEmpty(name) {
 $(function(){
 	/* 가입하기 버튼 클릭시 */
 	$('.btn.regist').click(function(){
-		if(isEmpty('id')) {
+		if(isEmpty('reg_id')) {
 			swal('','아이디를 확인하세요','error');
 			return;
 		}
-		if(isEmpty('password')) {
+		if(isEmpty('reg_password')) {
 			swal('','비밀번호를 확인하세요','error');
 			return;
 		}
@@ -90,7 +90,7 @@ $(function(){
 	
 	/* 아이디 중복체크 클릭시 */
 	$('.duplicate-check').click(function() {
-		var id = $('input[name*="id"').val();
+		var id = $('input[name*="reg_id"').val();
 		id = id.trim();
 		
 		if(id.length==0)
@@ -120,7 +120,7 @@ $(function(){
 	});	
 	
 	$('#password_confirm').on("input",function(){
-		var test = $('input[name*="password"').val();
+		var test = $('input[name*="reg_password"').val();
 		var target = $('#password_confirm').val();
 
 		if(test==target)

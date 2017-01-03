@@ -53,12 +53,14 @@ public class UserController {
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public HashMap<String, Object> register(MultipartRequest request) throws IllegalStateException, IOException, MessagingException {
-		userService.registUser(request.get("id"),
-							   request.get("password"),
+		userService.registUser(request.get("reg_id"),
+							   request.get("reg_password"),
 							   request.get("nickname"),
 							   request.get("email"),
 							   request.get("phone"),
 							   request.getFile(0));
+		
+		
 		
 		return SimpleHashMap.newInstance().put("result", true);
 	}

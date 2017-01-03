@@ -54,18 +54,8 @@ public class TestApplication {
 	}
 	
 	@Test
-	public void test() throws MessagingException {
-		
-		for(int i=1;i<=50;i++)
-		{
-			postDao.insert(new PostDTO(0, "admin", i+"번째제목", 16, 2, 0, "내용", null));
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
+	public void test()  {
+
 	}
 	
 	

@@ -11,6 +11,7 @@
 			F.TITLE,
 			F.DESCRIPTION,
 			F.BGIMG,
+			F.SUBJECT_ID,
 			S.NAME AS SUBJECT_NAME
 		FROM
 			BLOG_FEATURE F, BLOG_SUBJECT S
@@ -18,5 +19,27 @@
 			F.SUBJECT_ID = S.ID AND
 			F.USER_ID = #{param1}		
 	</select>	
+
+	<update id="update" parameterType="com.leelab.blogproject.feature.vo.FeatureVo">
+		UPDATE
+			BLOG_FEATURE
+		<set>
+			<if test="title != null">TITLE = #{title},</if>
+			<if test="description != null">DESCRIPTION = #{description},</if>
+			<if test="bgimg != null">BGIMG = #{bgimg},</if>
+			<if test="subject_id != 0">SUBJECT_ID = #{subject_id}</if>
+		</set>
+		WHERE
+			USER_ID = #{user_id}
+	</update>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.feature.vo.FeatureVo">
+		INSERT INTO
+			BLOG_FEATURE
+				(USER_ID, TITLE, DESCRIPTION, SUBJECT_ID)
+			VALUES
+				(#{user_id}, #{title}, #{description}, #{subject_id})
+			
+	</insert>
 
 </mapper>

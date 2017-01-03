@@ -13,7 +13,8 @@ public class GeneralExceptionHandler {
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception e) {
-		logger.info("{}", e.getMessage());
+		e.printStackTrace();
+		//logger.info("{}", e.getMessage());
 		return new ModelAndView("error");
 	}
 	

@@ -1,52 +1,85 @@
 package com.leelab.blogproject.utils.mail;
 
-import javax.mail.MessagingException;
+import java.util.Properties;
 
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.stereotype.Component;
 
 public class MailTemplate {
 	
-	private JavaMailSender mailSender;
-	private String from;
-	private String encoding;
-	
+	private String host = "smtp.gmail.com";
+	private int port;
+	private String username;
+	private String password;
+
 	public MailTemplate(){}
 
-	public JavaMailSender getMailSender() {
-		return mailSender;
+	public String getHost() {
+		return host;
 	}
 
-	public String getEncoding() {
-		return encoding;
+	public void setHost(String host) {
+		this.host = host;
 	}
 
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getFrom() {
-		return from;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
-	public void send(String to, String title, String content) throws MessagingException {
-		MimeMessageHelper helper = new MimeMessageHelper(mailSender.createMimeMessage(), true, encoding);
-		helper.setFrom(from);
-		helper.setTo(to);
-		helper.setText("", content);
-		helper.setSubject(title);
-		mailSender.send(helper.getMimeMessage());
+	public int getPort() {
+		return port;
 	}
-	
-	public void send(String[] to, String title, String content) {
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public void send(String title, String content, String[] tos) throws MessagingException {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", port);
+        props.put("mail.smtp.ssl.trust", host);
 		
+		Session session = Session.getInstance(props, new Authenticator() {
+						  	@Override
+							protected PasswordAuthentication getPasswordAuthentication() {
+						  		return new PasswordAuthentication(username, password);
+							}
+						  });
+		
+		MimeMessage msg = new MimeMessage(session);
+		msg.setSubject(title);
+		msg.setText(content);
+		msg.setFrom(new InternetAddress(username));
+		
+		for(String to : tos)
+		{
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		}
+		
+		Transport.send(msg, msg.getAllRecipients());
 	}
+
 }
