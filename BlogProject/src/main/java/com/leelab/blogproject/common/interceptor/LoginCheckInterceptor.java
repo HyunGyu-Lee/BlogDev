@@ -39,7 +39,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			{
 				for(Map.Entry<String, String[]> entry : map.entrySet())
 				{
-					sb.append(entry.getKey()).append("=").append(entry.getValue()[0]);
+					logger.info("{}", entry.getKey());
+					sb.append(entry.getKey()).append("=").append(entry.getValue()[0]).append("AND");
 				}
 			}
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With")))
@@ -51,7 +52,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 				response.getWriter().close();
 			}
 			else
-			{				
+			{	
+				sb.delete(sb.length()-3, sb.length()-1);
+				sb.deleteCharAt(sb.length()-1);
+				logger.info("{}", sb.toString());
 				response.sendRedirect("/blog/openLogin?requestUri="+request.getRequestURI()+sb.toString());
 			}
 			

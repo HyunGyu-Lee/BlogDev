@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <input type="hidden" id="idRef" value="${user.id}"/>
 <div class="blog-profile-box">
-	<div style="width: 100%; height: 100px;">
+	<div style="width: 100%; height: auto;">
 		<img src="/blog/ajax/profileImage/${user.id}" class="bgimg">
 	</div>
 	<div style="margin-top: 10px;">
@@ -12,7 +12,7 @@
 		<c:choose>
 			<c:when test="${sessionScope.user.id eq user.id}">
 				<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>
-				<a href="/blog/manage" class="label label-warning manageBtn">관리</a>
+				<a href="/blog/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
 				<a href="#" class="label label-success statisticBtn">통계</a>
 			</c:when>
 			<c:otherwise>

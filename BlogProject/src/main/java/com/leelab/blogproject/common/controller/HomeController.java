@@ -77,7 +77,7 @@ public class HomeController {
 	@RequestMapping("/openLogin")
 	public String openLogin(HttpServletRequest request, Model model) {
 		String uri = request.getParameter("requestUri");
-		if(uri!=null)model.addAttribute("redirectUri", uri);
+		if(uri!=null)model.addAttribute("redirectUri", uri.replaceAll("AND", "&"));
 		return "login/login";
 	}
 	

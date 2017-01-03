@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.service.CategoryService;
-import com.leelab.blogproject.post.service.PostService;
+import com.leelab.blogproject.common.vo.ManagePageMeshType;
 
 @Controller
 public class CategoryController {
@@ -23,14 +23,11 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@Autowired
-	private PostService postService;
-	
 	@RequestMapping("manage/categoryInfo")
 	public ModelAndView manage(@RequestParam("blogId") String blogId) {
 		ModelAndView mv = new ModelAndView("blog/manage/manage");
 		mv.addObject("blogId", blogId);
-		mv.addObject("type", "categoryInfo");
+		mv.addObject("type", ManagePageMeshType.CATEGORY_INFO);
 		mv.addObject("category", categoryService.getUserCategory(blogId));
 		return mv;
 	}

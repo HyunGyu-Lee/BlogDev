@@ -195,4 +195,5 @@ public class PostController {
 	public void updatePost(PostDTO post) {
 		postService.updatePost(post);
 	}
+	
 }

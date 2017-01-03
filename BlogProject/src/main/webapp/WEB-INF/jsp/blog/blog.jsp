@@ -7,15 +7,22 @@
 	</head>
 	<body>
 		<!-- Blog Feature - Background Title Image -->
-		<c:set var="imageURL" value="/blog/resources/image/blog_bg_ph.jpg"/>
 		<c:if test="${not empty feature}">
-			<c:set var="imageURL" value="/blog/blogBgImage/${user.id}"/>
+			<div style="margin-top: 20px; margin-bottom:10px; width: 100%; height: 300px;">
+				<img src="/blog/blogBgImage/${user.id}" class="bgimg">
+			</div>
+		</c:if>
+		<c:if test="${empty feature and sessionScope.user.id eq user.id}">
+			<div style="margin-top: 20px; margin-bottom:10px; width: 100%;">
+				<div class="alert alert-danger" role="alert">
+					블로그에 추가정보가 필요합니다! <br/>
+					<a href="/blog/manage?type=typography&user_id=${user.id}" class="alert-link">관리</a>페이지에서 블로그 배경화면과 블로그 정보를 설정할 수 있습니다.
+				</div>
+			</div>
 		</c:if>
 		
-		<div style="margin-top: 20px; margin-bottom:10px; width: 100%; height: 300px;">
-			<img src="${imageURL}" class="bgimg">
-		</div>
-	
+		<div style="margin-bottom: 10px;"></div>
+		
 		<div class="pull-left" style="width: 20%;">
 			<%@ include file="/WEB-INF/jsp/blog/blog-leftSection.jsp" %>
 		</div>

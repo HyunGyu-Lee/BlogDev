@@ -7,6 +7,7 @@
 	
 	<select id="select" resultType="com.leelab.blogproject.feature.vo.FeatureVo">
 		SELECT
+			F.USER_ID,
 			F.TITLE,
 			F.DESCRIPTION,
 			F.BGIMG,

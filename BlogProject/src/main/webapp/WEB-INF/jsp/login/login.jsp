@@ -10,7 +10,7 @@
 		<form id="login">
 			<c:choose>
 				<c:when test="${not empty redirectUri}">
-					<input type="hidden" name="redirectUri" value="${redirectUri}"/>					
+					<input type="hidden" name="redirectUri" value="${redirectUri}"/>
 				</c:when>
 				<c:otherwise>
 					<input type="hidden" name="redirectUri" value="/"/>				

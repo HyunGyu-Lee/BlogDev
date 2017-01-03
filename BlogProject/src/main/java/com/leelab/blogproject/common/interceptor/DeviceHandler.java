@@ -15,14 +15,6 @@ public class DeviceHandler extends DeviceResolverHandlerInterceptor {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceHandler.class);
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		logger.info("========================================================================================");
-		logger.info("{}", request.getRequestURI());
-		return super.preHandle(request, response, handler);
-	}
-	
-	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))||modelAndView==null)
 		{
@@ -41,7 +33,7 @@ public class DeviceHandler extends DeviceResolverHandlerInterceptor {
 			}
 			logger.info("{}, {}", device, modelAndView.getViewName());
 		}
-		logger.info("========================================================================================");
+
 		super.postHandle(request, response, handler, modelAndView);
 	}
 	
