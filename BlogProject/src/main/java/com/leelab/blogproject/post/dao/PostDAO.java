@@ -28,5 +28,7 @@ public interface PostDAO {
 	void delete(int post_id);
 
 	void update(@Param("post") PostDTO post);
+
+	void updateHit(int post_id);
 	
 }

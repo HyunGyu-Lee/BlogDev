@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -9,7 +10,7 @@
 		<input type="hidden" id="idRef" value="${user.id}"/>
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav nav-pills">
-				<li role="presentation" class="typography"><a href="/blog/manage?type=typography&user_id=${user.id}">블로그 설정</a></li>
+				<li role="presentation" class="typography"><a href="${contextPath}/manage?type=typography&user_id=${user.id}">블로그 설정</a></li>
 				<li role="presentation" class="decoration"><a href="#">꾸미기 설정</a></li>
 				<li role="presentation" class="categoryInfo"><a href="#">글 관리</a></li>
 				<li role="presentation" class="stat"><a href="#">통계</a></li>			
@@ -47,10 +48,10 @@
 <%-- 		<div class="pull-right info-box" style="width: 75%;">
 			<c:choose>
 				<c:when test="${type eq 'categoryInfo'}">
-					<%@ include file="/WEB-INF/jsp/blog/manage/categoryInfo.jsp"%>
+					<%@ include file="/WEB-INF/jsp${contextPath}/manage/categoryInfo.jsp"%>
 				</c:when>
 				<c:when test="${type eq 'typography'}">
-					<%@ include file="/WEB-INF/jsp/blog/manage/typography.jsp"%>
+					<%@ include file="/WEB-INF/jsp${contextPath}/manage/typography.jsp"%>
 				</c:when>
 			</c:choose>
 		</div> --%>

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <input type="hidden" id="idRef" value="${user.id}"/>
 <div class="blog-profile-box">
 	<div style="width: 100%; height: auto;">
-		<img src="/blog/ajax/profileImage/${user.id}" class="bgimg">
+		<img src="${contextPath}/ajax/profileImage/${user.id}" class="bgimg">
 	</div>
 	<div style="margin-top: 10px;">
 		<span>${user.nickname}</span><br/>
@@ -12,7 +13,7 @@
 		<c:choose>
 			<c:when test="${sessionScope.user.id eq user.id}">
 				<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>
-				<a href="/blog/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
+				<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
 				<a href="#" class="label label-success statisticBtn">통계</a>
 			</c:when>
 			<c:otherwise>
@@ -40,15 +41,15 @@
 	
   		<ul class="list-group">
 			<li class="list-group-item">
-				<a href="/blog/${user.id}?currentPage=1">전체보기</a>
+				<a href="${contextPath}/${user.id}?currentPage=1">전체보기</a>
 			</li>
 			<c:forEach items="${category}" var="mainCategory">
-				<li class="list-group-item"><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
+				<li class="list-group-item"><a href="${contextPath}/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
 					<c:if test="${mainCategory.value.size() != 0}">	<span class="caret clickable" data-toggle="collapse" data-target="#msarea${mainCategory.key.id}"></span></c:if>
 					<div id="msarea${mainCategory.key.id}" class="collapse">
 						<ul>
 						<c:forEach items="${mainCategory.value}" var="subCategory">
-							<li class="list-group-item"><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
+							<li class="list-group-item"><a href="${contextPath}/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
 						</c:forEach>
 						</ul>
 					</div>
@@ -56,5 +57,17 @@
 			</c:forEach>				
 		</ul>  		
 	</div>
+</div>
 
+<div class="well" style="background-color: #e1e1e1;">
+	<table style="margin: 0; width: 100%" >
+		<tr>
+			<td width="50%"><small><strong>TODAY</strong></small></td>
+			<td align="center">${visit_count.unique_today_visitor}</td>
+		</tr>
+		<tr>
+			<td><small><strong>TOTAL</strong></small></td>
+			<td align="center">${visit_count.unique_total_visitor}</td>
+		</tr>
+	</table>
 </div>

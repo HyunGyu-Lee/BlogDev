@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -12,7 +14,7 @@
 				<form id="register" enctype="multipart/form-data">
 				<div align="center">
 					<label for=".profile_view">권장 크기 (64X64)px</label><br/>
-					<img src="/blog/resources/image/profile_view_placeholder.png" class="profile_view"> <br/><br/>
+					<img src="${contextPath}/resources/image/profile_view_placeholder.png" class="profile_view"> <br/><br/>
 					<input type="file" name="profile_url" accept="image/*"/>
 				</div>
 				<br/><br/>

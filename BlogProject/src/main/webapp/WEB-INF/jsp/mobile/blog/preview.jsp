@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -13,13 +14,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
-		<link rel="stylesheet" href="/blog/resources/css/register.css">
-		<link rel="stylesheet" href="/blog/resources/css/login.css">
-		<link rel="stylesheet" href="/blog/resources/css/home.css">
-		<link rel="stylesheet" href="/blog/resources/css/userInfo.css">
-		<link rel="stylesheet" href="/blog/resources/css/blog.css">
-		<link rel="stylesheet" href="/blog/resources/css/manage-categoryInfo.css">
-		<link rel="stylesheet" href="/blog/resources/css/writePost.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/register.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/login.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/home.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/userInfo.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/blog.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/manage-categoryInfo.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/writePost.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.css">
 		<title>포스트 미리보기</title>
 	</head>

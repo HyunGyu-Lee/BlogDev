@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -11,17 +12,17 @@
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.css">
-		<link rel="stylesheet" href="/blog/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/blog/resources/css/summernote.css">
-		<link rel="stylesheet" href="/blog/resources/css/register.css">
-		<link rel="stylesheet" href="/blog/resources/css/login.css">
-		<link rel="stylesheet" href="/blog/resources/css/a.css">		
-		<link rel="stylesheet" href="/blog/resources/css/home.css">
-		<link rel="stylesheet" href="/blog/resources/css/userInfo.css">
-		<link rel="stylesheet" href="/blog/resources/css/blog.css">
-		<link rel="stylesheet" href="/blog/resources/css/manage-categoryInfo.css">
-		<link rel="stylesheet" href="/blog/resources/css/writePost.css">
-		<link rel="stylesheet" href="/blog/resources/css/bootstrap-drawer.min.css">		
+		<link rel="stylesheet" href="${contextPath}/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/summernote.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/register.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/login.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/a.css">		
+		<link rel="stylesheet" href="${contextPath}/resources/css/home.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/userInfo.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/blog.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/manage-categoryInfo.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/writePost.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap-drawer.min.css">
 		<title><decorator:title default="Welcome Public Blog"/> </title>
 	</head>
 	<body class="has-drawer" style=" padding-top: 70px;">

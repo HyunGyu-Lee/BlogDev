@@ -1,23 +1,23 @@
 $(function(){
-	$(".login").click(function(){
-		location.href = "/blog/openLogin";
+	$('.login').click(function(){
+		location.href = $('#contextPath').val()+'/openLogin';
 	});
 	
-	$(".register").click(function(){
-		location.href = "/blog/openRegister";
+	$('.register').click(function(){
+		location.href = $('#contextPath').val()+'/openRegister';
 	});
 	
-	$(".home").click(function(){
-		location.href = "/blog/";
+	$('.home').click(function(){
+		location.href = $('#contextPath').val()+'/';
 	});
 
 	$('.username').click(function(){
-		location.href = '/blog/userInfo';
+		location.href = $('#contextPath').val()+'/userInfo';
 	});
 	
 	$(document).on('click', '.openMyBlog', function(){
 		var id = $('#idRef').val();
-		location. href = '/blog/'+id;
+		location. href = $('#contextPath').val()+'/'+id;
 	})
 
 })

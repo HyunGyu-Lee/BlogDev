@@ -82,7 +82,7 @@ $(function(){
 		}).then(function () {
 			console.log('성공적');
 			swal('회원가입 완료','회원가입이 완료됐습니다. 이메일 인증을 완료하시면 로그인 할 수 있습니다.','success').then(function(){
-				location.href = '/blog/';
+				location.href = $('#contextPath').val()+'/';
 			})
 		})
 

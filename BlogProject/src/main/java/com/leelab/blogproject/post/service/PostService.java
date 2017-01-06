@@ -36,8 +36,19 @@ public class PostService {
 		return postDao.selectPosts(null);
 	}
 
-	public PostDTO getPostDetail(SearchVO searchVO) {
+	public PostDTO getPostDetail(SearchVO searchVO, String viewUserId) {
+		increaseHit(searchVO, viewUserId);
 		return postDao.selectById(searchVO);
+	}
+
+	private void increaseHit(SearchVO searchVO, String viewUserId) {
+		String blogUserId = searchVO.getUser_id();
+		
+		if(!blogUserId.equals(viewUserId))
+		{
+			postDao.updateHit(searchVO.getPost_id());
+		}
+		
 	}
 
 	public void getPostByCategoryId(int id, String type) {
@@ -80,9 +91,5 @@ public class PostService {
 	public void updatePost(PostDTO post) {
 		postDao.update(post);
 	}
-	
-	public void increaseHit(int post_id) {
-		
-	}
-	
+
 }

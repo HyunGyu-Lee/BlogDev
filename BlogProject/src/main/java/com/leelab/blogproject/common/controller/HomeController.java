@@ -29,11 +29,6 @@ public class HomeController {
 	@Autowired
 	private SubjectService subjectService;
 	
-	/**
-	 * Home 뷰 요청
-	 * @param HttpSession
-	 * @return String - "home/home"
-	 * */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session) {
 		if(session.getAttribute("user")!=null)
@@ -47,33 +42,17 @@ public class HomeController {
 		return mv;
 	}
 	
-	/**
-	 * Home 뷰 요청, "/"로 리다이렉트
-	 * @see HomeController#home(HttpSession)
-	 * @param -
-	 * @return String - "redirect:/"
-	 * */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeView(HttpServletRequest request) {
 		return "redirect:/";
 	}
 	
-	/**
-	 * Register 뷰 요청
-	 * @param -
-	 * @return String - "register/register"
-	 * */
 	@RequestMapping("/openRegister")
 	public String openRegister() {
-		logger.info("회원가입창 오픈");
+		logger.info("회원가입 오픈");
 		return "register/register";
 	}
 	
-	/**
-	 * 로그인 화면으로 이동 요청
-	 * @param HttpServletRequest, Model
-	 * @return String - "home/home"
-	 * */
 	@RequestMapping("/openLogin")
 	public String openLogin(HttpServletRequest request, Model model) {
 		String uri = request.getParameter("requestUri");
@@ -81,23 +60,12 @@ public class HomeController {
 		return "login/login";
 	}
 	
-	/**
-	 * 로그아웃 요청<br/>
-	 * HttpSession객체의 invalidate메소드 호출 후 Home으로 리다이렉트
-	 * @param HttpSession
-	 * @return String - "redirect:/"
-	 * */
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
 	
-	/**
-	 * 사용자 정보 보기 화면으로 이동 요청
-	 * @param UserDTO, Model
-	 * @return String - "home/userInfo"
-	 * */
 	@RequestMapping("/userInfo")
 	public String userInfo(@SessionAttribute UserDTO user, Model model) {
 		model.addAttribute("user", userService.getUserInfo(user.getId()));

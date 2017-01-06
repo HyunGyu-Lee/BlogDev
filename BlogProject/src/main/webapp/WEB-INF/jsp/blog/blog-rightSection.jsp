@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <div>
 	<div class="blog-header">
 		<div class="alert alert-info alert-dismissible" role="alert">
@@ -16,7 +17,7 @@
 		<c:forEach items="${posts}" var="post">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<span class="pull-left"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
+					<span class="pull-left"><strong>${post.title} ${post.hit}</strong></span>&nbsp;&nbsp;| 
 					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
 						<c:choose>
 							<c:when test="${empty post.sub_category_name}">
@@ -38,7 +39,7 @@
 				</div>
 				<div class="panel-body post-content">
 					<div align="right" style="margin-bottom: 20px;">
-						<a href="/blog/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
+						<a href="${contextPath}/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com${contextPath}/postview/${user.id}/${post.id}</a>
 					</div>
 					<div>
 					${post.content}
@@ -90,16 +91,16 @@
 			<a class="disabled">이전</a>
 			</c:if>
 			<c:if test="${page.currentPage!=page.prevPage}">
-			<a href="/blog/${user.id}?${queryString}currentPage=${page.prevPage}">이전</a>
+			<a href="${contextPath}/${user.id}?${queryString}currentPage=${page.prevPage}">이전</a>
 			</c:if>
 			|
 			<!-- 페이지 버튼 5개씩 출력 -->
 			<c:forEach begin="${page.firstPage}" end="${page.lastPage}" var="pageIdx">
 				<c:if test="${pageIdx == page.currentPage}">
-				<a href="/blog/${user.id}?${queryString}currentPage=${pageIdx}"><b><u>${pageIdx}</u></b></a> | 
+				<a href="${contextPath}/${user.id}?${queryString}currentPage=${pageIdx}"><b><u>${pageIdx}</u></b></a> | 
 				</c:if>
 				<c:if test="${pageIdx != page.currentPage}">
-				<a href="/blog/${user.id}?${queryString}currentPage=${pageIdx}">${pageIdx}</a> | 
+				<a href="${contextPath}/${user.id}?${queryString}currentPage=${pageIdx}">${pageIdx}</a> | 
 				</c:if>
 			</c:forEach>
 				
@@ -108,7 +109,7 @@
 				<a class="disabled">다음</a>			
 			</c:if>
 			<c:if test="${page.currentPage!=page.nextPage}">
-				<a href="/blog/${user.id}?${queryString}currentPage=${page.nextPage}">다음</a>
+				<a href="${contextPath}/${user.id}?${queryString}currentPage=${page.nextPage}">다음</a>
 			</c:if>
 		</div>
 	</c:when>
@@ -147,7 +148,7 @@
 			</div>
 			<div class="panel-body post-content">
 				<div align="right" style="margin-bottom: 20px;">
-					<a href="/blog/postview/${user.id}/${post.id}${queryString}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com/blog/postview/${user.id}/${post.id}</a>
+					<a href="${contextPath}/postview/${user.id}/${post.id}${queryString}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com${contextPath}/postview/${user.id}/${post.id}</a>
 				</div>
 				<div>
 				${post.content}
@@ -205,7 +206,7 @@
 						<td align="left">
 
 						<c:if test="${post.id == footItem.id}"><span class="glyphicon glyphicon-ok"></span></c:if>
-							<a href="/blog/postview/${user.id}/${footItem.id}${queryString}&currentPage=${page.currentPage}">${footItem.title}</a>
+							<a href="${contextPath}/postview/${user.id}/${footItem.id}${queryString}&currentPage=${page.currentPage}">${footItem.title}</a>
 						</td>
 						<td align="right">
 							<fmt:formatDate value="${footItem.create_at}" pattern="yyyy.MM.dd"/>

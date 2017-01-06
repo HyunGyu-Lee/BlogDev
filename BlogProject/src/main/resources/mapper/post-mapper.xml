@@ -4,6 +4,16 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.leelab.blogproject.post.dao.PostDAO">
+
+	<update id="updateHit">
+		UPDATE
+			BLOG_POST
+		SET
+			HIT = HIT + 1
+		WHERE
+			ID = #{param1}
+	</update>
+
 	<update id="update" parameterType="com.leelab.blogproject.post.dto.PostDTO">
 		UPDATE
 			BLOG_POST

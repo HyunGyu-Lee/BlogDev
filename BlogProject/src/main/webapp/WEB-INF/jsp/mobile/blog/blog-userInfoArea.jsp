@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <input type="hidden" id="idRef" value="${user.id}"/>
 <div class="mobile-blog-info-box">
-	<img src="/blog/blogBgImage/${user.id}" class="bgimg">
+	<img src="${contextPath}/blogBgImage/${user.id}" class="bgimg">
 	<div class="overary">
 		<div class="feature">
 			<h2><b>${feature.title}</b></h2>
 		</div>
-		<img src="/blog/ajax/profileImage/${user.id}" class="profile_view"/> <span class="user-nick">${user.nickname}</span>
+		<img src="${contextPath}/ajax/profileImage/${user.id}" class="profile_view"/> <span class="user-nick">${user.nickname}</span>
 		<ul class="control">
 		<li><button type="button" class="outline-btn categoryToggle"><span class="glyphicon glyphicon-list"></span></button></li>
 		<c:choose>
@@ -37,12 +38,12 @@
 		<div class="clearfix">
 			<div class="pull-left">
 				<ul>
-					<li><a href="/blog/${user.id}?currentPage=1">전체보기</a></li>
+					<li><a href="${contextPath}/${user.id}?currentPage=1">전체보기</a></li>
 					<c:forEach items="${category}" var="mainCategory">
-						<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
+						<li><a href="${contextPath}/${user.id}?main_category_id=${mainCategory.key.id}">${mainCategory.key.name}</a>
 						<ul>
 						<c:forEach items="${mainCategory.value}" var="subCategory">
-							<li><a href="/blog/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
+							<li><a href="${contextPath}/${user.id}?main_category_id=${mainCategory.key.id}&sub_category_id=${subCategory.id}">${subCategory.name}</a></li>
 						</c:forEach>
 						</ul>
 						</li>

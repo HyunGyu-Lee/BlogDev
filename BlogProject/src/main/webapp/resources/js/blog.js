@@ -27,7 +27,7 @@ $(document).on('click','.deleteComment',function(){
 		preConfirm : function(){
 			return new Promise(function(resolve, reject) {
 				$.ajax({
-					url : '/blog/deleteComment',
+					url : $('#contextPath').val()+'/deleteComment',
 					type : 'post',
 					data : {id : comment_id},
 					success : function(){resolve();}
@@ -36,7 +36,7 @@ $(document).on('click','.deleteComment',function(){
 		}
 	}).then(function(){
 		swal('','댓글이 삭제됐습니다.','success').then(function(){
-			location.href = '/blog/postview/'+$('#user_id').val()+'/'+post_id;
+			location.href = $('#contextPath').val()+'/postview/'+$('#user_id').val()+'/'+post_id;
 		});
 	}, function(){});
 });
@@ -51,7 +51,7 @@ $(document).on('click', '.doEdit', function(){
 	};
 	
 	$.ajax({
-		url : '/blog/editComment',
+		url : $('#contextPath').val()+'/editComment',
 		type : 'post',
 		data : data,
 		success : function(response) {
@@ -95,14 +95,14 @@ $(document).on('click', '.addComment', function(){
 	};
 	$(this).prev().val('');
 	$.ajax({
-		url : '/blog/addComment',
+		url : $('#contextPath').val()+'/addComment',
 		type : 'post',
 		data : data,
 		dataType : 'json',
 		success : function(response) {
 			if(response.status==-1)
 			{
-				location.href = '/blog/openLogin';
+				location.href = $('#contextPath').val()+'/openLogin';
 			}
 			else
 			{
@@ -199,9 +199,9 @@ function appendComment(comment, area) {
 	var nicknameView = $(item.find('div').eq(1).find('span').eq(0));
 	var createAtView = $(item.find('div').eq(1).find('span').eq(1));
 	var contentView = $(item.find('div').eq(4));
-	$(item.find('a').eq(0)).attr('href','/blog/'+comment.user_id);
-	$(item.find('img').eq(0)).attr('src','/blog/ajax/profileImage/'+comment.user_id);
-	nicknameView.html('<a href="/blog/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
+	$(item.find('a').eq(0)).attr('href',$('#contextPath').val()+'/'+comment.user_id);
+	$(item.find('img').eq(0)).attr('src',$('#contextPath').val()+'/ajax/profileImage/'+comment.user_id);
+	nicknameView.html('<a href="${contextPath}/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
 	createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));				
 	contentView.html(comment.content);
 	
@@ -214,7 +214,7 @@ function generateComment(post_id, area, currentPage) {
 	
 	area.find('div').eq(0).html('');
 	$.ajax({
-		url : '/blog/postComment',
+		url : $('#contextPath').val()+'/postComment',
 		type : 'post',
 		data : {post_id : post_id, currentPage : currentPage},
 		success : function(response) {
@@ -301,8 +301,9 @@ $(document).on('click', '.viewCommentBtn.closeToggle',function(){
 
 $(document).on('click','.postEditBtn',function(){
 	var post_id = $(this).attr('post_id');
-	var frmObj = new FormObject('/blog/openUpdatePost','post');
+	var frmObj = new FormObject($('#contextPath').val()+'/openUpdatePost','post');
 	frmObj.append('post_id', post_id);
+	frmObj.append('user_id', $('#user_id').val());
 	frmObj.submit();
 });
 
@@ -320,12 +321,12 @@ $(document).on('click','.postDeleteBtn',function(){
 	}
 	
 	$.ajax({
-		url:'/blog/deletePost',
+		url:$('#contextPath').val()+'/deletePost',
 		type:'post',
 		data : data,
 		success : function(){
 			swal('','포스트가 삭제됐습니다.','success').then(function(){
-				location.href = '/blog/'+$('#idRef').val()+'?main_category_id='+mci+'&sub_category_id='+sci;
+				location.href = $('#contextPath').val()+'/'+$('#idRef').val()+'?main_category_id='+mci+'&sub_category_id='+sci;
 			});
 		}
 	});
@@ -333,12 +334,12 @@ $(document).on('click','.postDeleteBtn',function(){
 
 $(document).on('click', '.editCategoryBtn', function(){
 	var id = $('#idRef').val();
-	location.href='/blog/manage/categoryInfo?blogId='+id;
+	location.href=$('#contextPath').val()+'/manage/categoryInfo?blogId='+id;
 })
 
 $(document).on('click','.writePostBtn', function(){
 	var id = $('#idRef').val();
-	location.href = '/blog/openWritePost?blogId='+id;
+	location.href = $('#contextPath').val()+'/openWritePost?blogId='+id;
 });
 
 $(document).on('click','.nextPostListBtn', function(){
@@ -356,7 +357,7 @@ $(document).on('click','.nextPostListBtn', function(){
 	};
 	
 	$.ajax({
-		url : '/blog/ajax/getPostList',
+		url : $('#contextPath').val()+'/ajax/getPostList',
 		type : 'post',
 		data : data,
 		dataType: 'json',
@@ -392,7 +393,7 @@ $(document).on('click','.nextPostListBtn', function(){
 					$(item).addClass('success');
 				}
 				
-				titleView.html(icon+' <a href="/blog/postview/'+user_id+'/'+post.id+
+				titleView.html(icon+' <a href="${contextPath}/postview/'+user_id+'/'+post.id+
 								'?main_category_id='+post.main_category_id+
 								'&sub_category_id='+post.sub_category_id+
 								'&currentPage='+page.currentPage+'">'+post.title+'</a>');
@@ -452,7 +453,7 @@ $(document).on('click','.prevPostListBtn', function(){
 	};
 	
 	$.ajax({
-		url : '/blog/ajax/getPostList',
+		url : $('#contextPath').val()+'/ajax/getPostList',
 		type : 'post',
 		data : data,
 		dataType: 'json',
@@ -488,7 +489,7 @@ $(document).on('click','.prevPostListBtn', function(){
 					$(item).addClass('success');
 				}
 
-				titleView.html(icon+' <a href="/blog/postview/'+user_id+'/'+post.id+
+				titleView.html(icon+' <a href="${contextPath}/postview/'+user_id+'/'+post.id+
 								'?main_category_id='+post.main_category_id+
 								'&sub_category_id='+post.sub_category_id+
 								'&currentPage='+page.currentPage+'">'+post.title+'</a>');

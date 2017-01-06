@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.dto.MainCategoryDTO;
@@ -30,6 +35,9 @@ import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
 import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageVo;
+import com.leelab.blogproject.visithistory.service.VisitHistoryService;
+import com.leelab.blogproject.visithistory.vo.VisitHistoryVO;
+import com.leelab.blogproject.visithistory.vo.VisitorCountVO;
 
 @Controller
 public class PostController {
@@ -45,8 +53,20 @@ public class PostController {
 	
 	@Autowired
 	private FeatureService featureService;
+
+	@Autowired
+	private VisitHistoryService visitHistoryService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+	
+	/* 현재 방문자의 ID 반환, 로그인 중이라면 그사람의 ID를 아니면 null이 반환 */
+	public String getVisitor() {
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		UserDTO loginUser = (UserDTO)request.getSession().getAttribute("user");
+		logger.info("{}", request.getRemoteAddr());
+		if(loginUser!=null) return loginUser.getId();
+		else return request.getRemoteAddr();
+	}
 	
 	@RequestMapping("openWritePost")
 	public ModelAndView openWritePost(@RequestParam("blogId") String id) {
@@ -87,8 +107,11 @@ public class PostController {
 	@RequestMapping("/{id}") 
 	public ModelAndView viewPosts(SearchVO searchVo, PageVo pageVo, @PathVariable String id) {
 		logger.info("Open Blog to {}", id);
-
-		/* 유저 정보 */
+		
+		/* 현재 블로그에 방문한 사람의 ID */
+		String visitorId = getVisitor();
+		
+		/* 블로그 주인 정보 */
 		UserDTO user = userService.getUser(id);
 		
 		/* 유저의 카테고리 정보 */
@@ -99,8 +122,23 @@ public class PostController {
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		
+		/* 블로그 정보 */
 		FeatureVo feature = featureService.getBlogFeature(searchVo.getUser_id());
 		
+		/* Today, Total 정보 */
+		VisitHistoryVO historyVo = new VisitHistoryVO();
+		historyVo.setBlog_id(id);
+		historyVo.setVisitor_id(visitorId);
+		
+		visitHistoryService.visitBlog(historyVo);
+		/* 분명 DB에 데이터는 잘 들어가는데, TOTAL쪽 값, 즉 GET_TOTAL로 가져와지는 값이 1개씩 적음..
+		 * 쿼리문제일까 싶었지만 DB에서 조회하면 멀쩡이나오는거로 봐선 쿼리 문제라 하기 힘듬...
+		 * 대체 뭘까..
+		 *  */
+		VisitorCountVO countVo = visitHistoryService.getBlogVisitorCountInfo(historyVo);
+		
+		logger.info("{}",countVo);
+
 		ModelAndView mv = new ModelAndView("blog/blog");		
 		mv.addObject("user", user);
 		mv.addObject("category", category);
@@ -108,23 +146,34 @@ public class PostController {
 		mv.addObject("page", pageVo);
 		mv.addObject("search", searchVo);
 		mv.addObject("feature", feature);
+		mv.addObject("visit_count", countVo);
 		logger.info("{}", feature);
 		logger.info("{}", pageVo);
 		return mv;
 	}
 	
-	@SuppressWarnings("unused")
-	@NotLoginCheck
 	@RequestMapping("/postview/{id}/{post_id}")
+	@NotLoginCheck
 	public ModelAndView viewPost(@PathVariable(name="id") String id, @PathVariable(name="post_id") String postId, SearchVO searchVo, PageVo pageVo) {
 		logger.info("Open blog to {} - No.{}'s post",id, postId);
 		ModelAndView mv = new ModelAndView("blog/blog");
 		
-		PostDTO post = postService.getPostDetail(searchVo);
+		/* 블로그 주인 ID, 포스트를 보는 사람의 ID를 전달해  */
 		searchVo.setUser_id(id);
+		String viewUserId = getVisitor();
+
+		PostDTO post = postService.getPostDetail(searchVo, viewUserId);
+		
+		if(post==null)
+		{
+			mv.setViewName("error");
+			return mv;
+		}
+		
 		searchVo.setMain_category_id(post.getMain_category_id());
 		searchVo.setSub_category_id(post.getSub_category_id());
 
+		/* 해당 카테고리의 페이지 된 리스트 */
 		ArrayList<PostVO> posts = postService.getPostsInPage(searchVo, pageVo);
 		pageVo.setCurrentPage(posts.get(0).getCurrentPage());
 		pageVo = postService.getPageInfo(searchVo, pageVo);
@@ -134,11 +183,6 @@ public class PostController {
 		for(PostVO p : posts)
 		{
 			logger.info("{}",p);
-		}
-		if(post==null)
-		{
-			mv.setViewName("error");
-			return mv;
 		}
 		
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
@@ -181,9 +225,10 @@ public class PostController {
 	}
 	
 	@RequestMapping("openUpdatePost")
-	public ModelAndView openUpdatePost(SearchVO searchVo) {
+	public ModelAndView openUpdatePost(SearchVO searchVo, @SessionAttribute("user") UserDTO loginUser) {
 		ModelAndView mv = new ModelAndView("blog/updatePost");
-		PostDTO post = postService.getPostDetail(searchVo);
+		logger.info("{}, {}", searchVo, loginUser);
+		PostDTO post = postService.getPostDetail(searchVo, loginUser.getId());
 		mv.addObject("category", categoryService.getUserCategory(post.getUser_id()));
 		post.setContent(StringEscapeUtils.escapeJavaScript(post.getContent()));
 		mv.addObject("post", post);

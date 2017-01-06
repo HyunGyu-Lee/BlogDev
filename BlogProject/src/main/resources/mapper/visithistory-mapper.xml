@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.visithistory.dao.VisitHistoryDAO">
+	
+	<select id="select" parameterType="com.leelab.blogproject.visithistory.vo.VisitHistoryVO" resultType="com.leelab.blogproject.visithistory.vo.VisitHistoryVO">
+		SELECT
+			*
+		FROM
+			BLOG_VISIT_HISTORY
+		<where>
+			<if test="blog_id != null">BLOG_ID = #{blog_id}</if>
+			<if test="visitor_id != null">AND VISITOR_ID = #{visitor_id}</if>
+			<if test="visited_at != null">AND VISITED_AT = #{visited_at}</if>
+			<if test="start != null and end != null">
+			<![CDATA[
+				AND VISITED_AT >= #{start}
+				AND VISITED_AT < #{end}
+			]]>
+			</if>
+			<if test="start == null and end != null">
+			<![CDATA[
+				AND VISITED_AT < #{end}
+			]]>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectCount" parameterType="com.leelab.blogproject.visithistory.vo.VisitHistoryVO" resultType="com.leelab.blogproject.visithistory.vo.VisitorCountVO">
+		WITH GET_TOTAL AS (
+			SELECT
+			  COUNT(DISTINCT VISITOR_ID) AS UNIQUE_TOTAL_VISITOR,
+			  COUNT(*) AS TOTAL_VISITOR
+			FROM
+			  BLOG_VISIT_HISTORY
+			WHERE
+			<![CDATA[VISITED_AT < SYSDATE AND BLOG_ID = #{blog_id}]]>
+			)
+			  
+			SELECT
+			  GT.UNIQUE_TOTAL_VISITOR,
+			  GT.TOTAL_VISITOR,
+			  COUNT(DISTINCT BVH.VISITOR_ID) AS UNIQUE_TODAY_VISITOR,
+			  COUNT(*) AS TODAY_VISITOR
+			FROM
+			  GET_TOTAL GT, BLOG_VISIT_HISTORY BVH
+			WHERE
+			 <![CDATA[TO_CHAR(VISITED_AT,'YYYY/MM/DD') = TO_CHAR(SYSDATE,'YYYY/MM/DD') AND BLOG_ID = #{blog_id}]]>
+			GROUP BY GT.UNIQUE_TOTAL_VISITOR, GT.TOTAL_VISITOR
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.visithistory.vo.VisitHistoryVO">
+		INSERT INTO
+			<if test="visitor_id != null">
+			BLOG_VISIT_HISTORY (ID, BLOG_ID, VISITOR_ID)
+			VALUES(VISIT_HISTORY_SEQ.NEXTVAL, #{blog_id}, #{visitor_id})
+			</if>
+			<if test="visitor_id == null">
+			BLOG_VISIT_HISTORY (ID, BLOG_ID, VISITOR_ID)
+			VALUES(VISIT_HISTORY_SEQ.NEXTVAL, #{blog_id}, 'NLU')
+			</if>
+	</insert>
+	
+
+</mapper>

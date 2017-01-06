@@ -3,14 +3,14 @@ $(document).ready(function(){
 		var tempForm = new FormData();
 		tempForm.append('image', files[0]);
 		$.ajax({
-			url : '/blog/ajax/send',
+			url : $('#contextPath').val()+'/ajax/send',
 			type : 'post',
 			data : tempForm,
 			contentType : false,
 			processData: false,
 			success : function(response){
 				console.log(response.save_url);
-				var url = '/blog/ajax/temp/'+response.save_url;
+				var url = $('#contextPath').val()+'/ajax/temp/'+response.save_url;
 				$.snote.image(url, function($image){
 					$image.css('width', '100%');
 					$image.css('height','auto');
@@ -99,7 +99,7 @@ $(document).on('click','.postWriteBtn', function(){
 		}
 	}).then(function(){
 		swal('','포스트가 작성됐습니다.','success').then(function(){
-			location.href = '/blog/'+user_id;
+			location.href = $('#contextPath').val()+'/'+user_id;
 		});
 	});
 	

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <h4><strong>블로그 정보</strong></h4>
 
 <table class="table" style="table-layout: fixed;">
@@ -17,7 +17,7 @@
 	<tr>
 		<td>블로그 커버 사진</td>
 		<td align="center">
-			<img src="/blog/blogBgImage/${feature.user_id}" id="coverPreview" alt="블로그 커버 이미지를 등록해주세요" style="width: 100%; height: auto;"/>
+			<img src="${contextPath}/blogBgImage/${feature.user_id}" id="coverPreview" alt="블로그 커버 이미지를 등록해주세요" style="width: 100%; height: auto;"/>
 		</td>
 		<td><small>
 			<input type="button" value="등록" id="filePopup" class="btn btn-sm"/><br/><br/>
@@ -62,7 +62,7 @@
 						frmData.append("cover", file);
 						frmData.append("user_id", '${user.id}');
 						$.ajax({
-							url : '/blog/updateCoverImage',
+							url : '${contextPath}/updateCoverImage',
 							type : 'post',
 							processData: false,
 							contentType: false,
@@ -102,7 +102,7 @@
 				preConfirm : function() {
 					return new Promise(function(resolve, reject){
 						$.ajax({
-							url : '/blog/updateBlogFeature',
+							url : '${contextPath}/updateBlogFeature',
 							type : 'post',
 							data : data,
 							success: function() {resolve();},

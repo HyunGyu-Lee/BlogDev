@@ -7,7 +7,7 @@ $(function(){
 		if(!isEmptyString(id)&&!isEmptyString(password))
 		{
 			$.ajax({
-				url : '/blog/ajax/login',
+				url : $('#contextPath').val()+'/ajax/login',
 				type : 'post',
 				data : {"id" : id, "password" : password, "redirectUri" : redirectUri},
 				dataType : 'json',

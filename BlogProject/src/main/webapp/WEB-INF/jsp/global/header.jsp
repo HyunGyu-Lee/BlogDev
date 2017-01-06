@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<input type="hidden" id="contextPath" value="${contextPath}"/>
 <div class="navigation">
 	<!-- 햄버거 메뉴, 사이트 로고 -->
 	<div class="pull-left">
 		<ul>
 			<li><a href="#main-menu" data-toggle="drawer" aria-foldedopen="false" aria-controls="main-menu"><span class="glyphicon glyphicon-menu-hamburger clickable main-menu"></span></a></li>
-			<li><a href="/blog" class="nav-title"><b>Public Blog</b></a></li>
+			<li><a href="${contextPath}" class="nav-title"><b>Public Blog</b></a></li>
 		</ul>
 	</div>
 	<!-- 우측 메뉴 -->
@@ -21,7 +22,7 @@
         <div class="drawer-heading" style="background-color: #2196F3;">
            	<div style="padding-left: 10px;">
            		<h2><a style="color:white;" href="#main-menu" data-toggle="drawer" aria-foldedopen="false" aria-controls="main-menu"><span class="glyphicon glyphicon-menu-hamburger clickable"></span></a><span style="font-size: 30px; margin-left: 10px;">
-	           	<a href="/blog" style="color:white;"><b>Public Blog</b></a></span></h2>
+	           	<a href="${contextPath}" style="color:white;"><b>Public Blog</b></a></span></h2>
            	</div>
            	<div style="padding-left:10px; padding-bottom:10px; margin-top: 15px;">
            		<%@ include file="/WEB-INF/jsp/home/login-control.jsp"%>
@@ -37,7 +38,7 @@
         	</nav>
         </div>
         <ul class="drawer-nav">
-            <li role="presentation" class="active"><a href="/blog/${sessionScope.user.id}">내 블로그</a></li>
+            <li role="presentation" class="active"><a href="${contextPath}/${sessionScope.user.id}">내 블로그</a></li>
             <li role="presentation"><a href="#">컨텐츠2</a></li>
             <li role="presentation"><a href="#">컨텐츠3</a></li>
         </ul>
