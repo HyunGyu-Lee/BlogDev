@@ -55,7 +55,7 @@ public class TestApplication {
 	
 	@Test
 	public void test()  {
-
+		System.out.println(System.getProperty("os.name"));
 	}
 	
 	

@@ -11,8 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.stereotype.Component;
-
 public class MailTemplate {
 	
 	private String host = "smtp.gmail.com";
@@ -70,8 +68,9 @@ public class MailTemplate {
 						  });
 		
 		MimeMessage msg = new MimeMessage(session);
+
 		msg.setSubject(title);
-		msg.setText(content);
+		msg.setContent(content,"text/html; charset=utf-8");
 		msg.setFrom(new InternetAddress(username));
 		
 		for(String to : tos)

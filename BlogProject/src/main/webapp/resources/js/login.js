@@ -16,7 +16,7 @@ $(function(){
 					{
 						if(response.redirectUri=='/blog')
 						{
-							window.location = '/blog';
+							window.location = $('#contextPath').val();
 						}
 						else
 						{

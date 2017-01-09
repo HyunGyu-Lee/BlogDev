@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.leelab.blogproject.feature.dao.FeatureDAO;
@@ -39,7 +41,7 @@ public class UserService {
 		return userDao.selectUser(id);
 	}
 	
-	/* ID Áßº¹ °Ë»ç */
+	/* ID ì¤‘ë³µê²€ì‚¬ */
 	public boolean duplicateUserCheck(String id) {
 		UserDTO user = getUser(id);
 		
@@ -48,7 +50,7 @@ public class UserService {
 		return false;
 	}
 	
-	/* È¸¿ø°¡ÀÔ  */
+	/* íšŒì›ê°€ì…  */
 	public void registUser(String id,
 						   String password,
 						   String nickname,
@@ -73,18 +75,17 @@ public class UserService {
 		userDao.add(user);
 		
 		FileUtils.save(saveFile, FileUtils.PROFILE+profile_url);
-		
-		String html = "<h1>Blog¿¡¼­ º¸³»µå¸³´Ï´Ù.</h1><br/>"
-					+ user.getNickname()+"´Ô, È¸¿ø°¡ÀÔ ÇØÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù.<br/><br/>"
-					+ "http://121.164.173.147:1234/blog ¿¡ ·Î±×ÀÎ ÈÄ ¾Æ·¡ ÀÎÁõÄÚµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.<br/><br/><br/>"
-					+ "#ÀÎÁõÄÚµå<br/>"
+		/* Default Feature ì‚½ì… */
+		featureDao.insert(new FeatureVo(id, nickname+"ì˜ ë¸”ë¡œê·¸", nickname+"ì˜ ë¸”ë¡œê·¸ì…ë‹ˆë‹¤.", null, "", 1));
+		String ctxPath = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		String html = "<h1>Public Blogì— ì˜¤ì‹ ê±¸ í™˜ì˜í•©ë‹ˆë‹¤.</h1><br/>"
+					+ user.getNickname()+"ë‹˜, ê°€ì…ì„ í™˜ì˜í•©ë‹ˆë‹¤.<br/><br/>"
+					+ "<a href=\"http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"+ctxPath+"/"+user.getId()+"\">ë¡œê·¸ì¸</a> í›„ ì•„ë˜ ì¸ì¦ì½”ë“œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. <br/><br/><br/>"
+					+ "# ì¸ì¦ì½”ë“œ<br/>"
 					+ "<b>"+user.getAuth_key()+"</b>";
 		
-		mail.send("Blog È¸¿ø°¡ÀÔ ÀÎÁõ ¸ŞÀÏÀÔ´Ï´Ù.", html, new String[]{user.getEmail()});
+		mail.send("Public Blog ê°€ì… ì¸ì¦ ë©”ì¼", html, new String[]{user.getEmail()});
 		logger.info("Send mail complete");
-		
-		/* Default Feature »ı¼º */
-		featureDao.insert(new FeatureVo(id, nickname+"´ÔÀÇ ºí·Î±×", nickname+"´ÔÀÇ ºí·Î±×ÀÔ´Ï´Ù.", null, "", 1));
 	}
 	
 	public boolean login(String id, String password) {
@@ -116,15 +117,15 @@ public class UserService {
 		String auth_key = StringUtils.getRandomString();
 		UserDTO user = getUser(id);
 		user.setAuth_key(auth_key);
-		
+		String ctxPath = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
 		HTMLGenerator html = new HTMLGenerator();
-		html.h1("Blog¿¡¼­ º¸³»µå¸³´Ï´Ù.").br()
-		    .b(user.getNickname()).plain("´Ô, È¸¿ø°¡ÀÔ ÇØ ÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù.").br(2)
-		    .plain("http://121.164.173.147:1234/blog ¿¡ ·Î±×ÀÎ ÈÄ ¾Æ·¡ ÀÎÁõÄÚµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.").br(3)
-		    .plain("#ÀÎÁõÄÚµå").br()
+		html.h1("Public Blogì—ì„œ ë³´ë‚´ë“œë¦½ë‹ˆë‹¤.").br()
+		    .b(user.getNickname()).plain("ë‹˜ì´ ìš”ì²­í•˜ì‹  ì¸ì¦ì½”ë“œì…ë‹ˆë‹¤.").br(2)
+		    .plain("<a href=\"http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"+ctxPath+"/"+user.getId()+"\">ë¡œê·¸ì¸</a> í›„ ì•„ë˜ ì¸ì¦ì½”ë“œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.").br(3)
+		    .plain("# ì¸ì¦ì½”ë“œ").br()
 		    .b(auth_key);
 		
-		mail.send("Blog ÀÌ¸ŞÀÏ ÀÎÁõ ÀÎÁõÄÚµåÀÔ´Ï´Ù.", html.generateHTML(), new String[]{user.getEmail()});
+		mail.send("Public Blog ê°€ì… ì¸ì¦ ì½”ë“œ", html.generateHTML(), new String[]{user.getEmail()});
 		
 		userDao.update(user);
 	}
