@@ -7,21 +7,24 @@
 		<title>Blog - 메인</title>
 	</head>
 	<body>
-		<div class="">
-			<%@ include file="/WEB-INF/jsp/home/home-leftSection.jsp" %>
+		<div>
+			<%@ include file="/WEB-INF/jsp/home/home-headerSection.jsp" %>
 		</div>
 		
-		<ul>
-			<c:forEach begin="0" end="4" var="i">
-				<li>${subjects.get(i).name}</li>
-			</c:forEach>
-			<li>모두보기</li>
-		</ul>
-		<div>
-			<c:forEach items="${subjects}" var="item">
-				${item.name}
-			</c:forEach>		
-		</div>
+		<c:choose>
+			<c:when test="${empty type or type eq 'home'}">
+				홈
+				이웃 소식
+			</c:when>
+			<c:when test="${type eq 'search'}">
+				검색결과
+			</c:when>
+			<c:otherwise>
+				
+			</c:otherwise>
+		</c:choose>
+		
+		
 		
 	</body>
 </html>

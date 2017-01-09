@@ -23,6 +23,7 @@
 		<link rel="stylesheet" href="${contextPath}/resources/css/manage-categoryInfo.css">
 		<link rel="stylesheet" href="${contextPath}/resources/css/writePost.css">
 		<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap-drawer.min.css">
+		<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap-select.min.css">
 		<title><decorator:title default="Welcome Public Blog"/> </title>
 	</head>
 	<body class="has-drawer" style=" padding-top: 70px;">

@@ -9,13 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class GeneralExceptionHandler {
 	
-	private static Logger logger = LoggerFactory.getLogger(GeneralExceptionHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GeneralExceptionHandler.class);
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception e) {
-		e.printStackTrace();
-		//logger.info("{}", e.getMessage());
-		return new ModelAndView("error");
+		logger.info("{}", e.getMessage());
+		ModelAndView mv = new ModelAndView("error");
+		mv.addObject("e", e);		
+		return mv;
 	}
 	
 }

@@ -16,4 +16,5 @@
 <script src='${contextPath}/resources/js/writePost.js'></script>
 <script src='${contextPath}/resources/js/lang/summernote-ko-KR.js'></script>
 <script src='${contextPath}/resources/js/drawer.min.js'></script>
+<script src='${contextPath}/resources/js/bootstrap-select.min.js'></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>

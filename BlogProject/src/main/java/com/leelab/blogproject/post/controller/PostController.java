@@ -25,6 +25,7 @@ import com.leelab.blogproject.category.dto.MainCategoryDTO;
 import com.leelab.blogproject.category.dto.SubCategoryDTO;
 import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
+import com.leelab.blogproject.common.exception.GeneralBlogException;
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.post.dto.PostDTO;
@@ -105,7 +106,7 @@ public class PostController {
 	
 	@NotLoginCheck
 	@RequestMapping("/{id}") 
-	public ModelAndView viewPosts(SearchVO searchVo, PageVo pageVo, @PathVariable String id) {
+	public ModelAndView viewPosts(SearchVO searchVo, PageVo pageVo, @PathVariable String id) throws GeneralBlogException {
 		logger.info("Open Blog to {}", id);
 		
 		/* 블로그 방문자 ID */
@@ -113,6 +114,7 @@ public class PostController {
 		
 		/* 블로그 주인 정보 */
 		UserDTO user = userService.getUser(id);
+		if(user==null)throw new GeneralBlogException("존재하지 않는 사용자의 블로그");
 		
 		/* 블로그 카테고리 정보 */
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);

@@ -1,6 +1,8 @@
 package com.leelab.blogproject.common.controller;
 
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.subject.service.SubjectService;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
@@ -29,8 +33,11 @@ public class HomeController {
 	@Autowired
 	private SubjectService subjectService;
 	
+	@Autowired
+	private FeatureService featureService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(HttpSession session) {
+	public ModelAndView home(HttpSession session, @RequestParam Map<String, String> request) {
 		if(session.getAttribute("user")!=null)
 		{
 			String id = ((UserDTO)session.getAttribute("user")).getId();
@@ -39,6 +46,19 @@ public class HomeController {
 		
 		ModelAndView mv = new ModelAndView("home/home");
 		mv.addObject("subjects", subjectService.getSubjects());
+		
+		String type = null;
+		String requestType = request.get("type");
+		if(request.isEmpty() || requestType == null)
+		{
+			type = "home";
+		}
+		else if(requestType.equals("search"))
+		{
+			type = "search";			
+		}
+		
+		mv.addObject("type", type);
 		return mv;
 	}
 	
@@ -49,7 +69,7 @@ public class HomeController {
 	
 	@RequestMapping("/openRegister")
 	public String openRegister() {
-		logger.info("È¸¿ø°¡ÀÔ ¿ÀÇÂ");
+		logger.info("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		return "register/register";
 	}
 	

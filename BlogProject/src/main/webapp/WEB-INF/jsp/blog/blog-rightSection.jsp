@@ -17,7 +17,7 @@
 		<c:forEach items="${posts}" var="post">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<span class="pull-left"><strong>${post.title} ${post.hit}</strong></span>&nbsp;&nbsp;| 
+					<span class="pull-left"><strong>${post.title}</strong></span>&nbsp;&nbsp;| 
 					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
 						<c:choose>
 							<c:when test="${empty post.sub_category_name}">
