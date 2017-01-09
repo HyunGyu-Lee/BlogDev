@@ -59,7 +59,7 @@ public class PostController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 	
-	/* ÇöÀç ¹æ¹®ÀÚÀÇ ID ¹İÈ¯, ·Î±×ÀÎ ÁßÀÌ¶ó¸é ±×»ç¶÷ÀÇ ID¸¦ ¾Æ´Ï¸é nullÀÌ ¹İÈ¯ */
+	/* ë¡œê·¸ì¸ ë¼ìˆìœ¼ë©´ ë¡œê·¸ì¸ìœ ì € ID, ì•„ë‹ˆë©´ IPì£¼ì†Œ */
 	public String getVisitor() {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		UserDTO loginUser = (UserDTO)request.getSession().getAttribute("user");
@@ -108,33 +108,30 @@ public class PostController {
 	public ModelAndView viewPosts(SearchVO searchVo, PageVo pageVo, @PathVariable String id) {
 		logger.info("Open Blog to {}", id);
 		
-		/* ÇöÀç ºí·Î±×¿¡ ¹æ¹®ÇÑ »ç¶÷ÀÇ ID */
+		/* ë¸”ë¡œê·¸ ë°©ë¬¸ì ID */
 		String visitorId = getVisitor();
 		
-		/* ºí·Î±× ÁÖÀÎ Á¤º¸ */
+		/* ë¸”ë¡œê·¸ ì£¼ì¸ ì •ë³´ */
 		UserDTO user = userService.getUser(id);
 		
-		/* À¯ÀúÀÇ Ä«Å×°í¸® Á¤º¸ */
+		/* ë¸”ë¡œê·¸ ì¹´í…Œê³ ë¦¬ ì •ë³´ */
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
 
-		/* Æ÷½ºÆ® Á¤º¸ */
+		/* í¬ìŠ¤íŠ¸ í˜ì´ì§•í•˜ì—¬ ê°€ì ¸ì˜´ */
 		searchVo.setUser_id(id);
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		
-		/* ºí·Î±× Á¤º¸ */
+		/* ë¸”ë¡œê·¸ Featureì •ë³´ */
 		FeatureVo feature = featureService.getBlogFeature(searchVo.getUser_id());
 		
-		/* Today, Total Á¤º¸ */
+		/* Today, Total ì •ë³´ */
 		VisitHistoryVO historyVo = new VisitHistoryVO();
 		historyVo.setBlog_id(id);
 		historyVo.setVisitor_id(visitorId);
 		
 		visitHistoryService.visitBlog(historyVo);
-		/* ºĞ¸í DB¿¡ µ¥ÀÌÅÍ´Â Àß µé¾î°¡´Âµ¥, TOTALÂÊ °ª, Áï GET_TOTAL·Î °¡Á®¿ÍÁö´Â °ªÀÌ 1°³¾¿ ÀûÀ½..
-		 * Äõ¸®¹®Á¦ÀÏ±î ½Í¾úÁö¸¸ DB¿¡¼­ Á¶È¸ÇÏ¸é ¸ÖÂÄÀÌ³ª¿À´Â°Å·Î ºÁ¼± Äõ¸® ¹®Á¦¶ó ÇÏ±â Èûµë...
-		 * ´ëÃ¼ ¹»±î..
-		 *  */
+		/* ì•„ì§ í•´ê²°ì•ˆë¨ */
 		VisitorCountVO countVo = visitHistoryService.getBlogVisitorCountInfo(historyVo);
 		
 		logger.info("{}",countVo);
@@ -158,7 +155,7 @@ public class PostController {
 		logger.info("Open blog to {} - No.{}'s post",id, postId);
 		ModelAndView mv = new ModelAndView("blog/blog");
 		
-		/* ºí·Î±× ÁÖÀÎ ID, Æ÷½ºÆ®¸¦ º¸´Â »ç¶÷ÀÇ ID¸¦ Àü´ŞÇØ  */
+		/* ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ ID, ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  */
 		searchVo.setUser_id(id);
 		String viewUserId = getVisitor();
 
@@ -173,7 +170,7 @@ public class PostController {
 		searchVo.setMain_category_id(post.getMain_category_id());
 		searchVo.setSub_category_id(post.getSub_category_id());
 
-		/* ÇØ´ç Ä«Å×°í¸®ÀÇ ÆäÀÌÁö µÈ ¸®½ºÆ® */
+		/* ï¿½Ø´ï¿½ Ä«ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® */
 		ArrayList<PostVO> posts = postService.getPostsInPage(searchVo, pageVo);
 		pageVo.setCurrentPage(posts.get(0).getCurrentPage());
 		pageVo = postService.getPageInfo(searchVo, pageVo);

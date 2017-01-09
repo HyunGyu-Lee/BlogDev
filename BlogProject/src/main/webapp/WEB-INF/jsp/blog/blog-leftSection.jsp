@@ -12,7 +12,14 @@
 		<p>${feature.description}</p>
 		<c:choose>
 			<c:when test="${sessionScope.user.id eq user.id}">
-				<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>
+				<c:choose>
+					<c:when test="${empty category}">
+						<strong><a href="${contextPath}/manage/categoryInfo?blogId=${sessionScope.user.id}" style="color:red;">블로그의 첫 카테고리를 만드세요!</a></strong><br/>
+					</c:when>
+					<c:otherwise>
+						<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>					
+					</c:otherwise>
+				</c:choose>
 				<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
 				<a href="#" class="label label-success statisticBtn">통계</a>
 			</c:when>
