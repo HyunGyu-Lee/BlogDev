@@ -10,6 +10,32 @@ FormObject.prototype.submit = function(){
 	$(this.formObj).submit();
 }
 
+function cut(content, byte) {
+	var contentLength = 0;
+	var replacedContent = '';
+	var temp;
+	for (i = 0; i < content.length; i++)
+	{
+        var code = content.charCodeAt(i);
+        var ch = content.substr(i,1).toUpperCase();
+
+        temp = content.substr(i,1)
+        code = parseInt(code);
+         
+        if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))) contentLength = contentLength + 3;
+        else contentLength = contentLength + 1;
+
+        if(contentLength>byte)
+        {
+        	replacedContent += '···';
+        	break;
+        }
+        else replacedContent = replacedContent+temp;
+	}    
+        return replacedContent;
+        
+}
+
 function valueFromQueryString(query_string, key) {
 	key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));

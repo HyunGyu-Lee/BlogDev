@@ -5,6 +5,125 @@
     
 <mapper namespace="com.leelab.blogproject.feature.dao.FeatureDAO">
 	
+	<select id="getFeatureCount" parameterType="com.leelab.blogproject.feature.vo.FeatureVo" resultType="int">
+		<if test="search_by != null">
+			SELECT
+				COUNT(*)
+			FROM
+			<if test="search_by.equals('post')">
+				BLOG_FEATURE F, BLOG_USER U, BLOG_POST P
+			WHERE
+				F.USER_ID = U.ID AND
+				F.USER_ID = P.USER_ID AND
+				(UPPER(P.CONTENT) LIKE '%' || UPPER(#{keyword}) || '%'
+				OR
+				UPPER(P.TITLE) LIKE '%' || UPPER(#{keyword}) || '%')
+			</if>
+			<if test="!search_by.equals('post')">
+				BLOG_FEATURE F, BLOG_USER U
+				<where>
+					F.USER_ID = U.ID
+					<if test="search_by.equals('nickname')">
+						AND U.NICKNAME LIKE '%' || #{keyword} || '%'
+					</if>
+					<if test="search_by.equals('blog')">
+						AND F.USER_ID = #{keyword}
+					</if>
+				</where>
+			</if>
+		</if>
+		<if test="search_by == null">
+			SELECT
+				COUNT(*)
+			FROM
+				BLOG_FEATURE
+			<where>
+				<if test="subject_id != 0">
+				SUBJECT_ID = #{subject_id}
+				</if>
+				AND BGIMG IS NOT NULL
+			</where>
+		</if>
+	</select>
+	
+	<select id="selectAll" resultType="com.leelab.blogproject.feature.vo.FeatureVo">
+		<if test="search.search_by != null">
+		WITH SELECTED_DATA AS (
+									SELECT
+											F.USER_ID,
+											F.TITLE,
+											F.DESCRIPTION,
+											F.BGIMG,
+											F.SUBJECT_ID,
+											U.NICKNAME,
+											S.NAME AS SUBJECT_NAME
+										<if test="search.search_by.equals('post')">
+										, P.CONTENT
+										, P.TITLE AS POST_TITLE
+										, P.ID AS POST_ID
+										, P.CREATE_AT										
+										FROM
+											BLOG_FEATURE F, BLOG_USER U, BLOG_POST P, BLOG_SUBJECT S
+										WHERE
+											F.USER_ID = U.ID AND
+											F.USER_ID = P.USER_ID AND
+											F.SUBJECT_ID = S.ID AND
+											(UPPER(P.CONTENT) LIKE '%' || UPPER(#{search.keyword}) || '%'
+											OR
+											UPPER(P.TITLE) LIKE '%' || UPPER(#{search.keyword}) || '%')
+										</if>
+										<if test="!search.search_by.equals('post')">
+										FROM
+											BLOG_FEATURE F, BLOG_USER U, BLOG_SUBJECT S
+											<where>
+												F.USER_ID = U.ID AND
+												F.SUBJECT_ID = S.ID
+												<if test="search.search_by.equals('nickname')">
+													AND U.NICKNAME LIKE '%' || #{search.keyword} || '%'
+												</if>
+												<if test="search.search_by.equals('blog')">
+													AND F.USER_ID = #{search.keyword}
+												</if>
+											</where>
+										</if>
+							   )	
+		</if>
+		<if test="search.search_by == null">
+		WITH SELECTED_DATA AS(
+								SELECT
+									F.USER_ID,
+									F.TITLE,
+									F.DESCRIPTION,
+									F.BGIMG,
+									F.SUBJECT_ID,
+									U.NICKNAME,
+									S.NAME AS SUBJECT_NAME
+								FROM
+									BLOG_FEATURE F, BLOG_SUBJECT S, BLOG_USER U
+								WHERE
+									F.SUBJECT_ID = S.ID AND
+									F.USER_ID = U.ID
+									AND BGIMG IS NOT NULL
+									<if test="search.subject_id !=0">
+									AND F.SUBJECT_ID = #{search.subject_id}
+									</if>
+								)
+		</if>
+		SELECT
+			PAGE.*
+		FROM
+			(
+				SELECT
+					SD.*, ROWNUM AS RNUM
+				FROM
+					SELECTED_DATA SD
+				WHERE
+				<![CDATA[	ROWNUM <= ${page.currentPage} * ${page.pageSize}]]>
+			) PAGE
+		WHERE
+			<![CDATA[ RNUM > (${page.currentPage}-1) * ${page.pageSize}]]>
+	</select>
+	
 	<select id="select" resultType="com.leelab.blogproject.feature.vo.FeatureVo">
 		SELECT
 			F.USER_ID,
@@ -14,9 +133,10 @@
 			F.SUBJECT_ID,
 			S.NAME AS SUBJECT_NAME
 		FROM
-			BLOG_FEATURE F, BLOG_SUBJECT S
+			BLOG_FEATURE F, BLOG_SUBJECT S, BLOG_USER U
 		WHERE
 			F.SUBJECT_ID = S.ID AND
+			F.USER_ID = U.ID AND
 			F.USER_ID = #{param1}		
 	</select>	
 

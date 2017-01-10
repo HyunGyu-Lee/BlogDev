@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.feature.service.FeatureService;
+import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.subject.service.SubjectService;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
+import com.leelab.blogproject.utils.StringUtils;
+import com.leelab.blogproject.utils.page.PageVo;
 
 @Controller
 public class HomeController {
@@ -37,7 +40,7 @@ public class HomeController {
 	private FeatureService featureService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(HttpSession session, @RequestParam Map<String, String> request) {
+	public ModelAndView home(HttpSession session, @RequestParam Map<String, String> request, PageVo page) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if(session.getAttribute("user")!=null)
 		{
 			String id = ((UserDTO)session.getAttribute("user")).getId();
@@ -49,15 +52,32 @@ public class HomeController {
 		
 		String type = null;
 		String requestType = request.get("type");
+		FeatureVo search = new FeatureVo();
+
 		if(request.isEmpty() || requestType == null)
 		{
 			type = "home";
+			int subject_id = 0;
+			if(request.get("subject_id")!=null) subject_id = Integer.parseInt(request.get("subject_id"));
+			search.setSubject_id(subject_id);
+			page = featureService.getPageInfo(search, page);
+			logger.info("{}",page);
+			mv.addObject("features", featureService.getBlogFeatures(search, page));
 		}
 		else if(requestType.equals("search"))
 		{
-			type = "search";			
+			type = "search";
+			search.setSearch_by(request.get("search_by"));
+			search.setKeyword(request.get("keyword"));
+			logger.info("{}", search);
+			page = featureService.getPageInfo(search, page);
+			logger.info("{}",page);
+			mv.addObject("features", featureService.getBlogFeatures(search, page));
+			mv.addObject("page", page);
+			mv.addObject("search_by", request.get("search_by"));
 		}
-		
+		mv.addObject("page", page);
+		mv.addObject("qryString", StringUtils.toQueryString(search));
 		mv.addObject("type", type);
 		return mv;
 	}

@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="host" value="http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"/>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <div>
 	<div class="blog-header">
 		<div class="alert alert-info alert-dismissible" role="alert">
@@ -51,14 +53,24 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<span class="label label-success clickable">공유하기</span>
+						<a class="label label-success clickable" data-toggle="collapse" href=".share-box" aria-expanded="false" aria-controls="collapseExample">공유하기</a>
+						
 						<c:if test="${sessionScope.user.id eq user.id}">
 							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
 							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a>
 							<span class="label label-default">설정</span>
 						</c:if>	
+						
+						<div class="share-box collapse" style="margin-top: 15px;">
+							<div class="well" share_uri="${host}${contextPath}/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" text="${post.title}">
+								<span class="clickable kakao-share">
+									  <img src="${contextPath}/resources/image/kakao_story_share.png">
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
 					<div class="comments">
 

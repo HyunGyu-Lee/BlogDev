@@ -1,6 +1,7 @@
 package com.leelab.blogproject.feature.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import com.leelab.blogproject.feature.dao.FeatureDAO;
 import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.utils.FileUtils;
 import com.leelab.blogproject.utils.StringUtils;
+import com.leelab.blogproject.utils.json.SimpleHashMap;
+import com.leelab.blogproject.utils.page.PageUtil;
+import com.leelab.blogproject.utils.page.PageVo;
 
 @Service
 public class FeatureService {
@@ -41,4 +45,17 @@ public class FeatureService {
 		featureDao.update(feature);
 	}
 
+	public List<FeatureVo> getBlogFeatures(FeatureVo search, PageVo page) {
+		return featureDao.selectAll(SimpleHashMap.newInstance().put("search", search).put("page", page));
+	}
+
+	public PageVo getPageInfo(FeatureVo search, PageVo page) {
+		int totalRecord = featureDao.getFeatureCount(search);
+		if(page.getCurrentPage()==0)page.setCurrentPage(1);
+		if(page.getPageSize()==0) page.setPageSize(6);
+		if(page.getGroupSize()==0)page.setGroupSize(5);
+		
+		return PageUtil.getPageInfo(totalRecord, page.getPageSize(), page.getGroupSize(), page.getCurrentPage());
+	}
+	
 }

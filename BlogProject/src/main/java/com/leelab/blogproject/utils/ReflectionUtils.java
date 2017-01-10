@@ -4,10 +4,14 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 
 public class ReflectionUtils {
 
+	private static final Logger logger = LoggerFactory.getLogger(ReflectionUtils.class);
+	
 	public static String[] getFieldNames(Class<?> clazz) {
 		ArrayList<String> fieldNames = new ArrayList<String>();
 		
@@ -30,5 +34,11 @@ public class ReflectionUtils {
 	public static boolean isAnnotatedOn(HandlerMethod method, Class<? extends Annotation> annotation) {
 		if(method.getMethodAnnotation(annotation)==null)return false;
 		return true;
+	}
+
+	public static Object getValue(String key, Object target) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field f = target.getClass().getDeclaredField(key);
+		f.setAccessible(true);
+		return f.get(target);
 	}
 }

@@ -15,6 +15,20 @@ public class StringUtils {
 		return new String(source.getBytes("ISO-8859-1"),"UTF-8");
 	}
 	
+	public static String toQueryString(Object obj) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		StringBuilder qryString = new StringBuilder();
+		qryString.append("?");
+		String[] keys = ReflectionUtils.getFieldNames(obj.getClass());
+		
+		for(String key : keys)
+		{
+			Object value = ReflectionUtils.getValue(key, obj);
+			if(value!=null && !value.toString().equals("0"))qryString.append(key).append("=").append(value).append("&");
+		}
+		if(qryString.length()!=1)qryString.deleteCharAt(qryString.length()-1);
+		return qryString.toString();
+	}
+	
 	public static void loop(String s) throws UnsupportedEncodingException {
 		 for(int i=0; i<charset.length ; i++)
 		 {

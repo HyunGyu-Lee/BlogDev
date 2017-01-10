@@ -14,8 +14,9 @@ public class GeneralExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception e) {
 		logger.info("{}", e.getMessage());
+		e.printStackTrace();
 		ModelAndView mv = new ModelAndView("error");
-		mv.addObject("e", e);		
+		mv.addObject("e", e);
 		return mv;
 	}
 	

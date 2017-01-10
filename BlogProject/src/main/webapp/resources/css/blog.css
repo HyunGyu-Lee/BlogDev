@@ -21,6 +21,11 @@
 	height: 100%;
 }
 
+.bgimg-wrap{
+	width: 100%;
+	height: auto%;
+}
+
 .overary {
 	padding-left : 15px;
 	position: absolute;

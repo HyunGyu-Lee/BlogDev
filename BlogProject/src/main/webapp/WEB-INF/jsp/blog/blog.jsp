@@ -1,12 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="host" value="http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<title>${feature.title} : Public Blog</title>
+		<c:if test="${empty posts}">
+			<c:set var="metaDesc" value="${post.title}"/>
+		</c:if>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="${feature.title} : Public Blog">
+		<meta property="og:description" content="${empty metaDesc ? '세상과 소통하는 모두의 블로그, Public Blog' : metaDesc}">
+		<meta property="og:image" content="${host}${contextPath}/blogBgImage/${user.id}">
+		<meta name="description" content="다양한 주제로 포스트를 적어가는 사람들을 만나보세요">
 	</head>
 	<body>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				Kakao.init('a43018ad95cd229f7260dcd2270add32');
+			});
+		</script>
 		<!-- Blog Feature - Background Title Image -->
 		<c:if test="${not empty feature.bgimg}">
 			<div style="margin-top: 20px; margin-bottom:10px; width: 100%; height: 300px;">

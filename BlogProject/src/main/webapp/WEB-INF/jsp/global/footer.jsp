@@ -3,11 +3,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <script src="${contextPath}/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+<script src='${contextPath}/resources/js/common.js'></script>
 <script src='${contextPath}/resources/js/table-util.js'></script>
 <script src='${contextPath}/resources/js/summernote.js'></script>
 <script src='${contextPath}/resources/js/home.js'></script>
 <script src='${contextPath}/resources/js/register.js'></script>
-<script src='${contextPath}/resources/js/common.js'></script>
 <script src='${contextPath}/resources/js/login.js'></script>
 <script src='${contextPath}/resources/js/userInfo.js'></script>
 <script src='${contextPath}/resources/js/blog.js'></script>

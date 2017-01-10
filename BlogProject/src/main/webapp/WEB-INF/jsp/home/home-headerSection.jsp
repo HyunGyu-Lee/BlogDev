@@ -20,7 +20,7 @@
 	<form class="form-inline" role="search">
 		<input type="hidden" name="type" value="search"/>
 		<div class="form-group">
-			<select class="selectpicker" data-width="fit" name="search_by">
+			<select class="selectpicker" data-width="fit" name="search_by" style="">
 				<option value="post">포스트</option>
 				<option value="blog">블로그</option>
 				<option value="nickname">닉네임</option>
@@ -39,13 +39,13 @@
 		<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
 			<c:forEach begin="0" end="4" var="i">
-				<li><a href="#">${subjects.get(i).name}</a></li>
+				<li><a href="${contextPath}?subject_id=${subjects.get(i).id}">${subjects.get(i).name}</a></li>
 			</c:forEach>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">모든주제 <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<c:forEach items="${subjects}" var="item">
-					<li><a href="#" id="${item.id}">${item.name}</a></li>
+					<li><a href="${contextPath}?subject_id=${item.id}" id="${item.id}">${item.name}</a></li>
 					</c:forEach>	
 				</ul>
 			</li>

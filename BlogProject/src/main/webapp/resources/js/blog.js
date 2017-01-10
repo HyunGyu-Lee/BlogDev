@@ -1,3 +1,11 @@
+$(document).on('click','.kakao-share', function(){	
+	Kakao.Story.share({
+	    url: $(this).parent().attr('share_uri'),
+	    text: $(this).parent().attr('text')
+	});
+	
+});
+
 $(document).on('click','.categoryToggle',function(){
 	var content = $('.category-box');
 	var visible = content.is(':visible');
