@@ -8,14 +8,8 @@
 		<title>포스트 수정</title>
 	</head>
 	<body>
-			<div class="alert alert-info" role="alert" style="width: 35%;">
-				주의! 이미지는 최대 680px의 넓이로 제한됩니다.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			</div>
 			<div class="editor-box">
-				<div class="editor-top">
+				<div class="editor-top" style="margin-top:30px;">
 					<span class="category-selector">
 						<select style="width: 20%;" id="category">
 							<c:forEach items="${category}" var="mainCategory">

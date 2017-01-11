@@ -347,7 +347,7 @@ $(document).on('click', '.editCategoryBtn', function(){
 
 $(document).on('click','.writePostBtn', function(){
 	var id = $('#idRef').val();
-	location.href = $('#contextPath').val()+'/openWritePost?blogId='+id;
+	location.href = $('#contextPath').val()+'/openWritePost?blogId='+id;		
 });
 
 $(document).on('click','.nextPostListBtn', function(){

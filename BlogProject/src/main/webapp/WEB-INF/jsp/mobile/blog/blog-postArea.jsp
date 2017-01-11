@@ -2,18 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<script>
-	$(document).ready(function(){
-		
-	});
-	
-	$(document).on('click', '.mobile-category-area .closeToggle', function(){
-		swal('zz');
-	});
-</script>
+<c:set var="host" value="http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"/>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <div>
-	<div class="blog-header">
-		<div class="alert alert-info alert-dismissible" role="alert">
+	<div class="blog-header" style="margin-bottom: 20px;">
+		
+		<button type="button" class="form-control writePostBtn">새 포스트 작성 <span class="glyphicon glyphicon-pencil"></span></button>
+	
+		<div class="alert alert-info alert-dismissible" role="alert" style="display: none;">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h6>From <span style="font-size: 15px;"> 블로그씨</span></h6>
 			블로그에 스킨 기능이 1달내로 적용될 예정입니다!
@@ -26,7 +22,7 @@
 		<c:forEach items="${posts}" var="post">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<span class="pull-left"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
+					<span class="pull-left"><strong>${post.title}</strong></span>&nbsp;&nbsp;| 
 					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
 						<c:choose>
 							<c:when test="${empty post.sub_category_name}">
@@ -37,15 +33,18 @@
 							</c:otherwise>
 						</c:choose>
 					</span>
+					<span class="pull-right" style="font-size: 20px;" data-target="#menu${post.id}" data-toggle="collapse">
+						<span class="glyphicon glyphicon-option-vertical"></span>
+					</span>
 					<br/>
 					<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>
-					<span class="pull-right">
+					<div class="collapse" id="menu${post.id}" align="right">
 						<c:if test="${sessionScope.user.id eq user.id}">
 							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a> | 
 							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a> | 
 						</c:if>
 						<a href="#" class="label label-primary">전용뷰어</a>
-					</span>
+					</div>
 				</div>
 				<div class="panel-body post-content">
 					<div align="right" style="margin-bottom: 20px;">
@@ -61,14 +60,24 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<span class="label label-success clickable">공유하기</span>
+						<a class="label label-success clickable" data-toggle="collapse" href=".share-box" aria-expanded="false" aria-controls="collapseExample">공유하기</a>
+						
 						<c:if test="${sessionScope.user.id eq user.id}">
 							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
 							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a>
 							<span class="label label-default">설정</span>
 						</c:if>	
+						
+						<div class="share-box collapse" style="margin-top: 15px;">
+							<div class="well" share_uri="${host}${contextPath}/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" text="${post.title}">
+								<span class="clickable kakao-share">
+									  <img src="${contextPath}/resources/image/kakao_story_share.png">
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
 					<div class="comments">
 
@@ -136,8 +145,8 @@
 		</c:if>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<span class="pull-left" id="post_title"><strong>${post.title} </strong></span>&nbsp;&nbsp;| 
-				<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
+					<span class="pull-left"><strong>${post.title}</strong></span>&nbsp;&nbsp;| 
+					<span class="post-category" main_category_id = "${post.main_category_id}" sub_category_id="${post.sub_category_id}">
 						<c:choose>
 							<c:when test="${empty post.sub_category_name}">
 								${post.main_category_name}
@@ -147,15 +156,19 @@
 							</c:otherwise>
 						</c:choose>
 					</span>
-				<span class="pull-right">
-					<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>	| 
-					<c:if test="${sessionScope.user.id eq user.id}">
-						<a class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a> | 
-						<a class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a> | 
-					</c:if>
-					<a href="#" class="label label-primary">전용뷰어</a>
-				</span>
-			</div>
+					<span class="pull-right" style="font-size: 20px;" data-target="#menu${post.id}" data-toggle="collapse">
+						<span class="glyphicon glyphicon-option-vertical"></span>
+					</span>
+					<br/>
+					<fmt:formatDate value="${post.create_at}" pattern="yyyy.MM.dd. HH:mm"/>
+					<div class="collapse" id="menu${post.id}" align="right">
+						<c:if test="${sessionScope.user.id eq user.id}">
+							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a> | 
+							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a> | 
+						</c:if>
+						<a href="#" class="label label-primary">전용뷰어</a>
+					</div>
+				</div>
 			<div class="panel-body post-content">
 				<div align="right" style="margin-bottom: 20px;">
 					<a href="${contextPath}/postview/${user.id}/${post.id}${queryString}&currentPage=${page.currentPage}" class="label label-info">www.publicblog.com${contextPath}/postview/${user.id}/${post.id}</a>
@@ -170,12 +183,19 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<span class="label label-success clickable">공유하기</span>
+						<a class="label label-success clickable" data-toggle="collapse" href=".share-box" aria-expanded="false" aria-controls="collapseExample">공유하기</a>
 						<c:if test="${sessionScope.user.id eq user.id}">
 							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
 							<a href="#" class="label label-danger postDeleteBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">삭제</a>
 							<span class="label label-default">설정</span>
 						</c:if>
+												<div class="share-box collapse" style="margin-top: 15px;">
+							<div class="well" share_uri="${host}${contextPath}/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" text="${post.title}">
+								<span class="clickable kakao-share">
+									  <img src="${contextPath}/resources/image/kakao_story_share.png">
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="post-comment-area form-inline" style="display: none; padding-top: 15px;">
@@ -247,5 +267,3 @@
 	</c:otherwise>
 	</c:choose>	
 </div>
-
-

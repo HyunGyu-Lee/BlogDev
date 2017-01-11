@@ -71,6 +71,7 @@ public class HomeController {
 			search.setSearch_by(request.get("search_by"));
 			search.setKeyword(request.get("keyword"));
 			logger.info("{}", search);
+			page.setPageSize(10);
 			page = featureService.getPageInfo(search, page);
 			logger.info("{}",page);
 			mv.addObject("features", featureService.getBlogFeatures(search, page));

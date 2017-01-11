@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="category-box">
 	
 	<div class="panel panel-info">
@@ -36,56 +35,58 @@
 				</c:choose>
 			</div>
 			<div class="pull-left category-control-box" align="center">
-				<table class="table">
-					<tr>
-						<td>카테고리명</td>
-						<td>
-							<form class="category-data">
-								<input class="form-control" type="text" name="name" value=""/>
-								<input type="hidden" name="type" value=""/>
-								<input type="hidden" name="id" value=""/>
-							</form>
-						</td>
-						<td>
-							<span class="label label-primary categoryEditBtn">변경</span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							카테고리 순서
-						</td>
-						<td>
-							<span class="label label-info order-up">
-								<span class="glyphicon glyphicon-arrow-up"></span>
-								올리기
-							</span> &nbsp&nbsp&nbsp&nbsp
-							<span class="label label-warning order-down">
-								<span class="glyphicon glyphicon-arrow-down"></span>
-								내리기
-							</span> &nbsp&nbsp&nbsp&nbsp
-						</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>추가/삭제</td>
-						<td>
-							<span class="label label-success category-main-add">
-								<span class="glyphicon glyphicon-plus"></span>
-								선택한 레벨에 추가
-							</span>&nbsp&nbsp&nbsp&nbsp
-							<span class="label label-info category-sub-add">
-								<span class="glyphicon glyphicon-plus"></span>
-								하위 레벨에 추가
-							</span>
-						</td>
-						<td>
-							<span class="label label-danger category-delete">
-								<span class="glyphicon glyphicon-remove"></span>
-								삭제
-							</span>
-						</td>
-					</tr>
-				</table>
+				<c:if test="${not empty category }">
+					<table class="table">
+						<tr>
+							<td>카테고리명</td>
+							<td>
+								<form class="category-data">
+									<input class="form-control" type="text" name="name" value=""/>
+									<input type="hidden" name="type" value=""/>
+									<input type="hidden" name="id" value=""/>
+								</form>
+							</td>
+							<td>
+								<span class="label label-primary categoryEditBtn">변경</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								카테고리 순서
+							</td>
+							<td>
+								<span class="label label-info order-up">
+									<span class="glyphicon glyphicon-arrow-up"></span>
+									올리기
+								</span> &nbsp&nbsp&nbsp&nbsp
+								<span class="label label-warning order-down">
+									<span class="glyphicon glyphicon-arrow-down"></span>
+									내리기
+								</span> &nbsp&nbsp&nbsp&nbsp
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>추가/삭제</td>
+							<td>
+								<span class="label label-success category-main-add">
+									<span class="glyphicon glyphicon-plus"></span>
+									선택한 레벨에 추가
+								</span>&nbsp&nbsp&nbsp&nbsp
+								<span class="label label-info category-sub-add">
+									<span class="glyphicon glyphicon-plus"></span>
+									하위 레벨에 추가
+								</span>
+							</td>
+							<td>
+								<span class="label label-danger category-delete">
+									<span class="glyphicon glyphicon-remove"></span>
+									삭제
+								</span>
+							</td>
+						</tr>
+					</table>
+				</c:if>
 			</div>
   		</div>
 	</div>

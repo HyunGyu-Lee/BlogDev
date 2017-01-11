@@ -8,25 +8,25 @@
 		<title>포스트 수정</title>
 	</head>
 	<body>
-			<div class="alert alert-info" role="alert" style="width: 35%;">
-				주의! 이미지는 최대 680px의 넓이로 제한됩니다.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="editor-box">
+			<div class="editor-box" style="margin-top : 30px;">
 				<div class="editor-top">
-					<span class="category-selector">
-						<select style="width: 20%;" id="category">
-							<c:forEach items="${category}" var="mainCategory">
-								<option type="main" key="${mainCategory.key.id}">${mainCategory.key.name}</option>
-								<c:forEach items="${mainCategory.value}" var="subCategory">
-									<option type="sub" main_category_id = "${subCategory.main_category_id}" key="${subCategory.id}">--${subCategory.name}</option>
+					<div class="pull-left">
+						<span class="category-selector">
+							<select id="category" class="selectpicker">
+								<c:forEach items="${category}" var="mainCategory">
+									<option type="main" key="${mainCategory.key.id}">${mainCategory.key.name}</option>
+									<c:forEach items="${mainCategory.value}" var="subCategory">
+										<option type="sub" main_category_id = "${subCategory.main_category_id}" key="${subCategory.id}">--${subCategory.name}</option>
+									</c:forEach>
 								</c:forEach>
-							</c:forEach>
-						</select>
-					</span>
-					<input type="text" name="title" value="${post.title}" style="width: 78%; border-radius: 5px;"/>
+							</select>
+						</span>
+						</div>
+						<div class="pull-right">
+						<a href="${contextPath}/${id}" class="btn btn-danger">돌아가기</a>
+						</div>
+						<br/><br/><br/>
+						<input type="text" name="title" value="${post.title}" class="form-control"/>
 				</div>			
 				<div id="editor"></div>
 				<div align="right">

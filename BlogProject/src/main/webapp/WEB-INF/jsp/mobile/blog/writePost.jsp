@@ -8,10 +8,11 @@
 	</head>
 	<body>
 		<input type="hidden" id="idRef" value="${id}"/>
-		<div class="editor-box">
+		<div class="editor-box" style="margin-top: 30px;">
 			<div class="editor-top">
+				<div class="pull-left">
 				<span class="category-selector">
-					<select style="width: 20%;" id="category">
+					<select id="category" class="selectpicker">
 						<c:forEach items="${category}" var="mainCategory">
 							<option type="main" key="${mainCategory.key.id}">${mainCategory.key.name}</option>
 							<c:forEach items="${mainCategory.value}" var="subCategory">
@@ -20,12 +21,17 @@
 						</c:forEach>
 					</select>
 				</span>
-				<input type="text" name="title" style="width: 78%; border-radius: 5px;"/>
+				</div>
+				<div class="pull-right">
+				<a href="${contextPath}/${id}" class="btn btn-danger">돌아가기</a>
+				</div>
+				<br/><br/><br/>
+				<input type="text" name="title" class="form-control"/>
 			</div>			
 			<div id="editor"></div>
 			<div align="right">
 				<input type="button" value="미리보기" class="btn btn-warning postPreviewBtn"/>
-				<input type="button" value=" 저장 " class="btn btn-info postWriteBtn"/>
+				<input type="button" value="작성 " class="btn btn-info postWriteBtn"/>
 			</div>
 		</div>
 	</body>
