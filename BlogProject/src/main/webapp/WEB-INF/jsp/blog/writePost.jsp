@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<input type="hidden" id="idRef" value="${id}"/>
-		<div class="editor-box">
+		<div class="editor-box" style="margin-top: 30px;">
 			<div class="editor-top">
 				<span class="category-selector">
 					<select style="width: 20%;" id="category">

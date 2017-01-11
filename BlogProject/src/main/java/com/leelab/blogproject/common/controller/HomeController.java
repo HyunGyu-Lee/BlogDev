@@ -41,6 +41,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session, @RequestParam Map<String, String> request, PageVo page) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+
 		if(session.getAttribute("user")!=null)
 		{
 			String id = ((UserDTO)session.getAttribute("user")).getId();

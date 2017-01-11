@@ -9,11 +9,18 @@
 <script>
 	$(document).ready(function(){
 		var type = '${type}';
+		var search_by = '${search_by}';
 		if(type=='')type = 'home';
 		
 		$('.'+type).css('background-color','#607D8B');
 		$('.'+type).css('color','white');
 		$('.'+type).css('border-radius','8px');
+		
+		if(search_by!='')
+		{
+			$('.selectpicker').selectpicker('val',search_by);
+			$('input[name="keyword"]').val('${keyword}');
+		}
 	});
 </script>
 <div style="margin-top: 15px; margin-bottom: 15px;">

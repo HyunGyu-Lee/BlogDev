@@ -55,6 +55,8 @@
 			<c:when test="${type eq 'search'}">
 				<c:choose>
 					<c:when test="${search_by eq 'post'}">
+						<strong>포스트 검색결과 <span style="color: #ff4326;">${page.totalRecord}건</span></strong>
+						<hr>
 						<c:forEach items="${features}" var="item">
 						<div style="height: 100px;">
 							<div class="pull-left post_thumbnail" style="height: 100%;">
@@ -74,10 +76,34 @@
 						</c:forEach>
 					</c:when>
 					<c:when test="${search_by eq 'blog'}">
-					
+						<c:forEach items="${features}" var="item">
+						<div class="jumbotron" style="background-image: url('${contextPath}/blogBgImage/${item.user_id}'); color : white;">
+							<h1>${item.title}</h1>
+							<p>${item.description}</p>
+							<p><a class="btn btn-primary btn-lg" href="${contextPath}/${item.user_id}" role="button">구경하기</a></p>
+						</div>
+						</c:forEach>
 					</c:when>
 					<c:when test="${search_by eq 'nickname'}">
-					
+						<strong>닉네임 검색결과 <span style="color: #ff4326;">${page.totalRecord}건</span></strong>
+						<table class="table">
+						<c:forEach items="${features}" var="item">
+						<tr class="blog-summary">
+							<td style="width: 30%;"><img src="${contextPath}/ajax/profileImage/${item.user_id}" style="width: 50px; height: 50px;"></td>
+							<td>${item.nickname}</td>
+							<td><a href="${contextPath}/${item.user_id}">${item.title}</a></td>
+						</tr>
+						<tr class="blog-info" style="display: none;">
+							<td><img src="${contextPath}/blogBgImage/${item.user_id}" style="width: 256px; height: 256px;"></td>
+							<td colspan="2">
+								<h4>● 관심분야</h4>
+								<p>${item.subject_name}</p>
+								<h4>● 소개글</h4>
+								<p>${item.description}</p>
+							</td>
+						</tr>
+						</c:forEach>
+						</table>
 					</c:when>
 				</c:choose>
 			</c:when>
@@ -147,6 +173,24 @@
 				
 				$('.post_preview_date').each(function(){
 					$(this).html(new Date($(this).html()).format('yyyy.MM.dd a/p hh:mm'));
+				});
+
+				$('.blog-summary').on({
+					mouseenter : function(){
+						$(this).next().show();
+					},
+					mouseleave : function(){
+						$(this).next().hide();
+					}
+				});
+				
+				$('.blog-info').on({
+					mouseenter : function(){
+						$(this).show();
+					},
+					mouseleave : function(){
+						$(this).hide();
+					}
 				});
 			})	
 		</script>
