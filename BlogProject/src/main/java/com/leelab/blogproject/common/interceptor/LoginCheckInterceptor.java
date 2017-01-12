@@ -8,10 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
+import com.leelab.blogproject.common.annotation.RequireAuthCheck;
+import com.leelab.blogproject.common.exception.GeneralBlogException;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.utils.ReflectionUtils;
 
@@ -63,6 +66,21 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			
 			return false;
 		}
+		else
+		{
+			UserDTO user = (UserDTO) session.getAttribute("user");
+			if(ReflectionUtils.isAnnotatedOn(handler, RequireAuthCheck.class))
+			{
+				String paramKey = ((HandlerMethod)handler).getMethodAnnotation(RequireAuthCheck.class).checkFor();
+				if(!request.getParameter(paramKey).equals(user.getId()))
+				{
+					logger.info("요청 : {}, 로그인 : {} - 권한이 없는 접근", request.getParameter(paramKey), user.getId());
+					
+					throw new GeneralBlogException("권한이 없는 사용자");
+				}
+			}
+		}
+		
 		return true;
 	}
 	

@@ -7,28 +7,64 @@
 		<title>Blog - 로그인</title>
 	</head>
 <body>
-	<div align="center">
-		<form id="login">
-			<c:choose>
-				<c:when test="${not empty redirectUri}">
-					<input type="hidden" name="redirectUri" value="${redirectUri}"/>
-				</c:when>
-				<c:otherwise>
-					<input type="hidden" name="redirectUri" value="/"/>				
-				</c:otherwise>
-			</c:choose>
-			<table class="table logintab table-borderless">
-				<tr>
-					<td><label for="id">아이디</label></td>
-					<td><input type="text" id="id" name="id" class="form-control"/></td>
-					<td rowspan="2"><input type="button" value="로그인" class="form-control login-button"/></td>
-				</tr>
-				<tr>
-					<td><label for="password">비밀번호</label></td>
-					<td><input type="password" id="password" name="password" class="form-control"/></td>
-				</tr>
-			</table>
-		</form>
+	<div class="card card-container">
+		<img id="profile-img" class="profile-img-card" src="<c:url value="resources/image/profile_view_placeholder.png"/>" />
+
+		<form class="form-signin">
+			<span id="reauth-email" class="reauth-email"></span>
+			<input type="hidden" name="redirectUri" value="${redirectUri}">
+			<input type="text" name="id" class="form-control" placeholder="ID" required autofocus>
+			<input type="password" name="password" class="form-control" placeholder="Password" required>
+			<div id="remember" class="checkbox">
+				<label>
+					<input type="checkbox" value="remember-me"> Remember me
+				</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block btn-signin" id="login-btn" type="button">로그인</button>
+			<button class="btn btn-lg btn-primary btn-block btn-signin" type="button">비밀번호찾기</button>
+		</form><!-- /form -->
+		<a href="<c:url value="openRegister"/>" class="forgot-password">
+			아직 회원이 아니신가요?
+		</a>
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+			$(document).on('click','#login-btn',function(){
+				var data = $('.form-signin').serialize();
+				
+				if(true)
+				{
+					$.ajax({
+						url : $('#contextPath').val()+'/ajax/login',
+						type : 'post',
+						data : data,
+						dataType : 'json',
+						success : function(response) {
+							if(response.result==true)
+							{
+								if(response.redirectUri=='/blog')
+								{
+									window.location = $('#contextPath').val();
+								}
+								else
+								{
+									location.href = response.redirectUri;
+								}
+							}
+							else
+							{
+								swal('','ID 또는 비밀번호를 확인하세요','error');
+							}
+						}
+					})	
+				}
+				else
+				{
+					swal('','ID, 비밀번호를 모두 입력해주세요','error');
+				}
+			});
+		});	
+	</script>	
 </body>
 </html>

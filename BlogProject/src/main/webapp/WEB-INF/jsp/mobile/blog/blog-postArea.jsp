@@ -6,8 +6,9 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <div>
 	<div class="blog-header" style="margin-bottom: 20px;">
-		
-		<button type="button" class="form-control writePostBtn">새 포스트 작성 <span class="glyphicon glyphicon-pencil"></span></button>
+		<c:if test="${user.id eq sessionScope.user.id and not empty category}">
+			<button type="button" class="form-control writePostBtn">새 포스트 작성 <span class="glyphicon glyphicon-pencil"></span></button>
+		</c:if>
 	
 		<div class="alert alert-info alert-dismissible" role="alert" style="display: none;">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -60,7 +61,7 @@
 						<span class="viewCommentBtn closeToggle" post_id="${post.id}"><span class="glyphicon glyphicon-triangle-bottom"></span> 댓글보기</span>
 					</div>
 					<div class="pull-right">
-						<a class="label label-success clickable" data-toggle="collapse" href=".share-box" aria-expanded="false" aria-controls="collapseExample">공유하기</a>
+						<a class="label label-success clickable" data-toggle="collapse" href=".share-box${post.id}" aria-expanded="false" aria-controls="collapseExample">공유하기</a>
 						
 						<c:if test="${sessionScope.user.id eq user.id}">
 							<a href="#" class="label label-warning postEditBtn" post_id="${post.id}" main_category_id="${post.main_category_id}" sub_category_id="${post.sub_category_id}">수정</a>
@@ -68,7 +69,7 @@
 							<span class="label label-default">설정</span>
 						</c:if>	
 						
-						<div class="share-box collapse" style="margin-top: 15px;">
+						<div class="share-box${post.id} collapse" style="margin-top: 15px;">
 							<div class="well" share_uri="${host}${contextPath}/postview/${user.id}/${post.id}?main_category_id=${post.main_category_id}&sub_category_id=${post.sub_category_id}&currentPage=${page.currentPage}" text="${post.title}">
 								<span class="clickable kakao-share">
 									  <img src="${contextPath}/resources/image/kakao_story_share.png">

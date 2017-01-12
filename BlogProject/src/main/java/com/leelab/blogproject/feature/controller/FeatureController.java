@@ -16,17 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
-import com.leelab.blogproject.common.exception.GeneralBlogException;
+import com.leelab.blogproject.common.annotation.RequireAuthCheck;
 import com.leelab.blogproject.common.resolver.MultipartRequest;
 import com.leelab.blogproject.common.vo.ManagePageMeshType;
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.subject.service.SubjectService;
-import com.leelab.blogproject.user.dto.UserDTO;
 
 @Controller
 public class FeatureController {
@@ -50,12 +48,11 @@ public class FeatureController {
 	}
 	
 	@RequestMapping("manage")
-	public ModelAndView manage(@RequestParam Map<String, String> requestScope, @SessionAttribute("user") UserDTO user) throws GeneralBlogException {
+	@RequireAuthCheck(checkFor="user_id")
+	public ModelAndView manage(@RequestParam Map<String, String> requestScope) {
 		
 		String userId = requestScope.get("user_id");
-		
-		if(!user.getId().equals(userId))throw new GeneralBlogException("페이지에 접근할 권한이 없습니다.");
-		
+
 		ModelAndView mv = new ModelAndView("blog/manage/manage");
 		
 		String type = requestScope.get("type");

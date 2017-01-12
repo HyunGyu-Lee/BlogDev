@@ -25,6 +25,7 @@ import com.leelab.blogproject.category.dto.MainCategoryDTO;
 import com.leelab.blogproject.category.dto.SubCategoryDTO;
 import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
+import com.leelab.blogproject.common.annotation.RequireAuthCheck;
 import com.leelab.blogproject.common.exception.GeneralBlogException;
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
@@ -70,6 +71,7 @@ public class PostController {
 	}
 	
 	@RequestMapping("openWritePost")
+	@RequireAuthCheck(checkFor="blogId")
 	public ModelAndView openWritePost(@RequestParam("blogId") String id) {
 		ModelAndView mv = new ModelAndView("blog/writePost");
 		mv.addObject("category", categoryService.getUserCategory(id));

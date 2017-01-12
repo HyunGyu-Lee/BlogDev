@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 	$(document).ready(function(){
+		Kakao.init('a43018ad95cd229f7260dcd2270add32');
+		
 		$(document).on('click','.manage-blog',function(){
 			location.href = '${contextPath}/manage?type=typography&user_id=${user.id}';
 		});
@@ -9,6 +11,20 @@
 </script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <input type="hidden" id="idRef" value="${user.id}"/>
+
+<c:if test="${empty feature.bgimg and sessionScope.user.id eq user.id}">
+	<div style="margin-top: 20px; margin-bottom:10px; width: 100%;">
+		<div class="alert alert-info" role="alert">
+			처음 오셨나요? <br/>
+			<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="alert-link">관리</a>화면애서 블로그 커버이미지를 설정해보세요<br/><br/>
+			<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="btn btn-primary form-control">설정하러가기</a>
+		</div>
+		<c:if test="${sessionScope.user.id eq user.id and empty category}">
+			<a href="<c:url value="manage/categoryInfo?blogId=${user.id}"/>" class="btn btn-danger form-control">첫 카테고리를 만들어보세요!</a>
+		</c:if>
+	</div>
+</c:if>
+<c:if test="${not empty feature.bgimg}">
 <div class="mobile-blog-info-box">
 	<img src="${contextPath}/blogBgImage/${user.id}" class="bgimg">
 	<div class="overary">
@@ -31,6 +47,7 @@
 		
 	</div>
 </div>
+</c:if>
 <hr/>
 <div class="feature-description">
 	<strong><i>Description.</i></strong><br/>

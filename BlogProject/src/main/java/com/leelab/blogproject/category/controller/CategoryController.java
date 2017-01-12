@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.category.service.CategoryService;
+import com.leelab.blogproject.common.annotation.RequireAuthCheck;
 import com.leelab.blogproject.common.vo.ManagePageMeshType;
 
 @Controller
@@ -24,6 +25,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@RequestMapping("manage/categoryInfo")
+	@RequireAuthCheck(checkFor="blogId")
 	public ModelAndView manage(@RequestParam("blogId") String blogId) {
 		ModelAndView mv = new ModelAndView("blog/manage/manage");
 		mv.addObject("blogId", blogId);

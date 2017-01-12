@@ -20,7 +20,7 @@
 		<div class="userInfo pull-left">
 			<img src="${contextPath}/ajax/profileImage/${sessionScope.user.id}" class="profile_view" style="border-radius: 50em;">
 			<span class="username">${sessionScope.user.nickname}</span>님 
-			<span class="logoutBtn"><a href="logout" class="label label-danger">로그아웃</a></span>
+			<span class="logoutBtn"><a href="${contextPath}/logout" class="label label-danger">로그아웃</a></span>
 		</div>
 		<div class="user-control pull-left">
 			<span class="glyphicon glyphicon glyphicon-cog" style="cursor: pointer;"></span> <br/>
