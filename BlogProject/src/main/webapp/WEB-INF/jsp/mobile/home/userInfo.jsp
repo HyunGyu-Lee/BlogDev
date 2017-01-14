@@ -4,20 +4,14 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <div>
 	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h1>회원 정보</h1>
-			<c:if test="${not empty sessionScope.social}">
-				<span color="white">소셜 로그인을 이용하여 로그인한 사용자는 프로필 이미지를 변경할 수 없습니다.</span>
-				<c:set var="dab" value="disabled"/>
-			</c:if>		
-		</div>
+		<div class="panel-heading"><h1>회원 정보</h1></div>
 	  	<div class="panel-body" align="center">
 	    	<table class="table">
 	    		<tr>
 	    			<td rowspan="6" align="center">
-	    				<img src="${contextPath}/ajax/profileImage/${sessionScope.user.id}" class="profile_view_normal"><br/><br/><br/>
+	    				<img src="ajax/profileImage/${user.id}" class="profile_view_normal"><br/><br/><br/>
 	    				<form id="edit_profile" enctype="multipart/form-data">
-	    					<input type="file" id="profile_url_normal" name="profile" value="변경" ${dab}/>
+	    					<input type="file" id="profile_url_normal" name="profile" value="변경"/>
 	    				</form>
 	    			</td>
 	    			<td>ID</td>

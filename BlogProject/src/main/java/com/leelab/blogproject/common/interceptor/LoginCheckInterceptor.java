@@ -87,7 +87,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		UserDTO user = (UserDTO)request.getSession().getAttribute("user");
-		
+		logger.info("{}",user);
 		if(user!=null)
 		{
 			if(user.getAuth().equals("false"))

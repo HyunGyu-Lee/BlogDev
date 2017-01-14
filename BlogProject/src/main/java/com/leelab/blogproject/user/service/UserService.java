@@ -163,4 +163,13 @@ public class UserService {
 		
 		FileUtils.save(file, FileUtils.PROFILE+saveFileName);		
 	}
+
+	public void registSocialUser(UserDTO user) {
+		user.setPassword("");
+		user.setEmail("");
+		user.setPhone("");
+		user.setAuth_key("");
+		userDao.add(user);
+		featureDao.insert(new FeatureVo(user.getId(), user.getNickname()+"의 블로그", user.getNickname()+"의 블로그입니다.", null, "", 1));
+	}
 }

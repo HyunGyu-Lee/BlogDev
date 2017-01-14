@@ -55,14 +55,19 @@ public class HomeController {
 		String requestType = request.get("type");
 		FeatureVo search = new FeatureVo();
 
-		if(request.isEmpty() || requestType == null)
+		if(request.isEmpty() || requestType == null || requestType.equals("home"))
 		{
 			type = "home";
 			int subject_id = 0;
 			if(request.get("subject_id")!=null) subject_id = Integer.parseInt(request.get("subject_id"));
 			search.setSubject_id(subject_id);
+			logger.info("{}", search);
 			page = featureService.getPageInfo(search, page);
 			logger.info("{}",page);
+			for(FeatureVo f : featureService.getBlogFeatures(search, page))
+			{
+				logger.info("{}",f);
+			}
 			mv.addObject("features", featureService.getBlogFeatures(search, page));
 		}
 		else if(requestType.equals("search"))
@@ -90,9 +95,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/openRegister")
-	public String openRegister() {
-		logger.info("ȸ������ ����");
-		return "register/register";
+	public ModelAndView openRegister(UserDTO user) {
+		ModelAndView mv = new ModelAndView("register/register");
+		return mv;
 	}
 	
 	@RequestMapping("/openLogin")

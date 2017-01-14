@@ -45,25 +45,19 @@
 		
 		<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<c:forEach begin="0" end="4" var="i">
-				<li><a href="${contextPath}?subject_id=${subjects.get(i).id}">${subjects.get(i).name}</a></li>
-			</c:forEach>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">모든주제 <span class="caret"></span></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">주제별<span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<c:forEach items="${subjects}" var="item">
 					<li><a href="${contextPath}?subject_id=${item.id}" id="${item.id}">${item.name}</a></li>
 					</c:forEach>	
 				</ul>
 			</li>
-			
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<!-- <li><a href="#">파워블로그</a></li>
+			<li><a href="#">파워블로그</a></li>
 			<li><a href="#">공식블로그</a></li>
 			<li><a href="#">이달의블로그</a></li>
-			<li><a href="#">블로그 빅데이터</a></li> -->
-		</ul>		
+			<li><a href="#">블로그 빅데이터</a></li>
+		</ul>
 		</div>
 	</div>
 </nav>

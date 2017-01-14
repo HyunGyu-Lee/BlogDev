@@ -3,6 +3,8 @@ package com.leelab.blogproject.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -41,6 +43,13 @@ public class FileUtils {
 	public static void save(MultipartFile file, String saveFileName) throws IllegalStateException, IOException {
 		file.transferTo(new File(saveFileName));
 		logger.info("File saved in {}", saveFileName);
+	}
+	
+	public static byte[] read(URL url) throws IOException {
+		InputStream source = url.openStream();
+		byte[] data = new byte[url.openConnection().getContentLength()];
+		IOUtils.read(source, data);
+		return data;
 	}
 	
 	public static byte[] read(String readFileName) throws IOException {

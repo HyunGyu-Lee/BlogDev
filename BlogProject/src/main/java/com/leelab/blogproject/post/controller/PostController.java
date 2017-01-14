@@ -148,7 +148,7 @@ public class PostController {
 		mv.addObject("search", searchVo);
 		mv.addObject("feature", feature);
 		mv.addObject("visit_count", countVo);
-		logger.info("{}", feature);
+
 		logger.info("{}", pageVo);
 		return mv;
 	}

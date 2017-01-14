@@ -1,7 +1,47 @@
 var editor;
 
 var onImageUploadCallback;
-	
+var contextPath;
+$.User = {
+	setContextPath : function(ctxPath) {
+		contextPath = ctxPath;
+	},	
+	duplicateCheck : function(id, onSuccess) {
+		$.ajax({
+			url  : contextPath+'/ajax/duplicate_check',
+			type : 'post',
+			data : {id : id},
+			success : function(response) {
+				onSuccess(response);
+			}
+		});
+	},
+	login : function(settings, onSuccess) {
+		if(settings.isSocial)
+		{
+			console.log('소셜 사용자 로그인 요청');
+			console.dir(settings);
+			$.ajax({
+				url : contextPath+'/ajax/login',
+				type : 'post',
+				data : {id:settings.id,nickname:settings.nickname,profile_url:settings.profile_url,socialLogin:true},
+				success : onSuccess
+			});
+		}
+		else
+		{
+			/* 일반 사용자 로그인 기능 구현 */
+			$.ajax({
+				url : contextPath+'/ajax/login',
+				type : 'post',
+				data : {"id" : settings.id, "password" : settings.password, "redirectUri" : settings.redirectUri},
+				dataType : 'json',
+				success : onSuccess
+			});
+		}
+	}
+}
+
 $.snote = {
 	initalize : function(editorArea) {
 		var toolbar = [

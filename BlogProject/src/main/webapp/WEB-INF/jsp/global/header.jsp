@@ -7,13 +7,47 @@
 	<div class="pull-left">
 		<ul>
 			<li><a href="#main-menu" data-toggle="drawer" aria-foldedopen="false" aria-controls="main-menu"><span class="glyphicon glyphicon-menu-hamburger clickable main-menu"></span></a></li>
-			<li><a href="${contextPath}" class="nav-title"><b>Public Blog</b></a></li>
+			<li><a href="${contextPath}/home" class="nav-title"><b>Public Blog</b></a></li>
 		</ul>
 	</div>
 	<!-- 우측 메뉴 -->
-	<div class="pull-right mobile-category-area">
-		<span style="font-size:30px; color:white; padding-right: 5px;" class="clickable"><span class="glyphicon glyphicon-option-vertical closeToggle"></span></span>
+	<div class="pull-right mobile-category-area" style="margin-right: 15px;">
+		<c:if test="${empty sessionScope.user.id}">
+			<span 
+			data-container="body"
+			data-html="true"
+			data-toggle="popover"
+			data-placement="left"
+			style="font-size:30px;
+			color:white;" class="clickable"><span class="glyphicon glyphicon-log-in"></span></span>
+			<div class="hide" id="login-control">
+		<div style="background-color: #CFD8DC; width: 300px; padding: 20px 25px 30px;">
+			<img id="profile-img" class="profile-img-card" src="<c:url value="/resources/image/logo.png"/>" style="width: 180px;"/>
+			<form class="form-signin-popover" style="margin-bottom: 10px;">
+				<span id="reauth-email" class="reauth-email"></span>
+				<input type="hidden" name="redirectUri" value="${redirectUri}">
+				<input type="text" name="id" class="form-control" placeholder="ID" required autofocus>
+				<input type="password" name="password" class="form-control" placeholder="Password" required>
+				<div id="remember" class="checkbox">
+					<label>
+						<input type="checkbox" value="remember-me"> Remember me
+					</label>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block btn-signin" id="login-btn-popover" type="button">로그인</button>
+				<button class="btn btn-lg btn-primary btn-block btn-signin" type="button">비밀번호찾기</button>
+			</form><!-- /form -->
+			<a href="<c:url value="openRegister"/>" class="forgot-password">
+				아직 회원이 아니신가요?
+			</a>
+		</div>
 	</div>
+		</c:if>
+		<c:if test="${not empty sessionScope.user.id}">
+			<span style="font-size:30px; color:white;" class="clickable" onclick="location.href='<c:url value="logout"/>'">
+				<span class="glyphicon glyphicon-log-out"></span>
+			</span>
+		</c:if>
+	</div>	
 </div>
 
 
@@ -50,3 +84,57 @@
 <div class="container">
     <!-- content as per usual -->
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		Kakao.init('a43018ad95cd229f7260dcd2270add32');
+		
+		$('[data-toggle="popover"]').popover({
+			html : true,
+			container : 'body',
+			content : function(){
+				return $('#login-control').html();
+			}
+		});
+		
+		$(document).on('click','#login-btn-popover',function(){
+			var data = $('.popover-content .form-signin-popover').serialize();
+			console.log(data);
+			if(true)
+			{
+				$.ajax({
+					url : $('#contextPath').val()+'/ajax/login',
+					type : 'post',
+					data : data,
+					dataType : 'json',
+					success : function(response) {
+						if(response.result==true)
+						{
+							console.log(response.redirectUri);
+ 							if(response.redirectUri=='/blog')
+							{
+								window.location = $('#contextPath').val();
+							}
+ 							else if(response.redirectUri=='')
+ 							{
+ 								location.reload();
+ 							}
+							else
+							{
+								location.href = response.redirectUri;
+							}
+						}
+						else
+						{
+							swal('','ID 또는 비밀번호를 확인하세요','error');
+						}
+					}
+				})	
+			}
+			else
+			{
+				swal('','ID, 비밀번호를 모두 입력해주세요','error');
+			}
+		});
+	});
+</script>

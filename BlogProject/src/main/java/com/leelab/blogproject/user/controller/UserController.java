@@ -1,12 +1,14 @@
  package com.leelab.blogproject.user.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class UserController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@RequestMapping(value="duplicate_check", method=RequestMethod.POST)
+	@RequestMapping(value=" ", method=RequestMethod.POST)
 	public HashMap<String, Object> duplicateCheck(@RequestParam String id) {
 		boolean result = userService.duplicateUserCheck(id);
 
@@ -66,7 +68,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public HashMap<String, Object> login(@RequestParam Map<String, String> requestScope, HttpSession session) {
+	public HashMap<String, Object> login(@RequestParam Map<String, String> requestScope, UserDTO user, HttpSession session) {
+		if(requestScope.get("socialLogin")!=null)
+		{
+			logger.info("소셜 로그인 {}",user);
+			user.setAuth("true");
+			if(userService.duplicateUserCheck(user.getId()))userService.registSocialUser(user);
+			session.setAttribute("user", user);
+			session.setAttribute("social", "kakao");
+			return SimpleHashMap.newInstance();
+		}
+		
 		String id = requestScope.get("id");
 		String password = requestScope.get("password");
 		String redirectUri = requestScope.get("redirectUri");
@@ -106,7 +118,19 @@ public class UserController {
 	public ResponseEntity<byte[]> profileImage(@PathVariable String id) throws IOException {
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
-		return new ResponseEntity<byte[]>(userService.getProfileImage(id), header, HttpStatus.CREATED);
+
+		byte[] image = null;
+		String profile_url = userService.getUser(id).getProfile_url();
+		if(profile_url.contains("http"))
+		{
+			image = FileUtils.read(new URL(profile_url));
+		}
+		else
+		{
+			image = userService.getProfileImage(id);
+		}
+		
+		return new ResponseEntity<byte[]>(image, header, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping("/temp/{filename:.+}")

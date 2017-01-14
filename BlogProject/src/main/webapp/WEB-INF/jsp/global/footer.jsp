@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<!-- <div style="width:100%; height: 70px; background-color: #2196F3; color: white; padding-top: 26px; position: fixed; top : 100%;" align="center">
+	Copyrightⓒ2017 LeeLAB All rights reserved.
+</div>
+ -->
+ <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="${contextPath}/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 <script src='${contextPath}/resources/js/common.js'></script>
 <script src='${contextPath}/resources/js/table-util.js'></script>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="host" value="http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"/>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <div>
 	<div class="blog-header">
 		<div class="alert alert-info alert-dismissible" role="alert">

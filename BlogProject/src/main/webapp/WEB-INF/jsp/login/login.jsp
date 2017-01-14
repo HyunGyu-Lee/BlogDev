@@ -8,11 +8,13 @@
 	</head>
 <body>
 	<div class="card card-container">
-		<img id="profile-img" class="profile-img-card" src="<c:url value="resources/image/profile_view_placeholder.png"/>" />
+		<img id="profile-img" class="profile-img-card" src="<c:url value="/resources/image/logo.png"/>" style="width: 180px;"/>
 
 		<form class="form-signin">
 			<span id="reauth-email" class="reauth-email"></span>
-			<input type="hidden" name="redirectUri" value="${redirectUri}">
+			<c:if test="${not empty redirectUri}">
+				<input type="hidden" name="redirectUri" value="${redirectUri}">
+			</c:if>
 			<input type="text" name="id" class="form-control" placeholder="ID" required autofocus>
 			<input type="password" name="password" class="form-control" placeholder="Password" required>
 			<div id="remember" class="checkbox">
@@ -43,7 +45,12 @@
 						success : function(response) {
 							if(response.result==true)
 							{
+								console.log(response.redirectUri);
 								if(response.redirectUri=='/blog')
+								{
+									window.location = $('#contextPath').val();
+								}
+								else if(redirectUri='')
 								{
 									window.location = $('#contextPath').val();
 								}

@@ -18,6 +18,7 @@
 							  PASSWORD,
 							  PHONE,
 							  EMAIL,
+							  AUTH,
 							  AUTH_KEY,
 							  NICKNAME,
 							  PROFILE_URL) 
@@ -25,6 +26,7 @@
 					         #{password},
 					         #{phone},
 					         #{email},
+					         #{auth},
 					         #{auth_key},
 					         #{nickname},
 					         #{profile_url})
