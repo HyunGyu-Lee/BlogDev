@@ -26,11 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.leelab.blogproject.category.service.CategoryService;
 import com.leelab.blogproject.common.resolver.MultipartRequest;
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
 import com.leelab.blogproject.utils.FileUtils;
 import com.leelab.blogproject.utils.StringUtils;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 
 @RestController
 @RequestMapping("/ajax")

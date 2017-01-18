@@ -15,12 +15,12 @@ import com.leelab.blogproject.category.dao.SubCategoryDAO;
 import com.leelab.blogproject.category.dto.MainCategoryDTO;
 import com.leelab.blogproject.category.dto.SubCategoryDTO;
 import com.leelab.blogproject.category.service.CategoryService;
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.post.dao.PostDAO;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.user.dao.UserDAO;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.utils.CollectionUtils;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.mail.MailTemplate;
 
 @RunWith(SpringJUnit4ClassRunner.class)

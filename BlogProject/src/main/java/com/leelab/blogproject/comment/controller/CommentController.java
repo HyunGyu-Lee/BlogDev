@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.leelab.blogproject.comment.service.CommentService;
 import com.leelab.blogproject.comment.vo.CommentVO;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.post.vo.SearchVO;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageVo;
 
 @Controller

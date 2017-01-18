@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.user.service.UserService;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 
 @Controller
 @RequestMapping("/util")

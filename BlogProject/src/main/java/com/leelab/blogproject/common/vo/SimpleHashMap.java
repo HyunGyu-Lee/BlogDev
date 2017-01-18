@@ -1,4 +1,4 @@
-package com.leelab.blogproject.utils.json;
+package com.leelab.blogproject.common.vo;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

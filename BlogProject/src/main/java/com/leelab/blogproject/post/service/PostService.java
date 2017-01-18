@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.post.dao.PostDAO;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.post.vo.PostVO;
 import com.leelab.blogproject.post.vo.SearchVO;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageUtil;
 import com.leelab.blogproject.utils.page.PageVo;
 
@@ -55,9 +55,9 @@ public class PostService {
 		if(type.equals("main"))
 		{
 			/*
-			 * Ä«Å×°í¸® »èÁ¦½Ã Æ÷½ºÆ® ÀÖ´ÂÁö È®ÀÎÇÏ±â ±â´É ¸¸µé±â
-			 * Å¸ÀÔ¿¡ µû¶ó Äõ¸® ºÐ±â½ÇÇà
-			 * Ä«Å×°í¸® ¾ÆÀÌµð·Î userÀÇ post ¼±ÅÃÇÏ±â ¸¸µé±â 
+			 * Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+			 * Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ï¿½ï¿½ï¿½
+			 * Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ userï¿½ï¿½ post ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			 * */
 			postDao.selectByCategoryId(id, type);	
 		}

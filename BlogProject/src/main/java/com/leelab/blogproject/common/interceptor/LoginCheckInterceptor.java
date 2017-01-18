@@ -25,7 +25,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {		
 		HttpSession session = request.getSession(false);
-
+		
+		/* favicon이 Blog조회 API에 걸려서 추가.. 나중에 처리할것*/
+		if(request.getServletPath().equals("/favicon.ico"))return false;
+		
 		if(session==null||session.getAttribute("user")==null)
 		{
 			if(ReflectionUtils.isAnnotatedOn(handler, NotLoginCheck.class))

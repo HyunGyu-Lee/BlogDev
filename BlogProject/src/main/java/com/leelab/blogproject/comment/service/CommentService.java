@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.leelab.blogproject.comment.dao.CommentDAO;
 import com.leelab.blogproject.comment.vo.CommentVO;
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.post.vo.SearchVO;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageUtil;
 import com.leelab.blogproject.utils.page.PageVo;
 

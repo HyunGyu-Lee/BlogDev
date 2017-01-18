@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.feature.dao.FeatureDAO;
 import com.leelab.blogproject.feature.vo.FeatureVo;
 import com.leelab.blogproject.utils.FileUtils;
 import com.leelab.blogproject.utils.StringUtils;
-import com.leelab.blogproject.utils.json.SimpleHashMap;
 import com.leelab.blogproject.utils.page.PageUtil;
 import com.leelab.blogproject.utils.page.PageVo;
 
