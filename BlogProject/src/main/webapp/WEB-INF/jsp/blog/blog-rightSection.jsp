@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="host" value="http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"/>
+<c:set var="host" value="http://publicblog.xyz"/>
 <div>
 	<div class="blog-header">
 		<div class="alert alert-info alert-dismissible" role="alert">

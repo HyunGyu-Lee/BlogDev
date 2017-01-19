@@ -10,10 +10,11 @@
 		<c:if test="${empty posts}">
 			<c:set var="metaDesc" value="${post.title}"/>
 		</c:if>
+		<meta property="og:url" content="${host}">
 		<meta property="og:type" content="website">
 		<meta property="og:title" content="${feature.title} : Public Blog">
 		<meta property="og:description" content="${empty metaDesc ? '세상과 소통하는 모두의 블로그, Public Blog' : metaDesc}">
-		<meta property="og:image" content="${host}${contextPath}/blogBgImage/${user.id}">
+		<meta property="og:image" content="${host}${contextPath}/resources/image/logo.png">
 		<meta name="description" content="다양한 주제로 포스트를 적어가는 사람들을 만나보세요">
 	</head>
 	<body>

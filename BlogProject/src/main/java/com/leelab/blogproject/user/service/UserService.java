@@ -80,7 +80,7 @@ public class UserService {
 		String ctxPath = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
 		String html = "<h1>Public Blog에 오신걸 환영합니다.</h1><br/>"
 					+ user.getNickname()+"님, 가입을 환영합니다.<br/><br/>"
-					+ "<a href=\"http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"+ctxPath+"/"+user.getId()+"\">로그인</a> 후 아래 인증코드를 입력해주세요. <br/><br/><br/>"
+					+ "<a href=\"http://publicblog.xyz"+ctxPath+"/"+user.getId()+"\">로그인</a> 후 아래 인증코드를 입력해주세요. <br/><br/><br/>"
 					+ "# 인증코드<br/>"
 					+ "<b>"+user.getAuth_key()+"</b>";
 		
@@ -121,7 +121,7 @@ public class UserService {
 		HTMLGenerator html = new HTMLGenerator();
 		html.h1("Public Blog에서 보내드립니다.").br()
 		    .b(user.getNickname()).plain("님이 요청하신 인증코드입니다.").br(2)
-		    .plain("<a href=\"http://ec2-35-165-223-153.us-west-2.compute.amazonaws.com"+ctxPath+"/"+user.getId()+"\">로그인</a> 후 아래 인증코드를 입력해주세요.").br(3)
+		    .plain("<a href=\"http://publicblog.xyz"+ctxPath+"/"+user.getId()+"\">로그인</a> 후 아래 인증코드를 입력해주세요.").br(3)
 		    .plain("# 인증코드").br()
 		    .b(auth_key);
 		
