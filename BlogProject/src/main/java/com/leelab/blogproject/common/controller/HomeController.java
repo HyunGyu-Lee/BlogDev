@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
+import com.leelab.blogproject.neighbor.service.NeighborService;
 import com.leelab.blogproject.subject.service.SubjectService;
 import com.leelab.blogproject.user.dto.UserDTO;
 import com.leelab.blogproject.user.service.UserService;
@@ -38,6 +39,9 @@ public class HomeController {
 	
 	@Autowired
 	private FeatureService featureService;
+	
+	@Autowired
+	private NeighborService nService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpSession session, @RequestParam Map<String, String> request, PageVo page) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
@@ -61,14 +65,15 @@ public class HomeController {
 			int subject_id = 0;
 			if(request.get("subject_id")!=null) subject_id = Integer.parseInt(request.get("subject_id"));
 			search.setSubject_id(subject_id);
-			logger.info("{}", search);
+
 			page = featureService.getPageInfo(search, page);
-			logger.info("{}",page);
+
 			for(FeatureVo f : featureService.getBlogFeatures(search, page))
 			{
 				logger.info("{}",f);
 			}
 			mv.addObject("features", featureService.getBlogFeatures(search, page));
+			//mv.addObject("relations", attributeValue);
 		}
 		else if(requestType.equals("search"))
 		{

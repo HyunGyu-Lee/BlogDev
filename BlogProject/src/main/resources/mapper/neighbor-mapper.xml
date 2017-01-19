@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.leelab.blogproject.neighbor.dao.NeighborDAO">
+	
+	<select id="select" resultType="com.leelab.blogproject.neighbor.vo.NeighborVo">
+		SELECT
+			*
+		FROM
+			BLOG_NEIGHBOR
+		WHERE
+			USER_ID = #{user_id} AND
+			REL_USER_ID = #{rel_user_id}
+	</select>
+	
+	<insert id="insert" parameterType="com.leelab.blogproject.neighbor.vo.NeighborVo">
+		INSERT INTO
+			BLOG_NEIGHBOR(USER_ID, REL_USER_ID, APPLY_MSG)
+		VALUES
+			(#{user_id},#{rel_user_id}, #{apply_msg})			
+	</insert>
+	
+	<update id="update" parameterType="com.leelab.blogproject.neighbor.vo.NeighborVo">
+		UPDATE
+			BLOG_NEIGHBOR
+		SET
+			REL_STATE = #{rel_state}
+		WHERE
+			USER_ID = #{user_id} AND
+			REL_USER_ID = #{rel_user_id}
+	</update>
+	
+</mapper>

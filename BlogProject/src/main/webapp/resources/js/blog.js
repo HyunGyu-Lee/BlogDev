@@ -84,7 +84,6 @@ $(document).on('click', '.editComment', function(){
 	var comment_id = $(this).parent().parent().parent().parent().attr('comment_id');
 	var content_area = $(this).parent().parent().parent().find('div').eq(2);
 	var content = content_area.html();
-	console.log('길이 : '+w);
 	var editForm = '<textarea class="form-control" style="width: '+w+'px; margin-right: 10px;" id="comment-edit-'+comment_id+'">'+content+'</textarea>'+
 				   '<input type="button" class="doEdit btn btn-primary" comment_id="'+comment_id+'" value="Edit"/>';
 	
@@ -209,7 +208,7 @@ function appendComment(comment, area) {
 	var contentView = $(item.find('div').eq(4));
 	$(item.find('a').eq(0)).attr('href',$('#contextPath').val()+'/'+comment.user_id);
 	$(item.find('img').eq(0)).attr('src',$('#contextPath').val()+'/ajax/profileImage/'+comment.user_id);
-	nicknameView.html('<a href="${contextPath}/'+comment.user_id+'"><strong>'+comment.nickname+'</strong></a>');
+	nicknameView.html('<a href="'+$('#contextPath').val()+'/'+comment.user_id+'" class="span data-container="body" data-html="true" data-toggle="popover-user-info" data-placement="top" rel_user_id="'+comment.user_id+'""><strong>'+comment.nickname+'</strong></a>');
 	createAtView.html(new Date(comment.create_at).format('yyyy.MM.dd a/p hh:mm'));				
 	contentView.html(comment.content);
 	

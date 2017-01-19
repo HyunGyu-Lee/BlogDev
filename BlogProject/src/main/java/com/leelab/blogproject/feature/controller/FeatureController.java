@@ -1,7 +1,10 @@
 package com.leelab.blogproject.feature.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,18 +25,25 @@ import com.leelab.blogproject.common.annotation.NotLoginCheck;
 import com.leelab.blogproject.common.annotation.RequireAuthCheck;
 import com.leelab.blogproject.common.resolver.MultipartRequest;
 import com.leelab.blogproject.common.vo.ManagePageMeshType;
+import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
+import com.leelab.blogproject.neighbor.service.NeighborService;
+import com.leelab.blogproject.neighbor.vo.NeighborVo;
 import com.leelab.blogproject.subject.service.SubjectService;
+import com.leelab.blogproject.user.dto.UserDTO;
 
 @Controller
 public class FeatureController {
 	
 	@Autowired
-	FeatureService featureService;
+	private FeatureService featureService;
 
 	@Autowired
-	SubjectService subjectService;
+	private SubjectService subjectService;
+	
+	@Autowired
+	private NeighborService nService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FeatureController.class);
 	
@@ -81,4 +91,38 @@ public class FeatureController {
 	public void updateBlogFeature(FeatureVo feature) {
 		featureService.updateBlogFeature(feature);
 	}
+	
+	@RequestMapping("/getFeature")
+	@ResponseBody
+	public HashMap<String, Object> getFeature(@RequestParam String user_id) {
+		return SimpleHashMap.newInstance().put("feature", featureService.getBlogFeature(user_id));
+	}
+	
+	@RequestMapping("/getUserDetail")
+	@ResponseBody
+	@NotLoginCheck
+	public HashMap<String, Object> getUserDetail(@RequestParam String rel_user_id, HttpSession session) {
+		FeatureVo vo = featureService.getBlogFeature(rel_user_id);
+		UserDTO user = (UserDTO)session.getAttribute("user");
+		
+		SimpleHashMap response = SimpleHashMap.newInstance().put("feature", vo);
+		
+		if(user!=null)
+		{
+			NeighborVo nVo = new NeighborVo();
+			nVo.setUser_id(user.getId());
+			nVo.setRel_user_id(rel_user_id);
+			nVo = nService.getRelation(nVo);
+			if(nVo==null)response.put("rel_state", 0);
+			else response.put("rel_state", nVo.getRel_state());
+		}
+		else
+		{
+			response.put("rel_state", 0);
+		}
+		
+		logger.info("{}", response);
+		return response;
+	}
+	
 }
