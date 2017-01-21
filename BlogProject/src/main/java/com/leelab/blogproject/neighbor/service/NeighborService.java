@@ -1,5 +1,7 @@
 package com.leelab.blogproject.neighbor.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,27 @@ public class NeighborService {
 	
 	public NeighborVo getRelation(NeighborVo vo) {
 		return neighborDao.select(vo);
+	}
+
+	public List<NeighborVo> getApplyList(String userId) {
+		NeighborVo vo = new NeighborVo();
+		vo.setUser_id(userId);
+		vo.setRel_state(NeighborVo.STATE_WAIT);
+		return neighborDao.selectAll(vo);
+	}
+	
+	public List<NeighborVo> getAcceptableList(String userId) {
+		NeighborVo vo = new NeighborVo();
+		vo.setRel_user_id(userId);
+		vo.setRel_state(NeighborVo.STATE_WAIT);
+		return neighborDao.selectAll(vo);
+	}
+
+	public List<NeighborVo> getNeighborList(String userId) {
+		NeighborVo vo = new NeighborVo();
+		vo.setUser_id(userId);
+		vo.setRel_state(NeighborVo.STATE_ACCEPT);
+		return neighborDao.selectNeighbor(vo);
 	}
 
 }

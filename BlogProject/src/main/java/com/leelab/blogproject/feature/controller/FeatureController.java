@@ -1,7 +1,9 @@
 package com.leelab.blogproject.feature.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -73,6 +75,25 @@ public class FeatureController {
 			mv.addObject("type", type);
 			mv.addObject("feature",featureService.getBlogFeature(userId));
 			mv.addObject("subject", subjectService.getSubjects());
+		}
+		else if(type.equals(ManagePageMeshType.NEIGHBOR))
+		{
+			logger.info("{}",nService.getApplyList(userId));
+			String sub_type = requestScope.get("sub_type");
+			mv.addObject("type", type);
+			mv.addObject("sub_type", sub_type);
+			if(sub_type.equals("to"))
+			{
+				mv.addObject("relations", nService.getApplyList(userId));
+			}
+			else if(sub_type.equals("from"))
+			{
+				mv.addObject("relations", nService.getAcceptableList(userId));
+			}
+			else if(sub_type.equals("we"))
+			{
+				mv.addObject("relations", nService.getNeighborList(userId));
+			}
 		}
 		
 		return mv;

@@ -17,6 +17,8 @@ public class NeighborVo {
 	private Timestamp rel_create_at;
 	private int rel_state;
 	private String apply_msg;
+	private String rel_user_nickname;
+	private String tag;
 	
 	public NeighborVo() {}
 	
@@ -69,11 +71,29 @@ public class NeighborVo {
 		this.apply_msg = apply_msg;
 	}
 
+	public String getRel_user_nickname() {
+		return rel_user_nickname;
+	}
+
+	public void setRel_user_nickname(String rel_user_nickname) {
+		this.rel_user_nickname = rel_user_nickname;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 	@Override
 	public String toString() {
 		return "NeighborVo [user_id=" + user_id + ", rel_user_id=" + rel_user_id + ", rel_create_at=" + rel_create_at
-				+ ", rel_state=" + rel_state + "]";
+				+ ", rel_state=" + rel_state + ", apply_msg=" + apply_msg + ", rel_user_nickname=" + rel_user_nickname
+				+ ", tag=" + tag + "]";
 	}
-	
+
+
 }
 

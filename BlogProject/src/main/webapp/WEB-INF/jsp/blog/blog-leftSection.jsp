@@ -24,7 +24,7 @@
 				<a href="#" class="label label-success statisticBtn">통계</a>
 			</c:when>
 			<c:otherwise>
-				<a href="#" class="label label-primary">이웃 추가</a>
+				<span class="label label-primary applyNeighbor clickable" user_id="${sessionScope.user.id}" rel_user_id="${user.id}">이웃 추가</span>
 			</c:otherwise>
 		</c:choose>
 	</div>

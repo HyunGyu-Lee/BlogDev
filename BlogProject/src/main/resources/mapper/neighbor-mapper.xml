@@ -5,6 +5,52 @@
     
 <mapper namespace="com.leelab.blogproject.neighbor.dao.NeighborDAO">
 	
+	<select id="selectNeighbor" parameterType="com.leelab.blogproject.neighbor.vo.NeighborVo" resultType="com.leelab.blogproject.neighbor.vo.NeighborVo" >
+		SELECT
+			N.*,
+		  	U.NICKNAME AS REL_USER_NICKNAME,
+		  	CASE N.USER_ID
+		  	WHEN #{user_id}
+		  	THEN 'USER'
+		  	ELSE 'REL_USER'
+		  	END TAG
+		FROM
+		 	BLOG_NEIGHBOR N, BLOG_USER U
+		WHERE
+			(N.user_id = #{user_id} OR N.rel_user_id = #{user_id})
+		  	AND N.REL_STATE = 3 AND
+		  	CASE N.USER_ID
+		  	WHEN #{user_id}
+		  	THEN N.REL_USER_ID 
+		  	ELSE N.USER_ID
+		  	END = U.ID
+	</select>
+	
+	<select id="selectAll" parameterType="com.leelab.blogproject.neighbor.vo.NeighborVo" resultType="com.leelab.blogproject.neighbor.vo.NeighborVo">
+		SELECT
+			N.*,
+			U.NICKNAME AS REL_USER_NICKNAME
+		FROM
+			BLOG_NEIGHBOR N, BLOG_USER U
+		WHERE
+			<if test="user_id != null">
+			N.REL_USER_ID = U.ID AND
+			N.USER_ID = #{user_id}
+			</if>
+			<if test="rel_user_id != null">
+			N.USER_ID = U.ID AND
+			N.REL_USER_ID = #{rel_user_id}
+			</if>
+			<if test="rel_state != 3">
+			AND
+			(N.REL_STATE = 1 OR N.REL_STATE = 2)
+			</if>
+			<if test="rel_state == 3">
+			AND
+			N.REL_STATE = 3
+			</if>
+	</select>
+	
 	<select id="select" resultType="com.leelab.blogproject.neighbor.vo.NeighborVo">
 		SELECT
 			*
@@ -26,7 +72,8 @@
 		UPDATE
 			BLOG_NEIGHBOR
 		SET
-			REL_STATE = #{rel_state}
+			REL_STATE = #{rel_state},
+			REL_CREATE_AT = SYSDATE
 		WHERE
 			USER_ID = #{user_id} AND
 			REL_USER_ID = #{rel_user_id}

@@ -44,7 +44,7 @@ public class UserController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@RequestMapping(value=" ", method=RequestMethod.POST)
+	@RequestMapping(value="duplicate_check", method=RequestMethod.POST)
 	public HashMap<String, Object> duplicateCheck(@RequestParam String id) {
 		boolean result = userService.duplicateUserCheck(id);
 

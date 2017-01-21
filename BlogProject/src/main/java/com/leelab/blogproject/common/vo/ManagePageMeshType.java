@@ -2,15 +2,18 @@ package com.leelab.blogproject.common.vo;
 
 public class ManagePageMeshType {
 
-	/* 블로그 설정 */
+	/* Setting Blog */
 	public static final String TYPOGRAPHY = "typography";
 	
-	/* 꾸미기 설정 */
+	/* Setting Decoration */
 	public static final String DECORATION = "decoration";
 	
-	/* 글 관리 - 카테고리 설정 */
+	/* Setting Category Info */
 	public static final String CATEGORY_INFO = "categoryInfo";
 	
-	/* 통계 */
+	/* View Stat */
 	public static final String STAT = "stat";
+	
+	/* Manage Neighborhood */
+	public static final String NEIGHBOR = "neighbor";
 }

@@ -210,12 +210,13 @@
 											url : '/apply',
 											type : 'post',
 											data : {user_id:user_id,rel_user_id:rel_user_id,apply_msg:textarea},
-											success : function(){resolve()}
+											success : function(response){resolve(response.code)}
 										});
 									});
 								}
-							}).then(function(){
-								swal('','이웃신청이 완료됐습니다.','success');
+							}).then(function(code){
+								if(code==1)swal('','이웃신청이 완료됐습니다.','success');
+								else swal('','이미 이웃입니다.','info');
 							},function(){});
 						}
 					})

@@ -22,20 +22,20 @@ public class VisitHistoryService {
 	private VisitHistoryDAO visitHistoryDao;
 
 	public VisitorCountVO getBlogVisitorCountInfo(VisitHistoryVO historyVo) {
-		logger.info("===================== ¹æ¹®±â·Ï insert Á÷ÈÄ DB »óÈ² ==========================");
+//		logger.info("===================== ï¿½æ¹®ï¿½ï¿½ï¿½ insert ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È² ==========================");
 		historyVo.setVisitor_id(null);
 		for(VisitHistoryVO v : visitHistoryDao.select(historyVo))
 		{
-			logger.info("¹æ¹® ºí·Î±× : {}, ¹æ¹®ÀÚ : {}, ¹æ¹® ½Ã°¢ {}",v.getBlog_id(),v.getVisitor_id(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(v.getVisited_at()));
+//			logger.info("ï¿½æ¹® ï¿½ï¿½Î±ï¿½ : {}, ï¿½æ¹®ï¿½ï¿½ : {}, ï¿½æ¹® ï¿½Ã°ï¿½ {}",v.getBlog_id(),v.getVisitor_id(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(v.getVisited_at()));
 		}
 		
 		VisitorCountVO cVo = visitHistoryDao.selectCount(historyVo);
-		logger.info("===================== ¹ÝÈ¯µÇ´Â ¹æ¹®ÀÚ Åë°è ===================================");
-		logger.info("TODAY    : {}", cVo.getUnique_today_visitor());
-		logger.info("TOTAL    : {}", cVo.getUnique_total_visitor());
-		logger.info("ÀüÃ¼ TODAY : {}", cVo.getToday_visitor());
-		logger.info("ÀüÃ¼ TOTAL : {}", cVo.getTotal_visitor());
-		logger.info("========================================================================");
+//		logger.info("===================== ï¿½ï¿½È¯ï¿½Ç´ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ ===================================");
+//		logger.info("TODAY    : {}", cVo.getUnique_today_visitor());
+//		logger.info("TOTAL    : {}", cVo.getUnique_total_visitor());
+//		logger.info("ï¿½ï¿½Ã¼ TODAY : {}", cVo.getToday_visitor());
+//		logger.info("ï¿½ï¿½Ã¼ TOTAL : {}", cVo.getTotal_visitor());
+//		logger.info("========================================================================");
 		return cVo;
 	}
 

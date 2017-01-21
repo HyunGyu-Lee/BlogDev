@@ -40,7 +40,7 @@
 <nav class="navbar navbar-default">
 	<div class="continaer-fluid">
 		<div class="navbar-header">
-			<a href="${contextPath}" class="navbar-brand home">블로그 홈</a>
+			<a href="${contextPath}/home" class="navbar-brand home">블로그 홈</a>
 		</div>
 		
 		<div class="collapse navbar-collapse">

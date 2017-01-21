@@ -273,6 +273,10 @@ $(document).ready(function(){
 	$(document).on('click','.applyNeighbor',function(){
 		var user_id = $(this).attr('user_id');
 		var rel_user_id = $(this).attr('rel_user_id');
+		if(user_id=='') {
+			swal('','로그인이 필요한 서비스입니다.','info');
+			return;
+		}
 		$.ajax({
 			url : '${contextPath}/getFeature',
 			type : 'post',
@@ -301,12 +305,16 @@ $(document).ready(function(){
 								url : '/apply',
 								type : 'post',
 								data : {user_id:user_id,rel_user_id:rel_user_id,apply_msg:textarea},
-								success : function(){resolve()}
+								success : function(response){
+									resolve(response.code);
+								}
 							});
 						});
 					}
-				}).then(function(){
-					swal('','이웃신청이 완료됐습니다.','success');
+				}).then(function(code){
+					if(code==1)swal('','이웃신청이 완료됐습니다.','success');
+					else swal('','이미 이웃입니다.','info');
+					
 				},function(){});
 			}
 		})

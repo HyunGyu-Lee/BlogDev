@@ -1,6 +1,7 @@
 package com.leelab.blogproject.neighbor.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ public interface NeighborDAO {
 	public void update(NeighborVo vo);
 
 	public NeighborVo select(NeighborVo vo);
+
+	public List<NeighborVo> selectNeighbor(NeighborVo vo);
 }

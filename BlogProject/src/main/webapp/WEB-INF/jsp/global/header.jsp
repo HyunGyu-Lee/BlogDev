@@ -43,6 +43,74 @@
 	</div>
 		</c:if>
 		<c:if test="${not empty sessionScope.user.id}">
+			<span 
+				data-container="body"
+				data-html="true"
+				data-toggle="popover-notification"
+				data-placement="left"
+				style="font-size:25px; color:white;" class="clickable"><span class="glyphicon glyphicon-bell"></span></span> 
+			&nbsp;&nbsp;&nbsp;
+			<div id="notification-area" style="display: none;">
+			<div style="font-size: 13px; padding: 5px;">
+				<table class="table">
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
+						</td>
+						<td>1일전</td>
+					</tr>
+					
+				</table>				
+			</div>	
+			</div>
 			<span style="font-size:30px; color:white;" class="clickable" onclick="location.href='<c:url value="logout"/>'">
 				<span class="glyphicon glyphicon-log-out"></span>
 			</span>
@@ -88,6 +156,15 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		Kakao.init('a43018ad95cd229f7260dcd2270add32');
+		
+		$('[data-toggle=popover-notification]').popover({
+			html : true,
+			title : '알림',
+			container : 'body',
+			content : function(){
+				return $('#notification-area').html();
+			}
+		})
 		
 		$('[data-toggle="popover"]').popover({
 			html : true,

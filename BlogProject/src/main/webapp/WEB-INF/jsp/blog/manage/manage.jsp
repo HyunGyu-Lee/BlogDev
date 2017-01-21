@@ -12,6 +12,7 @@
 			<ul class="nav navbar-nav nav-pills navbar-left">
 				<li role="presentation" class="typography"><a href="${contextPath}/manage?type=typography&user_id=${user.id}">블로그 설정</a></li>
 				<li role="presentation" class="decoration"><a href="#">꾸미기 설정</a></li>
+				<li role="presentation" class="decoration"><a href="${contextPath}/manage?type=neighbor&user_id=${user.id}&sub_type=we">이웃 관리</a></li>
 				<li role="presentation" class="categoryInfo"><a href="${contextPath}/manage/categoryInfo?blogId=${user.id}">글 관리</a></li>
 				<li role="presentation" class="stat"><a href="#">통계</a></li>			
 			</ul>
@@ -29,6 +30,9 @@
 				</c:when>
 				<c:when test="${type eq 'typography'}">
 					<%@ include file="/WEB-INF/jsp/blog/manage/typography.jsp"%>
+				</c:when>
+				<c:when test="${type eq 'neighbor'}">
+					<%@ include file="/WEB-INF/jsp/blog/manage/neighbor.jsp" %>
 				</c:when>
 			</c:choose>
 		</div>
