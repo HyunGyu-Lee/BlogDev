@@ -1,9 +1,7 @@
 package com.leelab.blogproject.feature.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -53,7 +51,6 @@ public class FeatureController {
 	@NotLoginCheck
 	@ResponseBody
 	public ResponseEntity<byte[]> blogBgImage(@PathVariable String id) throws IOException {
-		logger.info("{}", id);
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(featureService.getBackgroundImage(id), header, HttpStatus.CREATED);
@@ -102,8 +99,6 @@ public class FeatureController {
 	@RequestMapping(value="updateCoverImage", method=RequestMethod.POST) 
 	@ResponseBody
 	public void updateCoverImage(MultipartRequest request) throws IllegalStateException, IOException {
-		logger.info("{}",request.getFile(0));
-		logger.info("{}",request.get("user_id"));
 		featureService.updateCoverImage(request.get("user_id"), request.getFile(0));
 	}
 	

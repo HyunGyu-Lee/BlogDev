@@ -68,12 +68,7 @@ public class HomeController {
 
 			page = featureService.getPageInfo(search, page);
 
-			for(FeatureVo f : featureService.getBlogFeatures(search, page))
-			{
-				logger.info("{}",f);
-			}
 			mv.addObject("features", featureService.getBlogFeatures(search, page));
-			//mv.addObject("relations", attributeValue);
 		}
 		else if(requestType.equals("search"))
 		{

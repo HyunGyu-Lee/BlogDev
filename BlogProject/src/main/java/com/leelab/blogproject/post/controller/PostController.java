@@ -65,7 +65,6 @@ public class PostController {
 	public String getVisitor() {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		UserDTO loginUser = (UserDTO)request.getSession().getAttribute("user");
-		logger.info("{}", request.getRemoteAddr());
 		if(loginUser!=null) return loginUser.getId();
 		else return request.getRemoteAddr();
 	}
@@ -137,8 +136,7 @@ public class PostController {
 		visitHistoryService.visitBlog(historyVo);
 		/* 아직 해결안됨 */
 		VisitorCountVO countVo = visitHistoryService.getBlogVisitorCountInfo(historyVo);
-		
-		logger.info("{}",countVo);
+		logger.debug("{}",countVo);
 
 		ModelAndView mv = new ModelAndView("blog/blog");		
 		mv.addObject("user", user);
@@ -149,7 +147,7 @@ public class PostController {
 		mv.addObject("feature", feature);
 		mv.addObject("visit_count", countVo);
 
-		logger.info("{}", pageVo);
+		logger.debug("{}", pageVo);
 		return mv;
 	}
 	
@@ -159,7 +157,6 @@ public class PostController {
 		logger.info("Open blog to {} - No.{}'s post",id, postId);
 		ModelAndView mv = new ModelAndView("blog/blog");
 		
-		/* ��α� ���� ID, ����Ʈ�� ���� ����� ID�� ������  */
 		searchVo.setUser_id(id);
 		String viewUserId = getVisitor();
 
@@ -174,18 +171,13 @@ public class PostController {
 		searchVo.setMain_category_id(post.getMain_category_id());
 		searchVo.setSub_category_id(post.getSub_category_id());
 
-		/* �ش� ī�װ��� ������ �� ����Ʈ */
 		ArrayList<PostVO> posts = postService.getPostsInPage(searchVo, pageVo);
 		pageVo.setCurrentPage(posts.get(0).getCurrentPage());
 		pageVo = postService.getPageInfo(searchVo, pageVo);
-		logger.info("{}", searchVo);
+		logger.debug("{}", searchVo);
 		
-		logger.info("viewPost pageVo {}", pageVo);
-		for(PostVO p : posts)
-		{
-			logger.info("{}",p);
-		}
-		
+		logger.debug("viewPost pageVo {}", pageVo);
+
 		Map<MainCategoryDTO, ArrayList<SubCategoryDTO>> category = categoryService.getUserCategory(id);
 		mv.addObject("user", userService.getUser(id));
 		mv.addObject("category", category);
@@ -204,15 +196,10 @@ public class PostController {
 		pageVo = postService.getPageInfo(searchVo, pageVo);
 		ArrayList<PostDTO> posts = postService.getPosts(searchVo, pageVo);
 		
-		for(PostDTO p : posts)
-		{
-			logger.info("{}",p);
-		}
-		
 		HashMap<String, Object> result = SimpleHashMap.newInstance().put("posts", posts).put("page", pageVo).put("search", searchVo);
 
-		logger.info("{}", searchVo);
-		logger.info("{}", pageVo);
+		logger.debug("{}", searchVo);
+		logger.debug("{}", pageVo);
 		
 		return result;
 	}
@@ -228,7 +215,7 @@ public class PostController {
 	@RequestMapping("openUpdatePost")
 	public ModelAndView openUpdatePost(SearchVO searchVo, @SessionAttribute("user") UserDTO loginUser) {
 		ModelAndView mv = new ModelAndView("blog/updatePost");
-		logger.info("{}, {}", searchVo, loginUser);
+		logger.debug("{}, {}", searchVo, loginUser);
 		PostDTO post = postService.getPostDetail(searchVo, loginUser.getId());
 		mv.addObject("category", categoryService.getUserCategory(post.getUser_id()));
 		post.setContent(StringEscapeUtils.escapeJavaScript(post.getContent()));

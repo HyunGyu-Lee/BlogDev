@@ -33,7 +33,6 @@ public class DeviceHandler extends DeviceResolverHandlerInterceptor {
 					modelAndView.setViewName("mobile/"+modelAndView.getViewName());
 				}
 			}
-			logger.info("{}, {}", device, modelAndView.getViewName());
 		}
 
 		super.postHandle(request, response, handler, modelAndView);

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leelab.blogproject.common.annotation.Notificational;
 import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.post.dao.PostDAO;
 import com.leelab.blogproject.post.dto.PostDTO;
@@ -66,8 +67,10 @@ public class PostService {
 			postDao.selectByCategoryId(id, type);
 		}		
 	}
-
+	
+	@Notificational
 	public ArrayList<PostDTO> getPosts(SearchVO searchVo, PageVo pageVo) {
+		logger.debug("{}", this.getClass());
 		return postDao.selectPosts(SimpleHashMap.newInstance().put("search", searchVo).put("page", pageVo));
 	}
 

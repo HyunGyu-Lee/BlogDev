@@ -48,68 +48,17 @@
 				data-html="true"
 				data-toggle="popover-notification"
 				data-placement="left"
-				style="font-size:25px; color:white;" class="clickable"><span class="glyphicon glyphicon-bell"></span></span> 
+				style="font-size:25px; color:white; position: relative;" class="clickable">
+				<span class="glyphicon glyphicon-bell"></span>
+				<span class="badge noti-count" style="position: relative; left: -15px; top: -20px; background-color: red">0</span>
+			</span>
 			&nbsp;&nbsp;&nbsp;
 			<div id="notification-area" style="display: none;">
-			<div style="font-size: 13px; padding: 5px;">
-				<table class="table">
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="NOTI_NICKNAME">이현규</span>님이 '<span class="NOTI_TARGET_URL"><a href="#">스프링 사용 시 주의사항</a></span>'에 댓글을 남겼습니다.
-						</td>
-						<td>1일전</td>
-					</tr>
-					
-				</table>				
-			</div>	
+				<div style="font-size: 13px; padding: 5px; width: 400px;">
+					<table class="table" id="notification-contents">
+						
+					</table>
+				</div>	
 			</div>
 			<span style="font-size:30px; color:white;" class="clickable" onclick="location.href='<c:url value="logout"/>'">
 				<span class="glyphicon glyphicon-log-out"></span>
@@ -156,16 +105,69 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		Kakao.init('a43018ad95cd229f7260dcd2270add32');
-		
+		var noti_flag=0;
+		<c:if test="${not empty sessionScope}">
+		$.ajax({
+			url : '${contextPath}/getNotifications',
+			type : 'get',
+			success : function(response){
+				if(response.notification_count==0)
+				{
+					$('.noti-count').html('');
+					$('.noti-count').removeClass('badge');
+				}
+				else
+				{
+					$('.noti-count').html(''+response.notification_count);				
+				}
+				var area = $('#notification-area');
+				var contents = area.find('#notification-contents');
+				contents.html('');
+				$.each(response.notifications,function(i, item){
+					var row = $('<tr>');
+					var message = $('<td>');
+					var time = $('<td>');
+					if(item.check_state==-1)
+					{
+						row.css('color','black');
+						row.css('font-weight','bold');
+						message.html('<a href="'+item.link+'" style="text-decoration:none; color:black;">'+item.message+'</a>');
+						time.html('6시간전');
+					}
+					else
+					{
+						row.css('color','gray');
+						message.html('<a href="'+item.link+'" style="text-decoration:none; color:gray;">'+item.message+'</a>');
+						time.html('6시간전');
+					}
+					row.append(message).append(time);
+					contents.append(row);
+				});
+			}
+		})
 		$('[data-toggle=popover-notification]').popover({
 			html : true,
 			title : '알림',
 			container : 'body',
 			content : function(){
+				$('.noti-count').html('');
+				$('.noti-count').removeClass('badge');
+				if(noti_flag!=0)
+				{
+					var area = $('#notification-area');
+					var contents = area.find('#notification-contents');
+					contents.find('tr').each(function(i,item){
+						$(item).css('color','gray');
+						$(item).css('font-weight','normal');
+					});
+				}	
+				noti_flag++;
 				return $('#notification-area').html();
 			}
 		})
-		
+		$('[data-toggle=popover-notification]')
+		</c:if>
+
 		$('[data-toggle="popover"]').popover({
 			html : true,
 			container : 'body',

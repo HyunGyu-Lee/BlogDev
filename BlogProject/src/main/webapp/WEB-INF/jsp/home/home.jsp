@@ -18,8 +18,6 @@
 		
 		<%@ include file="/WEB-INF/jsp/home/home-carousel.jsp" %>
 		
-		
-		
 		<c:choose>
 			<c:when test="${empty type or type eq 'home'}">
 				<div class="row">

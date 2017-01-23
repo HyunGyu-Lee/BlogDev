@@ -12,6 +12,7 @@
 		<config>src/main/resources/config/spring/context-support.xml</config>
 	</configs>
 	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/config/root-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

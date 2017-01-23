@@ -31,11 +31,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		if(session==null||session.getAttribute("user")==null)
 		{
-			if(ReflectionUtils.isAnnotatedOn(handler, NotLoginCheck.class))
-			{
-				logger.info("{} -> Login Check Off", request.getRequestURI());
-				return true;
-			}
+			if(ReflectionUtils.isAnnotatedOn(handler, NotLoginCheck.class))return true;
 
 			StringBuilder sb = new StringBuilder();
 			@SuppressWarnings("unchecked")
@@ -45,13 +41,11 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			{
 				for(Map.Entry<String, String[]> entry : map.entrySet())
 				{
-					logger.info("{}", entry.getKey());
 					sb.append(entry.getKey()).append("=").append(entry.getValue()[0]).append("AND");
 				}
 			}
 			if("XMLHttpRequest".equals(request.getHeader("X-Requested-With")))
 			{
-				logger.info("Ajax Request Not Auth");
 				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().println("{\"status\":-1}");
 				response.getWriter().flush();
@@ -60,7 +54,6 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			else
 			{	if(sb.length()!=1)
 				{
-					logger.info("{}", sb.toString());
 					sb.delete(sb.length()-3, sb.length()-1);
 					sb.deleteCharAt(sb.length()-1);
 				}
@@ -90,13 +83,12 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		UserDTO user = (UserDTO)request.getSession().getAttribute("user");
-		logger.info("{}",user);
+
 		if(user!=null)
 		{
 			if(user.getAuth().equals("false"))
 			{
 				modelAndView.setViewName("auth");
-				logger.info("Auth Require");
 				super.postHandle(request, response, handler, modelAndView);
 				return;
 			}
