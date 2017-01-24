@@ -214,7 +214,7 @@
 								}
 							}).then(function(code){
 								if(code==1)swal('','이웃신청이 완료됐습니다.','success');
-								else swal('','이미 이웃입니다.','info');
+								else swal('','이미 이웃이거나 신청하셨습니다.','info');
 							},function(){});
 						}
 					})

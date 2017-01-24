@@ -15,6 +15,8 @@ public interface PostDAO {
 	
 	void insert(PostDTO post);
 	
+	PostDTO select(int id);
+	
 	PostDTO selectById(@Param("search")SearchVO searchVo);
 	
 	ArrayList<PostDTO> selectPosts(@Param("vos") HashMap<String, Object> vos);

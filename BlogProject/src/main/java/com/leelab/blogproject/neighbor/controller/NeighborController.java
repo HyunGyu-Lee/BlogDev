@@ -26,25 +26,14 @@ public class NeighborController {
 	@ResponseBody
 	public HashMap<String, Object> doApply(NeighborVo vo) {
 		logger.info("{}",vo);
-		try
-		{
-			nService.apply(vo);
-		}
-		catch(Exception e)
+
+		if(nService.isRelationEstablished(vo))
 		{
 			return SimpleHashMap.newInstance().put("code", -1);
 		}
-		
-		try
+		else
 		{
-			String temp = vo.getUser_id();
-			vo.setUser_id(vo.getRel_user_id());
-			vo.setRel_user_id(temp);
-			nService.apply(vo);
-		}
-		catch(Exception e)
-		{
-			return SimpleHashMap.newInstance().put("code", -1);
+			nService.apply(vo);			
 		}
 		
 		return SimpleHashMap.newInstance().put("code", 1);

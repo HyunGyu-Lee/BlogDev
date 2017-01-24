@@ -20,6 +20,17 @@ public class NeighborService {
 		neighborDao.insert(vo);
 	}
 	
+	public boolean isRelationEstablished(NeighborVo vo) {
+		boolean result = false;
+
+		NeighborVo temp = new NeighborVo();
+		temp.setRel_user_id(vo.getRel_user_id());
+		
+		if(neighborDao.select(temp)!=null)result = true;
+		
+		return result;
+	}
+	
 	public void action(NeighborVo vo, int action_state) {
 		vo.setRel_state(action_state);
 		neighborDao.update(vo);

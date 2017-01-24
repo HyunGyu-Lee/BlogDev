@@ -32,7 +32,7 @@ public class CommentService {
 	}
 
 	public void addComment(CommentVO commentVo) {
-		commentDao.insert(commentVo);		
+		commentDao.insert(commentVo);	
 	}
 
 	public CommentVO getComment(int id) {

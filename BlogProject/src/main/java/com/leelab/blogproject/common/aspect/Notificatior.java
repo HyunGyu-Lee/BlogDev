@@ -1,8 +1,8 @@
 package com.leelab.blogproject.common.aspect;
 
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +27,25 @@ public class Notificatior implements InitializingBean {
 	//@Pointcut("execution(* com.leelab.blogproject..*.*(..))")
 	//public void test(){};
 	
-	@Pointcut("@annotation(com.leelab.blogproject.common.annotation.Notificational)")
+	//@Pointcut("@annotation(com.leelab.blogproject.common.annotation.Notificational)")
 	public void notification(){};
 	
-	@Before("notification()")
-	public void notificate(JoinPoint jp) { 
-		logger.info("적용확인 {}", jp.getSignature());
+	//@Around("notification()")
+	public Object notificate(ProceedingJoinPoint jp) throws Throwable { 
+		Object returnVal = null;
+		
+		logger.info("{} 실행 전", jp.getSignature());
+
+		returnVal = jp.proceed();
+		Object[] args = jp.getArgs();
+		
+		for(Object arg : args)
+		{
+			logger.info("{}", arg);
+		}
+		
+		logger.info("{} 실행 후", jp.getSignature());
+		
+		return returnVal;
 	}
 }

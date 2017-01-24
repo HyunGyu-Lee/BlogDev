@@ -15,7 +15,13 @@ import com.leelab.blogproject.comment.service.CommentService;
 import com.leelab.blogproject.comment.vo.CommentVO;
 import com.leelab.blogproject.common.annotation.NotLoginCheck;
 import com.leelab.blogproject.common.vo.SimpleHashMap;
+import com.leelab.blogproject.notification.service.NotificationService;
+import com.leelab.blogproject.notification.vo.NotificationBuilder;
+import com.leelab.blogproject.notification.vo.NotificationVo;
+import com.leelab.blogproject.post.dto.PostDTO;
+import com.leelab.blogproject.post.service.PostService;
 import com.leelab.blogproject.post.vo.SearchVO;
+import com.leelab.blogproject.user.service.UserService;
 import com.leelab.blogproject.utils.page.PageVo;
 
 @Controller
@@ -25,6 +31,15 @@ public class CommentController {
 	
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private NotificationService notificationService;
+
+	@Autowired
+	private PostService postService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="postComment", method=RequestMethod.POST)
 	@NotLoginCheck
@@ -47,6 +62,18 @@ public class CommentController {
 		pageVo = commentService.getPageInfo(searchVo, pageVo);
 		logger.info("{}", searchVo);
 		logger.info("{}", pageVo);
+		
+		/* 알림처리 */
+		PostDTO post = postService.getPostById(commentVo.getPost_id());
+		if(!post.getUser_id().equals(commentVo.getUser_id()))
+		{
+			NotificationVo vo = new NotificationBuilder().setLink("/postview/"+post.getUser_id()+"/"+commentVo.getPost_id())
+					 									 .setMessage("<strong>"+userService.getUser(commentVo.getUser_id()).getNickname()+"</strong>님이 댓글을 달았습니다.")
+					 									 .setNotificator(commentVo.getUser_id()).build();
+			vo.setNotificate_target(postService.getPostById(commentVo.getPost_id()).getUser_id());
+			notificationService.notificate(vo);
+		}
+		
 		return SimpleHashMap.newInstance().put("comments", commentService.getComments(searchVo, pageVo)).put("page", pageVo);
 	}
 	

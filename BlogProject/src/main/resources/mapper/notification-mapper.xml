@@ -33,4 +33,11 @@
 			VALUES(NOTIFICATION_SEQ.NEXTVAL, #{notificate_target}, #{notificator}, #{message}, #{link})
 	</insert>
 	
+	<insert id="insertAll">
+		<foreach collection="targets" item="target" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO BLOG_NOTIFICATION(ID, NOTIFICATE_TARGET, NOTIFICATOR, MESSAGE, LINK)
+			VALUES(GET_NOTI_SEQ, #{target}, #{nVo.notificator}, #{nVo.message}, #{nVo.link})
+		</foreach>
+	</insert>
+	
 </mapper>

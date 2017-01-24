@@ -30,6 +30,10 @@ import com.leelab.blogproject.common.exception.GeneralBlogException;
 import com.leelab.blogproject.common.vo.SimpleHashMap;
 import com.leelab.blogproject.feature.service.FeatureService;
 import com.leelab.blogproject.feature.vo.FeatureVo;
+import com.leelab.blogproject.neighbor.service.NeighborService;
+import com.leelab.blogproject.notification.service.NotificationService;
+import com.leelab.blogproject.notification.vo.NotificationBuilder;
+import com.leelab.blogproject.notification.vo.NotificationVo;
 import com.leelab.blogproject.post.dto.PostDTO;
 import com.leelab.blogproject.post.service.PostService;
 import com.leelab.blogproject.post.vo.PostVO;
@@ -58,6 +62,12 @@ public class PostController {
 
 	@Autowired
 	private VisitHistoryService visitHistoryService;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
+	@Autowired
+	private NeighborService neighborService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 	
@@ -95,14 +105,16 @@ public class PostController {
 	
 	@RequestMapping(value="writePost", method=RequestMethod.POST)
 	@ResponseBody
-	public void writePost(@RequestParam Map<String, String> requestScope) {
-		String user_id = requestScope.get("user_id");
-		String title = requestScope.get("title");
-		String content = requestScope.get("content");
-		int main_category_id = Integer.parseInt(requestScope.get("main_category_id"));
-		int sub_category_id = Integer.parseInt(requestScope.get("sub_category_id"));
-
-		postService.newPost(user_id, title, content, main_category_id, sub_category_id);
+	public void writePost(PostDTO post) {
+		String user_id = post.getUser_id();
+		
+		postService.newPost(post);
+		
+		NotificationVo vo = new NotificationBuilder().setLink("/postview/"+user_id+"/"+post.getId())
+													 .setMessage("<strong>"+userService.getUser(user_id).getNickname()+"</strong>님의 새 포스트가 있습니다.")
+													 .setNotificator(user_id).build();
+		
+		notificationService.notificate(vo, neighborService.getNeighborList(user_id));
 	}
 	
 	@NotLoginCheck

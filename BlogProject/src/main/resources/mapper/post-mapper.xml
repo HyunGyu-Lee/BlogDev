@@ -5,6 +5,10 @@
     
 <mapper namespace="com.leelab.blogproject.post.dao.PostDAO">
 
+	<select id="select" resultType="com.leelab.blogproject.post.dto.PostDTO">
+		SELECT * FROM BLOG_POST WHERE ID = #{PARAM1}
+	</select>
+
 	<update id="updateHit">
 		UPDATE
 			BLOG_POST
@@ -167,6 +171,9 @@
 
 	
 	<insert id="insert" parameterType="com.leelab.blogproject.post.dto.PostDTO">
+	<selectKey keyProperty="id" order="BEFORE" resultType="int">
+		SELECT BLOG_POST_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
 		INSERT INTO BLOG_POST(
 						ID,
   					    USER_ID,
@@ -176,7 +183,7 @@
 					    CONTENT
 					)
 					VALUES(
-						BLOG_POST_SEQ.NEXTVAL,
+						#{id},
 						#{user_id},
 						#{title},
 						#{main_category_id},
