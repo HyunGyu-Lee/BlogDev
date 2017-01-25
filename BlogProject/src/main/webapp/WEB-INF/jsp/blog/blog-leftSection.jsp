@@ -2,31 +2,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <input type="hidden" id="idRef" value="${user.id}"/>
-<div class="blog-profile-box">
+<div class="thumbnail">
 	<div style="width: 100%; height: auto;">
 		<img src="${contextPath}/ajax/profileImage/${user.id}" class="bgimg">
 	</div>
-	<div style="margin-top: 10px;">
-		<span>${user.nickname}</span><br/>
-		<span>(${user.id})</span><br/>
-		<p>${feature.description}</p>
-		<c:choose>
-			<c:when test="${sessionScope.user.id eq user.id}">
-				<c:choose>
-					<c:when test="${empty category}">
-						<strong><a href="${contextPath}/manage/categoryInfo?blogId=${sessionScope.user.id}" style="color:red;">블로그의 첫 카테고리를 만드세요!</a></strong><br/>
-					</c:when>
-					<c:otherwise>
-						<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>					
-					</c:otherwise>
-				</c:choose>
-				<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
-				<a href="#" class="label label-success statisticBtn">통계</a>
-			</c:when>
-			<c:otherwise>
-				<span class="label label-primary applyNeighbor clickable" user_id="${sessionScope.user.id}" rel_user_id="${user.id}">이웃 추가</span>
-			</c:otherwise>
-		</c:choose>
+	<div class="caption" style="background-color: #eeeeee;">
+		
+		<div style="margin-top: 10px;">
+			<span>${user.nickname}</span><br/>
+			<span>(${user.id})</span><br/>
+			<p>${feature.description}</p>
+			<c:choose>
+				<c:when test="${sessionScope.user.id eq user.id}">
+					<c:choose>
+						<c:when test="${empty category}">
+							<strong><a href="${contextPath}/manage/categoryInfo?blogId=${sessionScope.user.id}" style="color:red;">블로그의 첫 카테고리를 만드세요!</a></strong><br/>
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="label label-info writePostBtn">포스트 쓰기</a>					
+						</c:otherwise>
+					</c:choose>
+					<a href="${contextPath}/manage?type=typography&user_id=${user.id}" class="label label-warning manageBtn">관리</a>
+					<a href="#" class="label label-success statisticBtn">통계</a>
+				</c:when>
+				<c:otherwise>
+					<span class="label label-primary applyNeighbor clickable" user_id="${sessionScope.user.id}" rel_user_id="${user.id}">이웃 추가</span>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 </div>
 

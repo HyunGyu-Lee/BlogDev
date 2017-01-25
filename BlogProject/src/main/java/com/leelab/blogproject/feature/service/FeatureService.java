@@ -1,8 +1,10 @@
 package com.leelab.blogproject.feature.service;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +28,17 @@ public class FeatureService {
 	}
 	
 	public byte[] getBackgroundImage(String user_id) throws IOException {
-		return FileUtils.read(FileUtils.BLOG+getBlogFeature(user_id).getBgimg());
+		FeatureVo vo = getBlogFeature(user_id);
+		
+		if(vo.getBgimg().contains("http"))
+		{
+			return FileUtils.read(new URL(vo.getBgimg()));
+		}
+		else
+		{
+			return FileUtils.read(FileUtils.BLOG+getBlogFeature(user_id).getBgimg());			
+		}
+		
 	}
 
 	public void updateCoverImage(String user_id, MultipartFile file) throws IllegalStateException, IOException {

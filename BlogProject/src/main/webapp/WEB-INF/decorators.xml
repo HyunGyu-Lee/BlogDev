@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorators defaultdir="/WEB-INF/jsp">
+	<excludes>
+		<pattern>/util/**</pattern>
+	</excludes>
+	
     <decorator name="layout" page="global/layout.jsp">
         <pattern>/*</pattern>
     </decorator>
+	
 
+	
     <decorator name="header" page="global/header.jsp" />
     
     <decorator name="footer" page="global/footer.jsp" />

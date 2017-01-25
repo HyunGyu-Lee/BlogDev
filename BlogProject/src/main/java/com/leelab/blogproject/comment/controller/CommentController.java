@@ -69,8 +69,9 @@ public class CommentController {
 		{
 			NotificationVo vo = new NotificationBuilder().setLink("/postview/"+post.getUser_id()+"/"+commentVo.getPost_id())
 					 									 .setMessage("<strong>"+userService.getUser(commentVo.getUser_id()).getNickname()+"</strong>님이 댓글을 달았습니다.")
-					 									 .setNotificator(commentVo.getUser_id()).build();
-			vo.setNotificate_target(postService.getPostById(commentVo.getPost_id()).getUser_id());
+					 									 .setNotificator(commentVo.getUser_id())
+					 									 .setNotificateTarget(postService.getPostById(commentVo.getPost_id()).getUser_id())
+					 									 .build();
 			notificationService.notificate(vo);
 		}
 		

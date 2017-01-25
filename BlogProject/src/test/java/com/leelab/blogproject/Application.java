@@ -1,5 +1,7 @@
 package com.leelab.blogproject;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leelab.blogproject.common.vo.SimpleHashMap;
@@ -15,7 +17,7 @@ public class Application {
 		
 		System.out.println(m.writeValueAsString(cvo));
 		System.out.println(JsonUtils.toJsonString(cvo));
-
+		AnnotationConfigApplicationContext ctx;
 	}
 	
 }

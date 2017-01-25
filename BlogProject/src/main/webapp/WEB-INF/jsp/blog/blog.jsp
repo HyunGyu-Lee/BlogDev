@@ -16,6 +16,12 @@
 		<meta property="og:description" content="${empty metaDesc ? '세상과 소통하는 모두의 블로그, Public Blog' : metaDesc}">
 		<meta property="og:image" content="${host}${contextPath}/resources/image/logo.png">
 		<meta name="description" content="다양한 주제로 포스트를 적어가는 사람들을 만나보세요">
+		<style>
+			body {
+				background-image: url('http://source.unsplash.com/random');
+				background-size: cover;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- Blog Feature - Background Title Image -->

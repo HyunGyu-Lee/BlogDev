@@ -18,7 +18,7 @@
 			</ul><br/><br/>
 			이 페이지가 계속해서 보이신다면 <strong>gusrb0808@naver.com</strong>으로 문의해주시기 바랍니다.			
 			<br/><br/>
-			<a href="${contextPath}">홈으로 돌아가기</a>
+			<a href="${contextPath}/home">홈으로 돌아가기</a>
 		</div>
 	</body>
 </html>

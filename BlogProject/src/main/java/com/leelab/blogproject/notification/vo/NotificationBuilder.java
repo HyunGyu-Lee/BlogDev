@@ -29,4 +29,9 @@ public class NotificationBuilder {
 	public NotificationVo build() {
 		return notification;
 	}
+
+	public NotificationBuilder setNotificateTarget(String user_id) {
+		notification.setNotificate_target(user_id);
+		return this;
+	}
 }

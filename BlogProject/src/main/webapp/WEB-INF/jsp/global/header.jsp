@@ -90,8 +90,8 @@
         </div>
         <ul class="drawer-nav">
             <li role="presentation" class="active"><a href="${contextPath}/${sessionScope.user.id}">내 블로그</a></li>
-            <li role="presentation"><a href="#">컨텐츠2</a></li>
-            <li role="presentation"><a href="#">컨텐츠3</a></li>
+            <li role="presentation"><a href="<c:url value="/util/test-cdn"/>">사이트 템플릿</a></li>
+            <li role="presentation"><a href="<c:url value="/util/test-movie"/>">개발</a></li>
         </ul>
         <div class="drawer-footer">
             <small>&copy;Hyungyu, LEE</small>

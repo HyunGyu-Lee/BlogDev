@@ -27,7 +27,7 @@
 		<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap-select.min.css">
 		<title><decorator:title default="Welcome Public Blog"/> </title>
 	</head>
-	<body class="has-drawer" style=" padding-top: 70px;">
+	<body class="has-drawer" style=" padding-top: 70px; background-color: #eeeeee">
 		<!-- Header -->
 		<page:applyDecorator name="header"/>
 
