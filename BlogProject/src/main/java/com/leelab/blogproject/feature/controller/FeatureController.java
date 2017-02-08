@@ -92,6 +92,11 @@ public class FeatureController {
 				mv.addObject("relations", nService.getNeighborList(userId));
 			}
 		}
+		else if(type.equals(ManagePageMeshType.STAT))
+		{
+			logger.info("통계 뷰 오픈");
+			mv.addObject("type", type);
+		}
 		
 		return mv;
 	}

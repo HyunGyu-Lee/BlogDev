@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript">
-	$(document).ready(function(){
-		Kakao.init('a43018ad95cd229f7260dcd2270add32');
-		
-		$(document).on('click','.manage-blog',function(){
-			location.href = '${contextPath}/manage?type=typography&user_id=${user.id}';
-		});
-	});
-</script>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <input type="hidden" id="idRef" value="${user.id}"/>
 

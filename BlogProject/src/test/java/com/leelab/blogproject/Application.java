@@ -1,23 +1,53 @@
 package com.leelab.blogproject;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leelab.blogproject.common.vo.SimpleHashMap;
-import com.leelab.blogproject.utils.json.JsonUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.leelab.blogproject.utils.prettylogger.PrettyLogger;
+import com.leelab.blogproject.utils.prettylogger.PrettyLoggerFactory;
+import com.leelab.blogproject.visithistory.dao.VisitHistoryDAO;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={
+		"classpath:/config/spring/*.xml"
+})
 public class Application {
 
-	public static void main(String[] args) throws JsonProcessingException, IllegalArgumentException, IllegalAccessException {
-		
-		CommonResponseVO cvo = new CommonResponseVO(1, new Object[]{"A",SimpleHashMap.newInstance().put("A", 1), new Integer[]{1,2,3}});
+	@Autowired
+	private VisitHistoryDAO vhDao;
 
-		ObjectMapper m = new ObjectMapper();
+	PrettyLogger logger = PrettyLoggerFactory.createInstance(Application.class);
+	
+	List<String> list;
+	
+	@Before
+	public void setUp() {
+		list = new ArrayList<String>();
+		list.add("김뚝aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa딱");
+		list.add("이뚝딱");
+		list.add("현뚝딱");
+		list.add("규뚝딱");
+		list.add("카뚝딱");
+	}
+	
+	@Test
+	public void a() {
+		logger.info("깔삼한 로그 테스트입니다!");
 		
-		System.out.println(m.writeValueAsString(cvo));
-		System.out.println(JsonUtils.toJsonString(cvo));
-		AnnotationConfigApplicationContext ctx;
+		String listable = logger.list("사용aaaaaaaaaaaaaaaaaasdasd자목록",list);
+		/* 
+		 * 원래 목적은 logger.list하면 색 입혀진 로그 출력되는게 목적이었는데
+		 * 자바 프록시가 내부 호출에 대해서는 메소드 인터셉팅이 안벌어진다.
+		 * */
+		String form = String.format("%-20s값", "\t");
+		logger.info(listable);
 	}
 	
 }

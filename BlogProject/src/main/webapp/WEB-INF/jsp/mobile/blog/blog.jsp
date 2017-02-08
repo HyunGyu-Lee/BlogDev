@@ -19,5 +19,12 @@
 		<div>
 			<%@ include file="/WEB-INF/jsp/mobile/blog/blog-postArea.jsp" %>				
 		</div>
+		<script type="text/javascript">
+			$(function(){
+				$(document).on('click','.manage-blog',function(){
+					location.href = '${contextPath}/manage?type=typography&user_id=${user.id}';
+				});
+			});
+		</script>
 	</body>
 </html>

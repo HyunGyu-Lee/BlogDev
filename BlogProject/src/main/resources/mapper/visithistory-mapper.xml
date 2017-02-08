@@ -63,5 +63,29 @@
 			</if>
 	</insert>
 	
+	<select id="getVisitStat" parameterType="com.leelab.blogproject.statistics.vo.GeneralStatisticVo" resultType="com.leelab.blogproject.statistics.vo.GeneralStatisticVo">
+	WITH VH AS (
+		SELECT
+			TRUNC(VISITED_AT) AS VDAY, VISITOR_ID
+		FROM
+			BLOG_VISIT_HISTORY
+		WHERE
+			BLOG_ID = #{user_id} AND VISITOR_ID != #{user_id}
+		GROUP BY TRUNC(VISITED_AT), VISITOR_ID
+	)
+	SELECT
+		VDAY as DAY, COUNT(*) as count
+	FROM
+		VH
+	WHERE
+		<if test="startDate == null">
+		<![CDATA[VDAY >= #{endDate}-14 and VDAY <= #{endDate}]]>
+		</if>
+		<if test="startDate != null">
+		<![CDATA[VDAY >= #{startDate} and VDAY <= #{endDate}]]>
+		</if>
+	GROUP BY (VDAY)
+	ORDER BY VDAY DESC
+	</select>
 
 </mapper>

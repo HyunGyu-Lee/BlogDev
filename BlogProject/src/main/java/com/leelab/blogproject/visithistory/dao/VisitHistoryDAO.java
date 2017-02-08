@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.leelab.blogproject.statistics.vo.GeneralStatisticVo;
 import com.leelab.blogproject.visithistory.vo.VisitHistoryVO;
 import com.leelab.blogproject.visithistory.vo.VisitorCountVO;
 
@@ -15,4 +16,6 @@ public interface VisitHistoryDAO {
 	List<VisitHistoryVO> select(VisitHistoryVO vo);
 
 	VisitorCountVO selectCount(VisitHistoryVO vo);
+	
+	List<GeneralStatisticVo> getVisitStat(GeneralStatisticVo vo);
 }

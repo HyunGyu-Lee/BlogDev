@@ -22,3 +22,5 @@
 <script src='${contextPath}/resources/js/drawer.min.js'></script>
 <script src='${contextPath}/resources/js/bootstrap-select.min.js'></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
+<script src="<c:url value="/resources/js/moment.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap-datetimepicker.js"/>"></script>

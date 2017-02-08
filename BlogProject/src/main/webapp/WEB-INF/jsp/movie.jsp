@@ -43,7 +43,7 @@
 		</div>
 
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery-2.1.1.min.js"/>"></script>
     <script src="<c:url value="/resources/js/search-box.js"/>"></script>
 	<script type="text/javascript">
 	    function logic(input) {
